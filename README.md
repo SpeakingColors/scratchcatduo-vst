@@ -1,5 +1,7 @@
 # Scratch Cat Duo 🐈
 
+<img src="assets/icon.svg" width="96" align="right" alt="icon">
+
 Dual deck scratch plugin (VST3).
 
 ## Status

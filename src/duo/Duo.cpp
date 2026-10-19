@@ -8,7 +8,8 @@ juce::String duoui::actionName(int a)
     const char* names[] = { "Play", "Cue", "Sync", "Key lock", "Brake", "Backspin", "Loop in", "Loop out", "Loop exit" };
     if (a >= 200)
     {
-        if (a == aCrossfader) return "Crossfader"; if (a == aMaster) return "Master level";
+        if (a == aCrossfader) return "Crossfader";
+        if (a == aMaster) return "Master level";
         if (a >= aFx1 && a <= aFx3) return "FX " + juce::String(a - aFx1 + 1) + " on/off";
         return {};
     }
@@ -244,7 +245,7 @@ void DuoProcessor::processBlock(juce::AudioBuffer<float>& buf, juce::MidiBuffer&
     {
         if (jogTouch[d].load()) { engine.deck[d].setJog(true, (double) jogTicks[d] / tpt / ((double) n / fs)); midiJogOn[d] = true; }
         else if (midiJogOn[d]) { engine.deck[d].setJog(false, 0.0); midiJogOn[d] = false; }
-        else if (jogTicks[d] != 0.f) engine.deck[d].setBend(juce::jlimit(-1.f, 1.f, jogTicks[d] / 6.f));
+        else if (std::fabs(jogTicks[d]) > 0.f) engine.deck[d].setBend(juce::jlimit(-1.f, 1.f, jogTicks[d] / 6.f));
     }
 
     // 3. new tracks and source changes

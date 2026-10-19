@@ -11,7 +11,7 @@ Scratch Cat Duo is two DJ decks and a mixer inside one plugin. Load a track on e
 - Source: File plays the loaded track. DAW input plays the audio that arrives on the plugin input for that deck; the last minute is kept so you can scratch it. Go live returns to the live sound.
 - CUE: while playing it jumps back to the cue point and stops. While stopped it sets the cue point here; hold it on the cue point to preview.
 - Sync, Key lock and Quant. Key lock changes the tempo without changing the pitch. Quant snaps cue points, hot cues and loops to the beat grid.
-- Tempo fader with a range of 8, 16 or 50 %. Up is slower, down is faster. Double click to reset.
+- Tempo fader with a range of 8, 16 or 50 %. Up is faster, down is slower. Double click to reset.
 - Loop in, Loop out and Exit, and beat loops of 1/4 to 8 beats from the playhead.
 - Brake slows to a stop. Backspin spins backward and stops. Roll, Censor, Stutter and Trans work while you hold them; Roll and Censor keep the track running underneath and jump back in time when released. Nudge - and + bend the tempo a little while held.
 - Eight hot cue pads: an empty pad sets a cue at the playhead, a set pad jumps there, right click clears it.

@@ -280,8 +280,7 @@ struct DuoEditor::Impl : public juce::Component
         hold("Re-analyse", { ox + 534, oy, 86, 26 }, col, "Analyse the loaded track again for BPM, beat grid and key.", [this, d] { auto t = proc.trackFor(d); (void) t; reanalyse(d); });
         jog[d] = std::make_unique<Jog>(proc, d); addAndMakeVisible(*jog[d]); jog[d]->setBounds(ox + 0, oy + 40, 284, 284);
         jog[d]->setTooltip("Platter. Drag to scratch: it follows your hand forward and backward and holds when you stop.");
-        auto* pit = linear("pitch_" + s, { ox + 292, oy + 44, 48, 268 }, true, col, "Tempo fader. Up is slower, down is faster (like a turntable). Double click: back to 0.");
-        pit->setInverted(true);
+        linear("pitch_" + s, { ox + 292, oy + 44, 48, 268 }, true, col, "Tempo fader. Up is faster, down is slower. Double click: back to 0.");
         choice("prange_" + s, { ox + 292, oy + 318, 52, 24 }, "Range of the tempo fader.");
         labels.push_back({ "TEMPO", { ox + 288, oy + 30, 56, 12 }, kDim, false });
         const int cx = ox + 352;
@@ -442,8 +441,8 @@ struct DuoEditor::Impl : public juce::Component
         for (int d = 0; d < 2; ++d)
         {
             const int ox = d == 0 ? 0 : 836; auto& v = proc.view[d]; g.setColour(kDeckCol[d]); g.setFont(juce::FontOptions(13.f, juce::Font::bold));
-            auto t = waves.trk[d]; juce::String s;
-            if (t) { s = juce::String(v.bpm.load(), 1) + " BPM"; if (t->key.tonic >= 0) s += "  " + juce::String(duo::camelot(t->key)) + " " + juce::String(duo::keyName(t->key)); }
+            auto tk = waves.trk[d]; juce::String s;
+            if (tk) { s = juce::String(v.bpm.load(), 1) + " BPM"; if (tk->key.tonic >= 0) s += "  " + juce::String(duo::camelot(tk->key)) + " " + juce::String(duo::keyName(tk->key)); }
             g.drawText(s, ox + 196, 292, 228, 26, juce::Justification::centredLeft);
         }
         for (auto& l : labels) { g.setColour(l.c); g.setFont(juce::FontOptions(l.big ? 13.f : 10.5f, l.big ? juce::Font::bold : juce::Font::plain)); g.drawFittedText(l.text, l.r, juce::Justification::centredLeft, 3); }

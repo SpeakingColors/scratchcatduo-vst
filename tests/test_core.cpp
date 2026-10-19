@@ -1,5 +1,6 @@
 // Pure C++ tests for the Scratch Cat Duo engine (no JUCE): sh tests/run.sh
 #include "../src/core/DuoEngine.h"
+#include "../src/core/DuoLibrary.h"
 #include <cstdio>
 #include <random>
 using namespace duo;
@@ -221,8 +222,25 @@ static void testAlign() {
     Deck c; c.prepare(sr); c.setTrack(sineTrack(sr, 5, 440));
     CHECK(!c.alignBeatTo(a), "no grid, no align");
 }
+static void testLibrary() {
+    namespace fs = std::filesystem; const fs::path root = fs::temp_directory_path() / "duo_lib_test"; fs::remove_all(root);
+    fs::create_directories(root / "drums" / "kicks"); fs::create_directories(root / "synth" / "leads" / "deep"); fs::create_directories(root / "docs");
+    auto mk = [&](const char* rel) { std::ofstream(root / rel) << "x"; };
+    mk("drums/kicks/Kick.WAV"); mk("drums/loop.mp3"); mk("synth/leads/deep/lead.flac"); mk("synth/pad.aiff"); mk("docs/readme.txt"); mk("drums/cover.png");
+    Library lib; const int n = lib.addFolder(root.string());
+    CHECK(n == 4, "scan finds audio in all subfolders and skips other files (found %d)", n);
+    CHECK(lib.addFolder(root.string()) == 0, "scanning the same folder twice adds nothing");
+    CHECK(lib.search("kick").size() == 1 && lib.search("KICK")[0].ext == "wav", "search ignores case and reads upper case extensions");
+    CHECK(lib.search("flac").size() == 1 && lib.search("").size() == 4, "search matches the format, empty query lists all");
+    CHECK(lib.search("", (root / "synth").string()).size() == 2, "folder filter includes subfolders");
+    CHECK(lib.addFolder((root / "missing").string()) == 0, "missing folder is ignored");
+    lib.toggleFavourite("/a/b"); lib.toggleFavourite("/c d"); Library l2; l2.favouritesFromString(lib.favouritesToString());
+    CHECK(l2.isFavourite("/a/b") && l2.isFavourite("/c d") && l2.favourites().size() == 2, "favourites survive a save and load");
+    lib.toggleFavourite("/a/b"); CHECK(!lib.isFavourite("/a/b"), "favourite can be removed");
+    fs::remove_all(root);
+}
 int main() {
-    testBpm(); testKey(); testDeck(); testMixer(); testEngineAndFx(); testKeyLockQuality(); testAlign();
+    testBpm(); testKey(); testDeck(); testMixer(); testEngineAndFx(); testKeyLockQuality(); testAlign(); testLibrary();
     if (fails) { std::printf("%d FAILED\n", fails); return 1; }
     std::printf("all tests passed\n"); return 0;
 }

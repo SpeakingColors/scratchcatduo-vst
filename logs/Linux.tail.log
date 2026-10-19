@@ -1,4 +1,177 @@
-      |             ~~~~~~~^~~~~~~~~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:18: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
+      |                  ^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:32: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
+      |                            ~~~~^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:43: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
+      |                                           ^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:58: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
+      |                                                      ~~~~^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:33: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
+      |                             ~~~~^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:46: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
+      |                                              ^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:63: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
+      |                                                           ~~~~^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:100: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
+   87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
+      |                                                                                                ~~~~^~~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:91:69: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   91 |         const int l2 = lag * 2; const double sup = l2 <= lagHi ? ac[l2] : 0;
+      |                                                                     ^~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h: In function ‘duo::BpmResult duo::analyseBpm(const float*, const float*, size_t, double)’:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:78:34: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   78 |     std::vector<double> ac(lagHi + 2, 0.0);
+      |                            ~~~~~~^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:80:46: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   80 |         double s = 0; for (size_t i = 0; i + lag < env.size(); ++i) s += (double) env[i] * env[i + lag];
+      |                                              ^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:80:100: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   80 |         double s = 0; for (size_t i = 0; i + lag < env.size(); ++i) s += (double) env[i] * env[i + lag];
+      |                                                                                                    ^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:81:12: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   81 |         ac[lag] = s / (double)(env.size() - lag);
+      |            ^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:81:45: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   81 |         ac[lag] = s / (double)(env.size() - lag);
+      |                                             ^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h: In function ‘duo::KeyResult duo::analyseKey(const float*, const float*, size_t, double)’:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:129:64: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  129 |     std::vector<float> w(win); for (int i = 0; i < win; ++i) w[i] = 0.5f - 0.5f * (float) std::cos(2 * kPi * i / win);
+      |                                                                ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:18: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
+      |                  ^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:32: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
+      |                            ~~~~^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:43: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
+      |                                           ^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:132:43: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  132 |         for (int i = 0; i < win; ++i) buf[i] = { m[p + i] * w[i], 0.f };
+      |                                           ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:58: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
+      |                                                      ~~~~^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:132:56: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  132 |         for (int i = 0; i < win; ++i) buf[i] = { m[p + i] * w[i], 0.f };
+      |                                                        ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:132:63: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  132 |         for (int i = 0; i < win; ++i) buf[i] = { m[p + i] * w[i], 0.f };
+      |                                                               ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:33: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
+      |                             ~~~~^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:46: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
+      |                                              ^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:63: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
+      |                                                           ~~~~^~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:136:45: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  136 |             const double mag = std::abs(buf[k]); if (mag <= 0) continue;
+      |                                             ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:100: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
+   87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
+      |                                                                                                ~~~~^~~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:91:69: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   91 |         const int l2 = lag * 2; const double sup = l2 <= lagHi ? ac[l2] : 0;
+      |                                                                     ^~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h: In function ‘duo::KeyResult duo::analyseKey(const float*, const float*, size_t, double)’:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:129:64: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  129 |     std::vector<float> w(win); for (int i = 0; i < win; ++i) w[i] = 0.5f - 0.5f * (float) std::cos(2 * kPi * i / win);
+      |                                                                ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:132:43: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  132 |         for (int i = 0; i < win; ++i) buf[i] = { m[p + i] * w[i], 0.f };
+      |                                           ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:132:56: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  132 |         for (int i = 0; i < win; ++i) buf[i] = { m[p + i] * w[i], 0.f };
+      |                                                        ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:132:63: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  132 |         for (int i = 0; i < win; ++i) buf[i] = { m[p + i] * w[i], 0.f };
+      |                                                               ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:136:45: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  136 |             const double mag = std::abs(buf[k]); if (mag <= 0) continue;
+      |                                             ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::hotCue(int, bool)’:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:81:17: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   81 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
+      |                 ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:81:29: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   81 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
+      |                             ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:81:62: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   81 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
+      |                                                              ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::setHotCuePos(int, double)’:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:83:67: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   83 |     void setHotCuePos(int i, double p) { if (i >= 0 && i < 8) hot[i] = p; }
+      |                                                                   ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::clearHotCue(int)’:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:84:56: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   84 |     void clearHotCue(int i) { if (i >= 0 && i < 8) hot[i] = -1.0; }
+      |                                                        ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘double duo::Deck::hotCuePos(int) const’:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:85:48: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   85 |     double hotCuePos(int i) const { return hot[i]; }
+      |                                                ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::process(float*, float*, int, const float*, const float*)’:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:157:21: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
+  157 |             if (vel != 0.0 || jogTouch) {
+      |                 ~~~~^~~~~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::hotCue(int, bool)’:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:81:17: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   81 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
+      |                 ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:81:29: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   81 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
+      |                             ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:81:62: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   81 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
+      |                                                              ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::setHotCuePos(int, double)’:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:83:67: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   83 |     void setHotCuePos(int i, double p) { if (i >= 0 && i < 8) hot[i] = p; }
+      |                                                                   ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::clearHotCue(int)’:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:84:56: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   84 |     void clearHotCue(int i) { if (i >= 0 && i < 8) hot[i] = -1.0; }
+      |                                                        ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘double duo::Deck::hotCuePos(int) const’:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:85:48: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+   85 |     double hotCuePos(int i) const { return hot[i]; }
+      |                                                ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::process(float*, float*, int, const float*, const float*)’:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:157:21: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
+  157 |             if (vel != 0.0 || jogTouch) {
+      |                 ~~~~^~~~~~
+In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless.h:145,
+                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors/juce_audio_processors.h:64,
+                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:3:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h: At global scope:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h:292:18: warning: ‘virtual void juce::AudioProcessor::processBlock(juce::AudioBuffer<double>&, juce::MidiBuffer&)’ was hidden [-Woverloaded-virtual=]
+  292 |     virtual void processBlock (AudioBuffer<double>& buffer,
+      |                  ^~~~~~~~~~~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:65:10: note:   by ‘virtual void DuoProcessor::processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&)’
+   65 |     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+      |          ^~~~~~~~~~~~
+In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless.h:145,
+                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors/juce_audio_processors.h:64,
+                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:3:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h: At global scope:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h:292:18: warning: ‘virtual void juce::AudioProcessor::processBlock(juce::AudioBuffer<double>&, juce::MidiBuffer&)’ was hidden [-Woverloaded-virtual=]
+  292 |     virtual void processBlock (AudioBuffer<double>& buffer,
+      |                  ^~~~~~~~~~~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:65:10: note:   by ‘virtual void DuoProcessor::processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&)’
+   65 |     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+      |          ^~~~~~~~~~~~
 In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:3,
                  from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:4,
                  from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoEngine.h:3,
@@ -11,10 +184,6 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDsp.h:99:19: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
    99 |         if (midDb != lastMid) { lastMid = midDb; for (int c = 0; c < 2; ++c) { Biquad t; t.peak(sr, 1000.0, g(midDb), 0.7); t.z1 = mid[c].z1; t.z2 = mid[c].z2; mid[c] = t; } }
       |             ~~~~~~^~~~~~~~~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDsp.h: In member function ‘float duo::ChannelStrip::tick(int, float)’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDsp.h:110:21: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
-  110 |         if (colMode != 0) { cf[ch].tick(x); x = colMode < 0 ? cf[ch].lp : cf[ch].hp; }
-      |             ~~~~~~~~^~~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDsp.h:100:18: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
   100 |         if (hiDb != lastHi)   { lastHi = hiDb;   for (int c = 0; c < 2; ++c) { Biquad t; t.highShelf(sr, 8000.0, g(hiDb)); t.z1 = hi[c].z1; t.z2 = hi[c].z2; hi[c] = t; } }
       |             ~~~~~^~~~~~~~~
@@ -29,24 +198,10 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDsp.h:176:39: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
   176 |             if (w < 0.0005f && target == 0.f) { if (type == FxEcho) { ed[0].push(ch[0][i]); ed[1].push(ch[1][i]); } continue; }
       |                                ~~~~~~~^~~~~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDsp.h: In member function ‘void duo::FxSlot::process(float*, float*, int)’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDsp.h:176:39: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
-  176 |             if (w < 0.0005f && target == 0.f) { if (type == FxEcho) { ed[0].push(ch[0][i]); ed[1].push(ch[1][i]); } continue; }
-      |                                ~~~~~~~^~~~~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h: In function ‘std::vector<float, std::allocator<float> > duo::decimateMono(const float*, const float*, size_t, double, double&, size_t, size_t)’:
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:17:36: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    17 |     m.reserve((end - startFrame) / f + 1);
       |                                    ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:18:37: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   18 |     for (size_t i = startFrame; i + f <= end; i += f) {
-      |                                     ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h: In function ‘std::vector<float, std::allocator<float> > duo::decimateMono(const float*, const float*, size_t, double, double&, size_t, size_t)’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:17:36: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   17 |     m.reserve((end - startFrame) / f + 1);
-      |                                    ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:18:52: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   18 |     for (size_t i = startFrame; i + f <= end; i += f) {
-      |                                                    ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:18:37: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    18 |     for (size_t i = startFrame; i + f <= end; i += f) {
       |                                     ^
@@ -56,15 +211,6 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:19:69: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    19 |         float a = 0; for (int k = 0; k < f; ++k) a += 0.5f * (l[i + k] + (r ? r[i + k] : l[i + k]));
       |                                                                     ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:19:69: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   19 |         float a = 0; for (int k = 0; k < f; ++k) a += 0.5f * (l[i + k] + (r ? r[i + k] : l[i + k]));
-      |                                                                     ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:19:85: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   19 |         float a = 0; for (int k = 0; k < f; ++k) a += 0.5f * (l[i + k] + (r ? r[i + k] : l[i + k]));
-      |                                                                                     ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:19:96: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   19 |         float a = 0; for (int k = 0; k < f; ++k) a += 0.5f * (l[i + k] + (r ? r[i + k] : l[i + k]));
-      |                                                                                                ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:19:85: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    19 |         float a = 0; for (int k = 0; k < f; ++k) a += 0.5f * (l[i + k] + (r ? r[i + k] : l[i + k]));
       |                                                                                     ^
@@ -75,80 +221,39 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:29:26: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    29 |     std::vector<float> w(win); for (int i = 0; i < win; ++i) w[i] = 0.5f - 0.5f * (float) std::cos(2 * kPi * i / win);
       |                          ^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h: In function ‘std::vector<float, std::allocator<float> > duo::onsetEnvelope(const std::vector<float, std::allocator<float> >&, int, int, double, std::vector<float, std::allocator<float> >*)’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:29:26: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   29 |     std::vector<float> w(win); for (int i = 0; i < win; ++i) w[i] = 0.5f - 0.5f * (float) std::cos(2 * kPi * i / win);
-      |                          ^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:29:64: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   29 |     std::vector<float> w(win); for (int i = 0; i < win; ++i) w[i] = 0.5f - 0.5f * (float) std::cos(2 * kPi * i / win);
-      |                                                                ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:29:64: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    29 |     std::vector<float> w(win); for (int i = 0; i < win; ++i) w[i] = 0.5f - 0.5f * (float) std::cos(2 * kPi * i / win);
       |                                                                ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:30:33: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    30 |     std::vector<float> prev(win / 2, 0.f);
       |                             ~~~~^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:30:33: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   30 |     std::vector<float> prev(win / 2, 0.f);
-      |                             ~~~~^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:31:42: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   31 |     std::vector<std::complex<float>> buf(win);
-      |                                          ^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:31:42: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    31 |     std::vector<std::complex<float>> buf(win);
       |                                          ^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:32:28: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    32 |     for (size_t p = 0; p + win <= x.size(); p += hop) {
       |                            ^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:32:28: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   32 |     for (size_t p = 0; p + win <= x.size(); p += hop) {
-      |                            ^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:32:50: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   32 |     for (size_t p = 0; p + win <= x.size(); p += hop) {
-      |                                                  ^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:32:50: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    32 |     for (size_t p = 0; p + win <= x.size(); p += hop) {
       |                                                  ^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:33:43: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    33 |         for (int i = 0; i < win; ++i) buf[i] = { x[p + i] * w[i], 0.f };
       |                                           ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:33:43: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   33 |         for (int i = 0; i < win; ++i) buf[i] = { x[p + i] * w[i], 0.f };
-      |                                           ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:33:56: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   33 |         for (int i = 0; i < win; ++i) buf[i] = { x[p + i] * w[i], 0.f };
-      |                                                        ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:33:56: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    33 |         for (int i = 0; i < win; ++i) buf[i] = { x[p + i] * w[i], 0.f };
       |                                                        ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:33:63: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    33 |         for (int i = 0; i < win; ++i) buf[i] = { x[p + i] * w[i], 0.f };
       |                                                               ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:33:63: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   33 |         for (int i = 0; i < win; ++i) buf[i] = { x[p + i] * w[i], 0.f };
-      |                                                               ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:38:61: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   38 |             const float m = std::log1p(100.f * std::abs(buf[k]) / (float) win * 4.f);
-      |                                                             ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:38:61: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    38 |             const float m = std::log1p(100.f * std::abs(buf[k]) / (float) win * 4.f);
       |                                                             ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:39:38: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    39 |             const float d = m - prev[k]; prev[k] = m;
       |                                      ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:39:38: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   39 |             const float d = m - prev[k]; prev[k] = m;
-      |                                      ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:39:47: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    39 |             const float d = m - prev[k]; prev[k] = m;
       |                                               ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:39:47: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   39 |             const float d = m - prev[k]; prev[k] = m;
-      |                                               ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h: In lambda function:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:49:114: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘long int’ may change the sign of the result [-Wsign-conversion]
-   49 |             for (int k = -ml; k <= ml; ++k) { long j = (long) i + k; if (j >= 0 && j < (long) e.size()) { s += e[j]; ++c; } }
-      |                                                                                                                  ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h: In lambda function:
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:49:114: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘long int’ may change the sign of the result [-Wsign-conversion]
    49 |             for (int k = -ml; k <= ml; ++k) { long j = (long) i + k; if (j >= 0 && j < (long) e.size()) { s += e[j]; ++c; } }
@@ -157,95 +262,42 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:78:34: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    78 |     std::vector<double> ac(lagHi + 2, 0.0);
       |                            ~~~~~~^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h: In function ‘duo::BpmResult duo::analyseBpm(const float*, const float*, size_t, double)’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:78:34: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   78 |     std::vector<double> ac(lagHi + 2, 0.0);
-      |                            ~~~~~~^~~
-In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless.h:145,
-                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors/juce_audio_processors.h:64,
-                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:3:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h: At global scope:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h:292:18: warning: ‘virtual void juce::AudioProcessor::processBlock(juce::AudioBuffer<double>&, juce::MidiBuffer&)’ was hidden [-Woverloaded-virtual=]
-  292 |     virtual void processBlock (AudioBuffer<double>& buffer,
-      |                  ^~~~~~~~~~~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:65:10: note:   by ‘virtual void DuoProcessor::processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&)’
-   65 |     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
-      |          ^~~~~~~~~~~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:80:46: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   80 |         double s = 0; for (size_t i = 0; i + lag < env.size(); ++i) s += (double) env[i] * env[i + lag];
-      |                                              ^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:80:46: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    80 |         double s = 0; for (size_t i = 0; i + lag < env.size(); ++i) s += (double) env[i] * env[i + lag];
       |                                              ^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:80:100: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    80 |         double s = 0; for (size_t i = 0; i + lag < env.size(); ++i) s += (double) env[i] * env[i + lag];
       |                                                                                                    ^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:80:100: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   80 |         double s = 0; for (size_t i = 0; i + lag < env.size(); ++i) s += (double) env[i] * env[i + lag];
-      |                                                                                                    ^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:81:12: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   81 |         ac[lag] = s / (double)(env.size() - lag);
-      |            ^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:81:12: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    81 |         ac[lag] = s / (double)(env.size() - lag);
       |            ^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:81:45: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    81 |         ac[lag] = s / (double)(env.size() - lag);
       |                                             ^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:81:45: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   81 |         ac[lag] = s / (double)(env.size() - lag);
-      |                                             ^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:18: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
-      |                  ^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:18: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
       |                  ^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:32: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
       |                            ~~~~^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:32: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
-      |                            ~~~~^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:43: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
-      |                                           ^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:43: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
       |                                           ^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:58: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
       |                                                      ~~~~^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:85:58: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   85 |         if (!(ac[lag] > ac[lag - 1] && ac[lag] >= ac[lag + 1])) continue;
-      |                                                      ~~~~^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:33: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
-      |                             ~~~~^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:33: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
       |                             ~~~~^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:46: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
       |                                              ^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:46: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
-      |                                              ^~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:63: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
-      |                                                           ~~~~^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:63: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
       |                                                           ~~~~^~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:100: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
    87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
       |                                                                                                ~~~~^~~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:87:100: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
-   87 |         const double a = ac[lag - 1], b = ac[lag], c = ac[lag + 1], den = a - 2 * b + c, off = den != 0 ? 0.5 * (a - c) / den : 0;
-      |                                                                                                ~~~~^~~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:91:69: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   91 |         const int l2 = lag * 2; const double sup = l2 <= lagHi ? ac[l2] : 0;
-      |                                                                     ^~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:91:69: warning: conversion to ‘std::vector<double>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    91 |         const int l2 = lag * 2; const double sup = l2 <= lagHi ? ac[l2] : 0;
       |                                                                     ^~
@@ -253,31 +305,15 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/buil
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:129:64: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
   129 |     std::vector<float> w(win); for (int i = 0; i < win; ++i) w[i] = 0.5f - 0.5f * (float) std::cos(2 * kPi * i / win);
       |                                                                ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h: In function ‘duo::KeyResult duo::analyseKey(const float*, const float*, size_t, double)’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:129:64: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-  129 |     std::vector<float> w(win); for (int i = 0; i < win; ++i) w[i] = 0.5f - 0.5f * (float) std::cos(2 * kPi * i / win);
-      |                                                                ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:132:43: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-  132 |         for (int i = 0; i < win; ++i) buf[i] = { m[p + i] * w[i], 0.f };
-      |                                           ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:132:43: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
   132 |         for (int i = 0; i < win; ++i) buf[i] = { m[p + i] * w[i], 0.f };
       |                                           ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:132:56: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
   132 |         for (int i = 0; i < win; ++i) buf[i] = { m[p + i] * w[i], 0.f };
       |                                                        ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:132:56: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-  132 |         for (int i = 0; i < win; ++i) buf[i] = { m[p + i] * w[i], 0.f };
-      |                                                        ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:132:63: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
   132 |         for (int i = 0; i < win; ++i) buf[i] = { m[p + i] * w[i], 0.f };
       |                                                               ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:132:63: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-  132 |         for (int i = 0; i < win; ++i) buf[i] = { m[p + i] * w[i], 0.f };
-      |                                                               ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:136:45: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-  136 |             const double mag = std::abs(buf[k]); if (mag <= 0) continue;
-      |                                             ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:136:45: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
   136 |             const double mag = std::abs(buf[k]); if (mag <= 0) continue;
       |                                             ^
@@ -285,26 +321,12 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/buil
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:81:17: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    81 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
       |                 ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::hotCue(int, bool)’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:81:17: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   81 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
-      |                 ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:81:29: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   81 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
-      |                             ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:81:29: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    81 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
       |                             ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:81:62: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    81 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
       |                                                              ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:81:62: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   81 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
-      |                                                              ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::setHotCuePos(int, double)’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:83:67: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   83 |     void setHotCuePos(int i, double p) { if (i >= 0 && i < 8) hot[i] = p; }
-      |                                                                   ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::setHotCuePos(int, double)’:
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:83:67: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    83 |     void setHotCuePos(int i, double p) { if (i >= 0 && i < 8) hot[i] = p; }
@@ -313,36 +335,14 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/buil
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:84:56: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    84 |     void clearHotCue(int i) { if (i >= 0 && i < 8) hot[i] = -1.0; }
       |                                                        ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::clearHotCue(int)’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:84:56: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   84 |     void clearHotCue(int i) { if (i >= 0 && i < 8) hot[i] = -1.0; }
-      |                                                        ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘double duo::Deck::hotCuePos(int) const’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:85:48: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   85 |     double hotCuePos(int i) const { return hot[i]; }
-      |                                                ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘double duo::Deck::hotCuePos(int) const’:
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:85:48: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    85 |     double hotCuePos(int i) const { return hot[i]; }
       |                                                ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::process(float*, float*, int, const float*, const float*)’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:150:21: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
-  150 |             if (vel != 0.0 || jogTouch) {
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:157:21: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
+  157 |             if (vel != 0.0 || jogTouch) {
       |                 ~~~~^~~~~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::process(float*, float*, int, const float*, const float*)’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:150:21: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
-  150 |             if (vel != 0.0 || jogTouch) {
-      |                 ~~~~^~~~~~
-In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless.h:145,
-                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors/juce_audio_processors.h:64,
-                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:3:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h: At global scope:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h:292:18: warning: ‘virtual void juce::AudioProcessor::processBlock(juce::AudioBuffer<double>&, juce::MidiBuffer&)’ was hidden [-Woverloaded-virtual=]
-  292 |     virtual void processBlock (AudioBuffer<double>& buffer,
-      |                  ^~~~~~~~~~~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:65:10: note:   by ‘virtual void DuoProcessor::processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&)’
-   65 |     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
-      |          ^~~~~~~~~~~~
 In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless.h:145,
                  from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors/juce_audio_processors.h:64,
                  from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:3:
@@ -377,21 +377,21 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/buil
 [ 70%] Linking CXX static library "ScratchCatDuo_artefacts/Release/libScratch Cat Duo_SharedCode.a"
 [ 70%] Built target ScratchCatDuo
 [ 71%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
-[ 73%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
-[ 75%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
-[ 76%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
-[ 78%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
-[ 80%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
-[ 81%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
+[ 73%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
+[ 76%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+[ 76%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+[ 80%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
+[ 80%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+[ 81%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
 [ 83%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
-[ 86%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
-[ 86%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
-[ 88%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
-[ 90%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
-[ 91%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
-[ 93%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
-[ 95%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
-[ 96%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
+[ 85%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
+[ 86%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+[ 88%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+[ 91%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+[ 90%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
+[ 93%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
+[ 95%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
+[ 96%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
 [ 98%] Linking CXX executable "ScratchCatDuo_artefacts/Release/Standalone/Scratch Cat Duo"
 [ 98%] Built target ScratchCatDuo_Standalone
 [100%] Linking CXX shared module "ScratchCatDuo_artefacts/Release/VST3/Scratch Cat Duo.vst3/Contents/x86_64-linux/Scratch Cat Duo.so"

@@ -299,8 +299,9 @@ struct DuoEditor::Impl : public juce::Component
             "Hold: retriggers from the cue point every 1/4 beat.", "Hold: chops the sound on and off every 1/8 beat." };
         static const duo::Move mm[4] = { duo::Move::Roll, duo::Move::Censor, duo::Move::Stutter, duo::Move::Transform };
         for (int i = 0; i < 4; ++i) hold(mv[i], { cx + i * 68, oy + 174, 64, 26 }, col, mt[i], [this, d, i] { cmd(duoui::kMoveStart, d, (int) mm[i], 0.25); }, [this, d] { cmd(duoui::kMoveEnd, d); });
-        hold("Nudge -", { cx, oy + 206, 132, 26 }, col, "Hold: slows the deck a little to line up the beats.", [this, d] { cmd(duoui::kBend, d, 0, -0.6); }, [this, d] { cmd(duoui::kBend, d, 0, 0.0); });
-        hold("Nudge +", { cx + 136, oy + 206, 132, 26 }, col, "Hold: speeds the deck up a little to line up the beats.", [this, d] { cmd(duoui::kBend, d, 0, 0.6); }, [this, d] { cmd(duoui::kBend, d, 0, 0.0); });
+        hold("Nudge -", { cx, oy + 206, 86, 26 }, col, "Hold: slows the deck a little to line up the beats.", [this, d] { cmd(duoui::kBend, d, 0, -0.6); }, [this, d] { cmd(duoui::kBend, d, 0, 0.0); });
+        hold("Nudge +", { cx + 90, oy + 206, 86, 26 }, col, "Hold: speeds the deck up a little to line up the beats.", [this, d] { cmd(duoui::kBend, d, 0, 0.6); }, [this, d] { cmd(duoui::kBend, d, 0, 0.0); });
+        hold("Align", { cx + 180, oy + 206, 88, 26 }, col, "Moves this deck by up to half a beat so its beat lands on the other deck. Tempo is not changed: use Sync for that.", [this, d] { cmd(duoui::kAlign, d); });
         hold("CUE", { cx, oy + 246, 132, 64 }, catui::SodaPop::lemon(), "Cue. Playing: jump back to the cue point and stop. Stopped: set the cue point here. Hold on the cue point to preview.", [this, d] { cmd(duoui::kCueDown, d); }, [this, d] { cmd(duoui::kCueUp, d); });
         playBtn[d] = hold("PLAY", { cx + 136, oy + 246, 132, 64 }, catui::SodaPop::mint(), "Play or pause.", [this, d] { cmd(duoui::kPlay, d, 2); });
         liveBtn[d] = hold("Go live", { ox + 100, oy + 330, 90, 26 }, col, "DAW input only: back to the live sound.", [this, d] { cmd(duoui::kGoLive, d); });

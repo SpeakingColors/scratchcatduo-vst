@@ -140,7 +140,8 @@ void DuoProcessor::applyCmd(const Cmd& c)
         case kBeatLoop: d.beatLoop(c.a); break; case kBrake: d.brake(); break; case kBackspin: d.backspin(); break;
         case kMoveStart: d.startMove((duo::Move) c.i, c.a); break; case kMoveEnd: d.endMove(); break;
         case kJog: d.setJog(c.i != 0, c.a); break; case kBend: d.setBend((float) c.a); break;
-        case kGoLive: d.goLive(); break; case kSeek: d.seekSeconds(c.a); break; default: break;
+        case kGoLive: d.goLive(); break; case kSeek: d.seekSeconds(c.a); break;
+        case kAlign: d.alignBeatTo(engine.deck[1 - juce::jlimit(0, 1, c.deck)]); break; default: break;
     }
 }
 

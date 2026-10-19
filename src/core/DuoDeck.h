@@ -118,6 +118,13 @@ public:
         const double bl = beatLenSrc(); if (bl <= 0 || src != Source::File) return -1;
         double p = (pos - trk->firstBeat * trk->sr) / bl; return p - std::floor(p);
     }
+    // Move this deck by the shortest way (at most half a beat) so its beat lands where the other deck's beat is.
+    // Returns false if either deck has no beat grid. The tempo is not touched: sync does that.
+    bool alignBeatTo(const Deck& o) {
+        const double a = beatPhase(), b = o.beatPhase(); if (a < 0 || b < 0) return false;
+        double d = b - a; if (d > 0.5) d -= 1.0; else if (d < -0.5) d += 1.0;
+        pos = std::max(0.0, std::min((double) trk->frames() - 1.0, pos + d * beatLenSrc())); return true;
+    }
     void seekSeconds(double s) { if (trk && src == Source::File) pos = std::max(0.0, std::min((double) trk->frames() - 1.0, s * trk->sr)); }
 
     // Render n frames. in may be null. Output is added into nothing: it overwrites outL/outR.
@@ -149,7 +156,7 @@ public:
             float l = 0, r = 0;
             if (vel != 0.0 || jogTouch) {
                 if (useGrains && vel > 0) {
-                    if (hopCnt-- <= 0) { hopCnt = ghop; for (auto& g : grains) if (!g.on) { g.on = true; g.p = pos; g.age = 0; break; } }
+                    if (hopCnt-- <= 0) { hopCnt = ghop; for (auto& g : grains) if (!g.on) { g.on = true; g.p = wsolaStart(pos, srcRatio); g.age = 0; break; } }
                     float al = 0, ar = 0;
                     for (auto& g : grains) if (g.on) {
                         const float w = 0.5f - 0.5f * std::cos(2.f * (float) kPi * (float) g.age / (float) glen);
@@ -182,6 +189,27 @@ private:
     struct Grain { bool on = false; double p = 0; int age = 0; };
     bool hasAudio() const { return src == Source::Live || (trk && trk->frames() > 4); }
     // 4 point Hermite, out of range reads as silence
+    // WSOLA: nudge a new grain's start (within +-kSearch samples) so it lines up in phase with where the youngest running grain
+    // is about to continue; this removes the comb and flutter of plain overlap-add. Only used for file playback.
+    static constexpr int kSearch = 288, kCorr = 640, kStep = 4;
+    double wsolaStart(double want, double ratio) const {
+        const Grain* ref = nullptr;
+        for (const auto& g : grains) if (g.on && (!ref || g.age < ref->age)) ref = &g;
+        if (!ref || src != Source::File || !trk) return want;
+        const long long nf = (long long) trk->frames();
+        auto x = [&](double p) -> float { const long long i = (long long) p; return (i < 0 || i >= nf) ? 0.f : trk->l[(size_t) i]; };
+        float refv[kCorr / kStep]; double refE = 0;
+        for (int k = 0; k < kCorr / kStep; ++k) { refv[k] = x(ref->p + (double) (k * kStep) * ratio); refE += (double) refv[k] * refv[k]; }
+        if (refE < 1e-9) return want;
+        double best = -1e30; int bestD = 0;
+        for (int d = -kSearch; d <= kSearch; d += 2) {
+            double c = 0, e = 1e-9;
+            for (int k = 0; k < kCorr / kStep; ++k) { const float v = x(want + (double) d * ratio + (double) (k * kStep) * ratio); c += (double) v * refv[k]; e += (double) v * v; }
+            const double score = c / std::sqrt(e);
+            if (score > best) { best = score; bestD = d; }
+        }
+        return std::max(0.0, want + (double) bestD * ratio);
+    }
     void readAt(double p, float& l, float& r) const {
         const long long i = (long long) std::floor(p); const float f = (float)(p - (double) i);
         float a[4], b[4];

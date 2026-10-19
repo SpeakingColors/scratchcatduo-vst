@@ -181,8 +181,48 @@ static void testEngineAndFx() {
         CHECK(Engine::softClip(0.5f) == 0.5f && Engine::softClip(-0.9f) == -0.9f, "softclip transparent"); CHECK(std::fabs(Engine::softClip(8.f)) <= 1.0f, "softclip bounded");
     }
 }
+
+// Share of the windowed energy found at the wanted tones: 1.0 is a clean copy, lower means smeared or combed.
+static double toneShare(const std::vector<float>& v, size_t a, size_t b, double sr, const std::vector<double>& freqs) {
+    const double N = (double)(b - a); double tot = 0, got = 0;
+    for (size_t i = a; i < b; ++i) { const double w = 0.5 - 0.5 * std::cos(2 * kPi * (double)(i - a) / N); tot += w * w * (double) v[i] * v[i]; }
+    for (double f : freqs) { double c = 0, s = 0; for (size_t i = a; i < b; ++i) { const double w = 0.5 - 0.5 * std::cos(2 * kPi * (double)(i - a) / N); c += w * v[i] * std::cos(2 * kPi * f * (double) i / sr); s += w * v[i] * std::sin(2 * kPi * f * (double) i / sr); } got += 2.0 * (c * c + s * s) * (0.375 * N) / ((0.5 * N) * (0.5 * N)); }
+    return got / std::max(tot, 1e-12);
+}
+static double maxStep(const std::vector<float>& v, size_t a, size_t b) { double m = 0; for (size_t i = a + 1; i < b; ++i) m = std::max(m, (double) std::fabs(v[i] - v[i - 1])); return m; }
+static void testKeyLockQuality() {
+    const double sr = 48000;
+    for (double pct : { 0.08, -0.08, 0.5, -0.4 }) {
+        Deck d; d.prepare(sr); auto t = std::make_shared<Track>(); t->sr = sr; const size_t n = (size_t)(sr * 12); t->l.resize(n); t->r.resize(n);
+        for (size_t i = 0; i < n; ++i) { const float v = 0.3f * (float) std::sin(2 * kPi * 440.0 * i / sr) + 0.2f * (float) std::sin(2 * kPi * 1330.0 * i / sr); t->l[i] = t->r[i] = v; }
+        d.setTrack(t); d.setPitch((float)(pct > 0.4 || pct < -0.3 ? pct : pct / 0.08), pct > 0.4 || pct < -0.3 ? 1.f : 0.08f); d.setKeyLock(true); d.setPlaying(true);
+        std::vector<float> L, R; render(d, (int) sr * 3, L, R);
+        const size_t a = (size_t) sr, b = (size_t) sr * 3;
+        // the 20 ms windowed RMS should stay steady; a bad overlap makes it pulse
+        double mn = 1e9, mx = 0; for (size_t i = a; i + 960 < b; i += 480) { const double r = rms(L, i, i + 960); mn = std::min(mn, r); mx = std::max(mx, r); }
+        double share = 0; int nw = 0; for (size_t w = a; w + 6000 <= b; w += 6000, ++nw) share += toneShare(L, w, w + 6000, sr, { 440.0, 1330.0 }); share /= nw;
+        std::printf("  tone share %.3f\n", share);
+        std::printf("keylock %+.0f%%: rms swing %.3f..%.3f (ratio %.3f), max step %.3f\n", pct * 100, mn, mx, mx / std::max(mn, 1e-9), maxStep(L, a, b));
+        CHECK(share > 0.9, "keylock %+.0f%% tone purity %.3f (WSOLA alignment)", pct * 100, share);
+        CHECK(mx / std::max(mn, 1e-9) < 1.12, "keylock %+.0f%% output pulses: rms ratio %.3f", pct * 100, mx / std::max(mn, 1e-9));
+        CHECK(maxStep(L, a, b) < 0.25, "keylock %+.0f%% output has a jump of %.3f", pct * 100, maxStep(L, a, b));
+    }
+}
+static void testAlign() {
+    const double sr = 48000;
+    Deck a, b; a.prepare(sr); b.prepare(sr);
+    auto ta = makeTrack(sr, 20, 120, 0.10), tb = makeTrack(sr, 20, 120, 0.30); ta->bpm = tb->bpm = 120; ta->firstBeat = 0.10; tb->firstBeat = 0.30;
+    a.setTrack(ta); b.setTrack(tb);
+    a.seekSeconds(4.0); b.seekSeconds(4.13);                // b is 0.13 s (0.26 beat) ahead of a
+    CHECK(b.alignBeatTo(a), "align works with grids");
+    double d = std::fabs(a.beatPhase() - b.beatPhase()); d = std::min(d, 1.0 - d);
+    CHECK(d < 0.002, "beat phases match after align (diff %.4f)", d);
+    CHECK(std::fabs(b.positionSeconds() - 4.13) < 0.26, "align moves less than half a beat (%.3f)", b.positionSeconds());
+    Deck c; c.prepare(sr); c.setTrack(sineTrack(sr, 5, 440));
+    CHECK(!c.alignBeatTo(a), "no grid, no align");
+}
 int main() {
-    testBpm(); testKey(); testDeck(); testMixer(); testEngineAndFx();
+    testBpm(); testKey(); testDeck(); testMixer(); testEngineAndFx(); testKeyLockQuality(); testAlign();
     if (fails) { std::printf("%d FAILED\n", fails); return 1; }
     std::printf("all tests passed\n"); return 0;
 }

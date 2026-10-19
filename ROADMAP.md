@@ -5,8 +5,9 @@
 - [x] Plugin shell on cat-ui with the shared PurrOne wood
 
 ## Next
-- [ ] Listen and tune: scratch feel, key lock quality (switch to a WSOLA style stretch), brake and backspin times, FX
-- [ ] Beat phase alignment button (sync the beat position, not only the tempo)
+- [x] Key lock: WSOLA style grain alignment (unit test: tone purity 0.013 before, 0.996 after at +-8 %, +50 %, -40 %)
+- [ ] Listen and tune by ear: scratch feel, key lock on real music, brake and backspin times, FX
+- [x] Align button (moves a deck by up to half a beat onto the other deck's beat; unit tested; not yet tried by ear)
 - [ ] Controller maps for real devices, from the vendor MIDI charts (FLX4, DDJ-400, and others from the mockup list)
 - [ ] Waveform colours by frequency, overview strip, track list
 - [ ] Manual with screenshots from the real editor

@@ -5,7 +5,7 @@
 Two DJ decks and a mixer in one plugin (VST3 and standalone). Free and open source, Linux first.
 
 ## What works now (v0.1, test build)
-- Two decks: load wav, aiff, flac, ogg or mp3; BPM, beat grid and key (Camelot) analysis; scratch on the platter, cue, 8 hot cues, loops, brake, backspin, roll, censor, stutter, transform, nudge, key lock, tempo fader (8, 16, 50 %), sync to the DAW tempo or the other deck.
+- Two decks: load wav, aiff, flac, ogg or mp3; BPM, beat grid and key (Camelot) analysis; scratch on the platter, cue, 8 hot cues, loops, brake, backspin, roll, censor, stutter, transform, nudge, beat align, key lock (WSOLA aligned grains), tempo fader (8, 16, 50 %), sync to the DAW tempo or the other deck.
 - DAW input mode: send a DAW track to a deck and scratch the last minute of it.
 - Mixer: trim, 3 band EQ with kill, colour filter, channel faders, crossfader (smooth, sharp, constant power), cue (headphone) output, master.
 - FX chain of three (filter, echo, reverb, flanger, crush) on deck A, deck B, A+B or master.

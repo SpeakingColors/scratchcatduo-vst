@@ -10,7 +10,7 @@
 
 namespace duoui
 {
-enum CmdType { kPlay = 1, kCueDown, kCueUp, kHot, kHotClear, kLoopIn, kLoopOut, kLoopExit, kBeatLoop, kBrake, kBackspin, kMoveStart, kMoveEnd, kJog, kBend, kGoLive, kSeek };
+enum CmdType { kPlay = 1, kCueDown, kCueUp, kHot, kHotClear, kLoopIn, kLoopOut, kLoopExit, kBeatLoop, kBrake, kBackspin, kMoveStart, kMoveEnd, kJog, kBend, kGoLive, kSeek, kAlign };
 struct Cmd { int type = 0, deck = 0, i = 0; double a = 0.0; };
 
 // Things you can map to a MIDI control (note or CC). Deck actions are offset by 100 for deck B.

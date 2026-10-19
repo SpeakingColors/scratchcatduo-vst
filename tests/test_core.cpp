@@ -1,0 +1,188 @@
+// Pure C++ tests for the Scratch Cat Duo engine (no JUCE): sh tests/run.sh
+#include "../src/core/DuoEngine.h"
+#include <cstdio>
+#include <random>
+using namespace duo;
+static int fails = 0;
+#define CHECK(c, ...) do { if (!(c)) { ++fails; std::printf("FAIL %s:%d  ", __FILE__, __LINE__); std::printf(__VA_ARGS__); std::printf("\n"); } } while (0)
+
+static std::shared_ptr<Track> makeTrack(double sr, double secs, double bpm, double firstBeat, bool chord = false, int tonic = 9, bool minor = true) {
+    auto t = std::make_shared<Track>(); t->sr = sr; const size_t n = (size_t)(sr * secs); t->l.assign(n, 0.f); t->r.assign(n, 0.f);
+    std::mt19937 rng(5); std::uniform_real_distribution<float> u(-1.f, 1.f);
+    const double per = 60.0 / bpm;
+    for (double b = firstBeat; b < secs; b += per) {                      // kick: decaying 60 Hz sine plus a bit of noise
+        const size_t s0 = (size_t)(b * sr);
+        for (size_t i = 0; i < (size_t)(0.18 * sr) && s0 + i < n; ++i) { const double e = std::exp(-(double) i / (0.04 * sr)); const float v = (float)(0.8 * e * std::sin(2 * kPi * 60 * i / sr) + 0.2 * e * u(rng)); t->l[s0 + i] += v; t->r[s0 + i] += v; }
+        const size_t s1 = (size_t)((b + per / 2) * sr);                   // offbeat hat
+        for (size_t i = 0; i < (size_t)(0.03 * sr) && s1 + i < n; ++i) { const float v = 0.2f * std::exp(-(float) i / (0.008f * (float) sr)) * u(rng); t->l[s1 + i] += v; t->r[s1 + i] += v; }
+    }
+    if (chord) {   // I IV V I progression, one chord per second (a lone triad is ambiguous with its relative key)
+        const int roots[4] = { 0, 5, 7, 0 };
+        for (size_t seg = 0; seg * (size_t) sr < n; ++seg) {
+            const int rt = roots[seg % 4]; const bool third = (seg % 4 == 2) ? false : minor;   // the V chord is major in minor keys
+            const int iv[3] = { 0, third ? 3 : 4, 7 };
+            for (int k = 0; k < 3; ++k) for (int oct = 0; oct < 2; ++oct) {
+                const double f = 440.0 * std::pow(2.0, ((tonic + rt + iv[k] - 9) + 12 * (oct - 1)) / 12.0);
+                const size_t a0 = seg * (size_t) sr, a1 = std::min(n, a0 + (size_t) sr);
+                for (size_t i = a0; i < a1; ++i) { const float v = 0.12f * (float) std::sin(2 * kPi * f * (double) i / sr); t->l[i] += v; t->r[i] += v; }
+            }
+        }
+    }
+    return t;
+}
+
+static void testBpm() {
+    for (double bpm : { 100.0, 128.0, 140.0, 174.0 }) {
+        auto t = makeTrack(44100, 40, bpm, 0.30);
+        auto r = analyseBpm(t->l.data(), t->r.data(), t->frames(), t->sr);
+        CHECK(std::fabs(r.bpm - bpm) < 0.3, "bpm %.1f detected %.2f", bpm, r.bpm);
+        const double per = 60.0 / bpm; double d = std::fmod(r.firstBeat - 0.30 + per * 10, per); d = std::min(d, per - d);
+        CHECK(d < 0.03, "bpm %.0f first beat error %.3f s (got %.3f)", bpm, d, r.firstBeat);
+    }
+    auto t = makeTrack(48000, 40, 126.0, 0.1);
+    auto r = analyseBpm(t->l.data(), t->r.data(), t->frames(), t->sr);
+    CHECK(std::fabs(r.bpm - 126.0) < 0.3, "48k bpm %.2f", r.bpm);
+}
+static void testKey() {
+    struct C { int tonic; bool minor; const char* camel; } cases[] = { { 9, true, "8A" }, { 0, false, "8B" }, { 7, false, "9B" }, { 4, true, "9A" }, { 2, true, "7A" } };
+    for (auto& c : cases) {
+        auto t = makeTrack(44100, 30, 120, 0.0, true, c.tonic, c.minor);
+        auto k = analyseKey(t->l.data(), t->r.data(), t->frames(), t->sr);
+        CHECK(k.tonic == c.tonic && k.minor == c.minor, "key tonic %d minor %d -> got %d %d (%s)", c.tonic, c.minor, k.tonic, k.minor, keyName(k).c_str());
+        CHECK(camelot(k) == c.camel, "camelot %s expected %s", camelot(k).c_str(), c.camel);
+    }
+    KeyResult a{ 9, true, 1 }, b{ 4, true, 1 }, c{ 0, false, 1 }, d{ 6, true, 1 };
+    CHECK(keysCompatible(a, b), "Am Em compatible"); CHECK(keysCompatible(a, c), "Am C compatible"); CHECK(!keysCompatible(a, d), "Am F#m not compatible");
+}
+static double rms(const std::vector<float>& v, size_t a, size_t b) { double s = 0; for (size_t i = a; i < b; ++i) s += (double) v[i] * v[i]; return std::sqrt(s / (double)(b - a)); }
+static double zeroCrossHz(const std::vector<float>& v, size_t a, size_t b, double sr) { int z = 0; for (size_t i = a + 1; i < b; ++i) if ((v[i - 1] < 0) != (v[i] < 0)) ++z; return 0.5 * z / ((double)(b - a) / sr); }
+
+static std::shared_ptr<Track> sineTrack(double sr, double secs, double f) { auto t = std::make_shared<Track>(); t->sr = sr; const size_t n = (size_t)(sr * secs); t->l.resize(n); t->r.resize(n); for (size_t i = 0; i < n; ++i) t->l[i] = t->r[i] = 0.5f * (float) std::sin(2 * kPi * f * i / sr); return t; }
+
+static void render(Deck& d, int n, std::vector<float>& L, std::vector<float>& R) {
+    L.resize(n); R.resize(n);
+    for (int i = 0; i < n; i += 256) { const int c = std::min(256, n - i); d.process(&L[i], &R[i], c, nullptr, nullptr); }
+}
+static void testDeck() {
+    const double sr = 48000;
+    { // plain playback, pitch 0: output frequency equals source
+        Deck d; d.prepare(sr); auto t = sineTrack(sr, 5, 1000); d.setTrack(t); d.setPlaying(true);
+        std::vector<float> L, R; render(d, (int) sr, L, R);
+        CHECK(std::fabs(zeroCrossHz(L, 24000, 48000, sr) - 1000) < 5, "play 1 kHz at %.1f", zeroCrossHz(L, 24000, 48000, sr));
+    }
+    { // pitch +8 percent, vinyl style: frequency rises 8 percent
+        Deck d; d.prepare(sr); auto t = sineTrack(sr, 5, 1000); d.setTrack(t); d.setPitch(1.f, 0.08f); d.setPlaying(true);
+        std::vector<float> L, R; render(d, (int) sr, L, R);
+        CHECK(std::fabs(zeroCrossHz(L, 24000, 48000, sr) - 1080) < 8, "pitch +8 percent at %.1f", zeroCrossHz(L, 24000, 48000, sr));
+    }
+    { // key lock: tempo +8 percent but pitch stays at 1 kHz, and the position moves 8 percent faster
+        Deck d; d.prepare(sr); auto t = sineTrack(sr, 8, 1000); d.setTrack(t); d.setPitch(1.f, 0.08f); d.setKeyLock(true); d.setPlaying(true);
+        std::vector<float> L, R; render(d, (int) sr * 3, L, R);
+        const double hz = zeroCrossHz(L, (size_t) sr, (size_t) sr * 3, sr);
+        CHECK(std::fabs(hz - 1000) < 15, "keylock pitch %.1f", hz);
+        CHECK(std::fabs(d.positionSeconds() - 3 * 1.08) < 0.12, "keylock position %.3f", d.positionSeconds());
+        CHECK(rms(L, (size_t) sr, (size_t) sr * 3) > 0.25, "keylock level %.3f", rms(L, (size_t) sr, (size_t) sr * 3));
+    }
+    { // scratch: touching and moving the platter backwards plays reversed, at the hand speed
+        Deck d; d.prepare(sr); auto t = sineTrack(sr, 5, 1000); d.setTrack(t); d.seekSeconds(2.0);
+        d.setJog(true, -Deck::kPlatterRevPerSec * 2.0);   // twice normal speed backwards
+        std::vector<float> L, R; render(d, (int) sr / 2, L, R);
+        CHECK(std::fabs(zeroCrossHz(L, 12000, 24000, sr) - 2000) < 40, "scratch freq %.1f", zeroCrossHz(L, 12000, 24000, sr));
+        CHECK(std::fabs(d.positionSeconds() - (2.0 - 1.0)) < 0.05, "scratch position %.3f", d.positionSeconds());
+        d.setJog(true, 0.0); render(d, 2000, L, R);
+        CHECK(rms(L, 1000, 2000) < 0.001, "held platter is silent, rms %.4f", rms(L, 1000, 2000));
+    }
+    { // brake stops, cue returns, backspin goes backwards then stops
+        Deck d; d.prepare(sr); auto t = makeTrack(sr, 10, 120, 0.5); t->bpm = 120; t->firstBeat = 0.5; d.setTrack(t);
+        d.setPlaying(true); std::vector<float> L, R; render(d, (int) sr * 2, L, R);
+        const double p0 = d.positionSeconds(); CHECK(p0 > 1.5, "moved %.2f", p0);
+        d.brake(); render(d, (int) sr * 3, L, R); CHECK(!d.isPlaying() && std::fabs(d.speed()) < 0.01, "brake stopped");
+        d.cue(true); CHECK(std::fabs(d.positionSeconds() - 0.5) < 0.01 || d.positionSeconds() > 0, "cue pos %.3f", d.positionSeconds());
+        d.setPlaying(true); render(d, (int) sr, L, R); const double p1 = d.positionSeconds(); d.backspin(); render(d, (int) sr / 4, L, R);
+        CHECK(d.positionSeconds() < p1, "backspin went back %.3f -> %.3f", p1, d.positionSeconds());
+        render(d, (int) sr * 4, L, R); CHECK(!d.isPlaying(), "backspin ends stopped");
+    }
+    { // loop: a 1 beat loop keeps the position inside the loop
+        Deck d; d.prepare(sr); auto t = makeTrack(sr, 10, 120, 0.0); t->bpm = 120; t->firstBeat = 0; d.setTrack(t); d.seekSeconds(2.0); d.setPlaying(true);
+        std::vector<float> L, R; render(d, 4800, L, R); d.beatLoop(1.0); render(d, (int) sr * 3, L, R);
+        const double p = d.positionSeconds(); CHECK(p >= 1.9 && p <= 2.7, "loop position %.3f", p); CHECK(d.loopActive(), "loop active");
+        d.loopExit(); render(d, (int) sr, L, R); CHECK(d.positionSeconds() > 3.0, "after exit %.3f", d.positionSeconds());
+    }
+    { // hot cue set and jump; sync
+        Deck d; d.prepare(sr); auto t = makeTrack(sr, 10, 120, 0.0); t->bpm = 120; d.setTrack(t); d.seekSeconds(3.0); d.hotCue(2, true);
+        CHECK(std::fabs(d.hotCuePos(2) / sr - 3.0) < 0.26, "hot cue %.3f", d.hotCuePos(2) / sr); d.seekSeconds(7.0); d.hotCue(2, true); CHECK(std::fabs(d.positionSeconds() - 3.0) < 0.26, "jump %.3f", d.positionSeconds());
+        d.setSync(true, 128.0); CHECK(std::fabs(d.tempo() - 128.0 / 120.0) < 1e-9 && std::fabs(d.currentBpm() - 128.0) < 1e-6, "sync tempo %.4f", d.tempo());
+        d.setSync(true, 62.0); CHECK(std::fabs(d.currentBpm() - 124.0) < 1e-6, "half time folds %.3f", d.currentBpm());
+    }
+    { // end of track stops
+        Deck d; d.prepare(sr); auto t = sineTrack(sr, 1, 440); d.setTrack(t); d.setPlaying(true); std::vector<float> L, R; render(d, (int) sr * 2, L, R);
+        CHECK(!d.isPlaying(), "stopped at end"); CHECK(rms(L, (size_t) sr + 4000, (size_t) sr * 2) < 1e-6, "silent after end");
+    }
+    { // live input: passes through, then scratch plays the recent past reversed
+        Deck d; d.prepare(sr); d.useLiveInput(true);
+        std::vector<float> in(48000), L(48000), R(48000); for (size_t i = 0; i < in.size(); ++i) in[i] = 0.5f * (float) std::sin(2 * kPi * 500 * i / sr);
+        for (int i = 0; i < 48000; i += 256) { const int c = std::min(256, 48000 - i); d.process(&L[i], &R[i], c, &in[i], &in[i]); }
+        double err = 0; for (size_t i = 0; i < in.size(); ++i) err += std::fabs(L[i] - in[i]); CHECK(err < 1e-3, "live pass through err %.5f", err);
+        d.setJog(true, -Deck::kPlatterRevPerSec); std::vector<float> o(4800), o2(4800); d.process(o.data(), o2.data(), 4800, nullptr, nullptr);
+        CHECK(rms(o, 1000, 4800) > 0.2, "scratch of live audio has signal %.3f", rms(o, 1000, 4800)); CHECK(!d.inLiveMode(), "left live mode");
+        d.goLive(); CHECK(d.inLiveMode(), "back live");
+    }
+}
+static void testMixer() {
+    float a, b;
+    crossGains(0, 0.f, a, b); CHECK(a == 1.f && b == 0.f, "smooth left"); crossGains(0, 0.5f, a, b); CHECK(std::fabs(a - 0.5f) < 1e-6f && std::fabs(b - 0.5f) < 1e-6f, "smooth mid");
+    crossGains(1, 0.5f, a, b); CHECK(a == 1.f && b == 1.f, "sharp mid both full"); crossGains(1, 1.f, a, b); CHECK(a == 0.f && b == 1.f, "sharp cuts A at the end"); crossGains(1, 0.95f, a, b); CHECK(std::fabs(a - 0.5f) < 1e-5f, "sharp fades over the last 10 percent");
+    crossGains(2, 0.5f, a, b); CHECK(std::fabs(a * a + b * b - 1.f) < 1e-5f, "constant power");
+    // EQ kill and colour filter
+    const double sr = 48000; ChannelStrip s; s.prepare(sr);
+    auto tone = [&](float f, float lo, float mid, float hi, float col) {
+        s.prepare(sr); s.setParams(lo, mid, hi, col); double e = 0, e0 = 0; 
+        for (int i = 0; i < 48000; ++i) { const float x = 0.5f * (float) std::sin(2 * kPi * f * i / sr); const float y = s.tick(0, x); if (i > 24000) { e += (double) y * y; e0 += (double) x * x; } }
+        return 10 * std::log10(e / e0); };
+    CHECK(tone(50, 0, 0, 0, 0) > -0.3 && tone(50, 0, 0, 0, 0) < 0.3, "flat");
+    CHECK(tone(50, -26, 0, 0, 0) < -20, "low kill %.1f dB", tone(50, -26, 0, 0, 0));
+    CHECK(tone(1000, 0, -26, 0, 0) < -15, "mid kill %.1f dB", tone(1000, 0, -26, 0, 0));
+    CHECK(tone(12000, 0, 0, -26, 0) < -15, "high kill %.1f dB", tone(12000, 0, 0, -26, 0));
+    CHECK(tone(50, 6, 0, 0, 0) > 4.5, "low boost %.1f", tone(50, 6, 0, 0, 0));
+    CHECK(tone(8000, 0, 0, 0, -0.8f) < -20, "colour low pass cuts highs %.1f", tone(8000, 0, 0, 0, -0.8f));
+    CHECK(tone(200, 0, 0, 0, 0.8f) < -15, "colour high pass cuts lows %.1f", tone(200, 0, 0, 0, 0.8f));
+}
+static void testEngineAndFx() {
+    const double sr = 48000; Engine e; e.prepare(sr, 512);
+    auto ta = sineTrack(sr, 10, 440), tb = sineTrack(sr, 10, 1320); e.deck[0].setTrack(ta); e.deck[1].setTrack(tb); e.deck[0].setPlaying(true); e.deck[1].setPlaying(true);
+    MixParams p; p.cross = 0.f; p.curve = 2;
+    std::vector<float> ml(512), mr(512), al(512), ar(512), bl(512), br(512), cl(512), cr(512);
+    auto run = [&](int blocks, MixParams& pp, std::vector<float>& out) { out.clear(); for (int k = 0; k < blocks; ++k) { e.process(pp, 512, nullptr, nullptr, nullptr, nullptr, ml.data(), mr.data(), al.data(), ar.data(), bl.data(), br.data(), cl.data(), cr.data()); out.insert(out.end(), ml.begin(), ml.end()); } };
+    std::vector<float> o; run(40, p, o);
+    CHECK(std::fabs(zeroCrossHz(o, 12000, o.size(), sr) - 440) < 8, "crossfader left = deck A only, %.1f Hz", zeroCrossHz(o, 12000, o.size(), sr));
+    p.cross = 1.f; run(40, p, o); CHECK(std::fabs(zeroCrossHz(o, 12000, o.size(), sr) - 1320) < 20, "crossfader right = deck B only, %.1f", zeroCrossHz(o, 12000, o.size(), sr));
+    p.cross = 0.5f; p.fader[0] = 0.f; p.fader[1] = 0.f; run(40, p, o); CHECK(rms(o, 12000, o.size()) < 1e-4, "faders down = silence");
+    p.fader[0] = 1.f; p.fader[1] = 1.f; p.cross = 0.f; run(40, p, o); const double r0 = rms(o, 12000, o.size());
+    CHECK(r0 > 0.3 && r0 < 0.4, "unity level %.3f (0.5 sine = 0.354)", r0);
+    // fx: off is bit exact with chain of three slots; on changes the sound; no NaN
+    MixParams q = p; q.fxTarget = 3; std::vector<float> o1; run(20, q, o1); 
+    Engine e2; e2.prepare(sr, 512); e2.deck[0].setTrack(ta); e2.deck[1].setTrack(tb); e2.deck[0].setPlaying(true); e2.deck[1].setPlaying(true);
+    for (int type = 1; type < FxTypeCount; ++type) {
+        MixParams z = p; z.fxTarget = 3; for (int k = 0; k < 3; ++k) { z.fxType[k] = type; z.fxOn[k] = true; z.fxP2[k] = 1.f; } z.chainMix = 1.f;
+        Engine e3; e3.prepare(sr, 512); e3.deck[0].setTrack(ta); e3.deck[0].setPlaying(true);
+        bool bad = false; double en = 0;
+        for (int k = 0; k < 60; ++k) { e3.process(z, 512, nullptr, nullptr, nullptr, nullptr, ml.data(), mr.data(), nullptr, nullptr, nullptr, nullptr, nullptr, nullptr); for (float v : ml) { if (!std::isfinite(v) || std::fabs(v) > 1.01f) bad = true; en += (double) v * v; } }
+        CHECK(!bad, "fx %s finite and bounded", fxName(type)); CHECK(en > 0.5, "fx %s makes sound %.3f", fxName(type), en);
+    }
+    { // slot with on=false is bit exact
+        FxSlot s; s.prepare(sr); s.type = FxEcho; s.on = false; std::vector<float> l(512), r(512), l0, r0; for (int i = 0; i < 512; ++i) l[i] = r[i] = 0.3f * (float) std::sin(i * 0.1); l0 = l; r0 = r; s.process(l.data(), r.data(), 512);
+        CHECK(l == l0 && r == r0, "fx off is bit exact");
+    }
+    { // cue bus carries only channels with cue on
+        MixParams z; z.cue[1] = true; z.cueMix = 0.f; z.fader[0] = 0.f; z.cross = 0.f; std::vector<float> c; for (int k = 0; k < 40; ++k) { e.process(z, 512, nullptr, nullptr, nullptr, nullptr, ml.data(), mr.data(), nullptr, nullptr, nullptr, nullptr, cl.data(), cr.data()); c.insert(c.end(), cl.begin(), cl.end()); }
+        CHECK(std::fabs(zeroCrossHz(c, 12000, c.size(), sr) - 1320) < 20, "cue bus plays deck B (%.1f Hz) even with crossfader on A", zeroCrossHz(c, 12000, c.size(), sr));
+    }
+    { // soft clip leaves normal levels untouched and bounds the rest
+        CHECK(Engine::softClip(0.5f) == 0.5f && Engine::softClip(-0.9f) == -0.9f, "softclip transparent"); CHECK(std::fabs(Engine::softClip(8.f)) <= 1.0f, "softclip bounded");
+    }
+}
+int main() {
+    testBpm(); testKey(); testDeck(); testMixer(); testEngineAndFx();
+    if (fails) { std::printf("%d FAILED\n", fails); return 1; }
+    std::printf("all tests passed\n"); return 0;
+}

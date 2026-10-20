@@ -2,7 +2,7 @@
 Scratch Cat Duo is two DJ decks and a mixer inside one plugin. Load a track on each deck (it is analysed for BPM, beat grid and key), or send a DAW track to a deck and scratch the last minute of it. Use it to scratch, mix and loop your own songs while you compose, or to play a set from your DAW.
 
 # Quick start
-- Press Load track on a deck and pick a file (wav, aiff, flac, ogg or mp3). The BPM and the key (Camelot code and name) appear next to the deck name.
+- Click the track name box on a deck (or use the track browser at the bottom, or drop a file) and pick a file (wav, aiff, flac, ogg or mp3). The BPM and the key (Camelot code and name) appear next to the deck name.
 - Press PLAY. Drag the platter to scratch: the sound follows your hand, forward and backward, and holds when you stop.
 - Move the crossfader between the decks. Sync matches the deck tempo to the DAW tempo (or to the other deck when Tempo is set to Decks lead).
 - The two waveforms at the top show both decks on one time axis, so when the beat lines match the beats are aligned.
@@ -13,7 +13,7 @@ Scratch Cat Duo is two DJ decks and a mixer inside one plugin. Load a track on e
 - Sync, Key lock and Quant. Key lock changes the tempo without changing the pitch. Quant snaps cue points, hot cues and loops to the beat grid.
 - Tempo fader with a range of 8, 16 or 50 %. Up is faster, down is slower. Double click to reset.
 - Loop in, Loop out and Exit, and beat loops of 1/4 to 8 beats from the playhead.
-- Brake slows to a stop. Backspin spins backward and stops. Roll, Censor, Stutter and Trans work while you hold them; Roll and Censor keep the track running underneath and jump back in time when released. Nudge - and + bend the tempo a little while held.
+- Brake slows to a stop. Backspin spins backward and stops. Roll, Censor, Stutter and Trans work while you hold them; Roll and Censor keep the track running underneath and jump back in time when released.
 - Eight hot cue pads: an empty pad sets a cue at the playhead, a set pad jumps there, right click clears it.
 
 # Mixer

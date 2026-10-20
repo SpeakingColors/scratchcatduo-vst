@@ -50,8 +50,8 @@ struct RoundButton : HoldButton
         g.setColour(ring);
         if (isPlay)
         {
-            juce::Path p; p.addTriangle(c.x - 28.f, c.y - 24.f, c.x - 28.f, c.y + 24.f, c.x + 8.f, c.y); g.fillPath(p);
-            g.fillRoundedRectangle(c.x + 14.f, c.y - 24.f, 13.f, 48.f, 2.f);
+            juce::Path p; p.addTriangle(c.x - 32.f, c.y - 22.f, c.x - 32.f, c.y + 22.f, c.x + 2.f, c.y); g.fillPath(p);
+            g.fillRoundedRectangle(c.x + 10.f, c.y - 22.f, 9.f, 44.f, 2.f); g.fillRoundedRectangle(c.x + 24.f, c.y - 22.f, 9.f, 44.f, 2.f);
         }
         else { g.setFont(f(36.f, true)); g.drawText(text, getLocalBounds(), juce::Justification::centred); }
     }
@@ -226,8 +226,8 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
     {
         const int dx = d * 1136; const juce::String s = d == 0 ? "a" : "b"; const juce::String D = d == 0 ? "A" : "B"; const Colour col = deckCol(d);
         auto X = [dx](int ax, int ay, int w, int h) { return R(ax + dx, ay, w, h); };
-        text("DECK " + D, X(56, 398, 90, 32), 28.f, col, juce::Justification::centredLeft, true);
-        deckInfo[d] = text("", X(150, 400, 420, 28), 16.f, kInk, juce::Justification::centredLeft, false, true);
+        text("DECK " + D, X(56, 398, 100, 32), 26.f, col, juce::Justification::centredLeft, true);
+        deckInfo[d] = text("", X(166, 400, 420, 28), 16.f, kInk, juce::Justification::centredLeft, false, true);
         hold("Analyze key & BPM", X(671, 400, 140, 27), "Analyse the loaded track again for BPM, beat grid and key.", [this, d] { reanalyse(d); });
         srcSeg[d] = seg(X(56, 434, 88, 35), { { "File", "File: play the loaded track." }, { "DAW", "DAW: scratch the audio your project sends to this deck's input. Touch the platter to hold the last minute." } }, {}, 15.f);
         srcSeg[d]->onCol = col; bindChoice(*srcSeg[d], "src_" + s);
@@ -650,7 +650,7 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
     {
         g.fillAll(kGround);
         catui::drawCatHead(g, { 36.f, 20.f, 46.f, 40.f }, Colour(0xfff4f5f7));
-        g.setColour(kInk); g.setFont(caps(36.f, 0.1f)); g.drawText("SCRATCH CAT DUO", 90, 8, 370, 44, juce::Justification::centredLeft);
+        g.setColour(kInk); g.setFont(caps(30.f, 0.08f)); g.drawText("SCRATCH CAT DUO", 90, 8, 340, 44, juce::Justification::centredLeft);
         g.setColour(Colour(0xffe0a020)); g.setFont(caps(13.f, 0.3f)); g.drawText("STUDIO 87", 92, 46, 200, 18, juce::Justification::centredLeft);
         panel(g, { 44, 75, 1912, 306 }, kPanel);
         for (int d = 0; d < 2; ++d)

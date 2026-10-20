@@ -14,6 +14,12 @@ namespace duo {
 struct LibFile { std::string path, name, dir, ext; unsigned long long size = 0; };
 
 inline std::string lowerStr(std::string s) { for (auto& c : s) c = (char) std::tolower((unsigned char) c); return s; }
+// True when dir is the folder itself or inside it (so /music does not match /music2).
+inline bool inFolder(const std::string& dir, const std::string& folder) {
+    if (folder.empty()) return true;
+    if (dir.size() < folder.size() || dir.compare(0, folder.size(), folder) != 0) return false;
+    return dir.size() == folder.size() || dir[folder.size()] == '/' || dir[folder.size()] == '\\';
+}
 inline bool isAudioExt(const std::string& e) {
     static const char* ok[] = { "wav", "mp3", "flac", "ogg", "oga", "opus", "aif", "aiff", "m4a", "aac", "wma" };
     const std::string l = lowerStr(e); for (auto* o : ok) if (l == o) return true; return false;
@@ -37,11 +43,18 @@ public:
         std::sort(files.begin(), files.end(), [](const LibFile& a, const LibFile& b) { return a.dir == b.dir ? a.name < b.name : a.dir < b.dir; });
         return added;
     }
+    // Adds files found by a scan done elsewhere (for example on a background thread). Skips duplicates. Returns how many were new.
+    int merge(const std::vector<LibFile>& in) {
+        int added = 0;
+        for (auto& f : in) { if (std::any_of(files.begin(), files.end(), [&](const LibFile& g) { return g.path == f.path; })) continue; files.push_back(f); ++added; }
+        std::sort(files.begin(), files.end(), [](const LibFile& a, const LibFile& b) { return a.dir == b.dir ? a.name < b.name : a.dir < b.dir; });
+        return added;
+    }
     // Case insensitive match on name, folder and format. Empty query returns everything. `folder` limits to a folder and its subfolders.
     std::vector<LibFile> search(const std::string& query, const std::string& folder = "") const {
         std::vector<LibFile> out; const std::string q = lowerStr(query), fo = lowerStr(folder);
         for (auto& f : files) {
-            if (!fo.empty() && lowerStr(f.dir).compare(0, fo.size(), fo) != 0) continue;
+            if (!fo.empty() && !inFolder(lowerStr(f.dir), fo)) continue;
             if (!q.empty() && lowerStr(f.name + " " + f.dir + " " + f.ext).find(q) == std::string::npos) continue;
             out.push_back(f);
         }

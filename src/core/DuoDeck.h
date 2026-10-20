@@ -50,6 +50,15 @@ public:
     bool isSyncOn() const { return sync; }
     void setBend(float b) { bend = clampf(b, -1.f, 1.f); }
     void setVinylTime(float sec) { vinylTc = std::max(0.005f, sec); }
+    // Vinyl on: pause and stop slow the record down like a turntable. Off: it stops almost at once.
+    void setVinyl(bool on) { vinylTc = on ? 0.06f : 0.006f; }
+    // Transform gate left on (the Trans. button): chops the sound on and off every 1/8 beat until switched off.
+    void setTransLatch(bool on) { transLatch = on; if (!on && move != Move::Transform) gateG = 1.f; }
+    // Jump by a number of beats (negative: backwards). Needs a beat grid.
+    void jumpBeats(double beats) {
+        const double bl = beatLenSrc(); if (bl <= 0 || !trk || src != Source::File) return;
+        pos = std::max(0.0, std::min((double) trk->frames() - 1.0, pos + beats * bl));
+    }
     // jog: while touching, speed follows the hand. velocity in platter turns per second (positive = forward).
     void setJog(bool touching, double turnsPerSec) {
         if (touching && !jogTouch && src == Source::Live && live) { live = false; pos = (double) writeIdx - 1.0; playing = false; }
@@ -171,7 +180,7 @@ public:
             if (move == Move::Roll || move == Move::Censor) shadow += (move == Move::Roll ? t : t) * srcRatio * (playing ? 1.0 : 0.0);
             if (loopOn && loopB > loopA) { const double len = loopB - loopA; if (vel > 0 && pos >= loopB) pos -= len * std::max(1.0, std::floor((pos - loopA) / len)); else if (vel < 0 && pos < loopA) pos += len; }
             if (move == Move::Stutter && bl > 0 && ++stutCnt >= (int)(bl * moveBeats / srcRatio / std::max(0.1, t))) { stutCnt = 0; pos = cuePoint; }
-            if (move == Move::Transform && bl > 0) { const double ph = std::fmod((pos - trk->firstBeat * trk->sr) / (bl * 0.25), 2.0); const float g = ph < 1.0 ? 1.f : 0.f; gateG += (g - gateG) * 0.01f; l *= gateG; r *= gateG; }
+            if ((move == Move::Transform || transLatch) && bl > 0) { const double ph = std::fmod((pos - trk->firstBeat * trk->sr) / (bl * 0.25), 2.0); const float g = ph < 1.0 ? 1.f : 0.f; gateG += (g - gateG) * 0.01f; l *= gateG; r *= gateG; }
             if (src == Source::File) {
                 if (pos >= (double) trk->frames() - 1) { pos = (double) trk->frames() - 1; playing = false; vel = 0; }
                 if (pos < 0) { pos = 0; if (vel < 0) vel = 0; }
@@ -234,6 +243,7 @@ private:
     double cuePoint = 0; std::array<double, 8> hot = { -1, -1, -1, -1, -1, -1, -1, -1 };
     double loopA = -1, loopB = -1; bool loopOn = false, savedLoopOn = false;
     Mode mode = Mode::Normal; double spinV = 0;
+    bool transLatch = false;
     Move move = Move::None; double moveBeats = 0.25, shadow = 0; int stutCnt = 0; float gateG = 1.f;
     std::array<Grain, 6> grains; int hopCnt = 0;
 };

@@ -55,6 +55,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout DuoProcessor::makeLayout()
         F("col_" + s, D + "Colour", -1.f, 1.f, 0.f, "", 2); F("fader_" + s, D + "Fader", 0.f, 1.f, 1.f, "", 2); B("cue_" + s, D + "Cue", false);
         F("pitch_" + s, D + "Tempo fader", -1.f, 1.f, 0.f, "", 3); C("prange_" + s, D + "Tempo range", { "8 %", "16 %", "50 %" }, 0);
         B("keylock_" + s, D + "Key lock", false); B("sync_" + s, D + "Sync", false); B("quant_" + s, D + "Quantize", true);
+        B("master_" + s, D + "Tempo master", false); B("vinyl_" + s, D + "Vinyl", true); B("trans_" + s, D + "Transform", false);
         C("src_" + s, D + "Source", { "File", "DAW input" }, 0);
     }
     F("xfade", "Crossfader", 0.f, 1.f, 0.5f, "", 2); C("xcurve", "Crossfader curve", { "Smooth", "Sharp", "Const" }, 2);
@@ -141,6 +142,9 @@ void DuoProcessor::applyCmd(const Cmd& c)
         case kMoveStart: d.startMove((duo::Move) c.i, c.a); break; case kMoveEnd: d.endMove(); break;
         case kJog: d.setJog(c.i != 0, c.a); break; case kBend: d.setBend((float) c.a); break;
         case kGoLive: d.goLive(); break; case kSeek: d.seekSeconds(c.a); break;
+        case kJumpBeats: d.jumpBeats(c.a); break; case kShot: engine.triggerShot(c.i); break;
+        case kPadFx: engine.setPadFx(c.deck, c.i, c.a > 0.5); break;
+        case kSetHot: if (const auto t = d.track()) d.setHotCuePos(c.i, std::max(0.0, c.a) * t->sr); break;
         case kAlign: d.alignBeatTo(engine.deck[1 - juce::jlimit(0, 1, c.deck)]); break; default: break;
     }
 }
@@ -265,8 +269,10 @@ void DuoProcessor::processBlock(juce::AudioBuffer<float>& buf, juce::MidiBuffer&
 
     // 4. parameters to the decks
     auto mp = readParams();
-    double host = 0.0;
-    if (get("tempomode") < 0.5f) if (auto* ph = getPlayHead()) if (auto pos = ph->getPosition()) if (auto b = pos->getBpm()) host = *b;
+    double host = 0.0, hostSeen = 0.0;
+    if (auto* ph = getPlayHead()) if (auto pos = ph->getPosition()) if (auto b = pos->getBpm()) hostSeen = *b;
+    hostBpmView.store(hostSeen);
+    if (get("tempomode") < 0.5f) host = hostSeen;
     mp.hostBpm = host;
     static const float ranges[3] = { 0.08f, 0.16f, 0.5f };
     for (int d = 0; d < 2; ++d)
@@ -274,12 +280,15 @@ void DuoProcessor::processBlock(juce::AudioBuffer<float>& buf, juce::MidiBuffer&
         const juce::String s = d == 0 ? "a" : "b";
         engine.deck[d].setPitch(get("pitch_" + s), ranges[juce::jlimit(0, 2, (int) std::lround(get("prange_" + s)))]);
         engine.deck[d].setKeyLock(get("keylock_" + s) > 0.5f); engine.deck[d].setQuant(get("quant_" + s) > 0.5f);
+        engine.deck[d].setVinyl(get("vinyl_" + s) > 0.5f); engine.deck[d].setTransLatch(get("trans_" + s) > 0.5f);
     }
     {   // sync: follow the DAW tempo, or the other deck (deck A leads when both are synced)
         const bool sa = get("sync_a") > 0.5f, sb = get("sync_b") > 0.5f;
         auto& A = engine.deck[0]; auto& B = engine.deck[1];
         if (host > 0.0) { A.setSync(sa, host); B.setSync(sb, host); }
-        else if (sa && sb) { A.setSync(false, 0.0); B.setSync(true, A.currentBpm()); }
+        else if (sa && sb) {   // the deck with Master on leads; deck A when neither or both are set
+            const bool bLeads = get("master_b") > 0.5f && get("master_a") < 0.5f;
+            if (bLeads) { B.setSync(false, 0.0); A.setSync(true, B.currentBpm()); } else { A.setSync(false, 0.0); B.setSync(true, A.currentBpm()); } }
         else { A.setSync(sa, B.currentBpm()); B.setSync(sb, A.currentBpm()); }
     }
 

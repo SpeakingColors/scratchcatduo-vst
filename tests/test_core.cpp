@@ -233,14 +233,42 @@ static void testLibrary() {
     CHECK(lib.search("kick").size() == 1 && lib.search("KICK")[0].ext == "wav", "search ignores case and reads upper case extensions");
     CHECK(lib.search("flac").size() == 1 && lib.search("").size() == 4, "search matches the format, empty query lists all");
     CHECK(lib.search("", (root / "synth").string()).size() == 2, "folder filter includes subfolders");
+    CHECK(duo::inFolder("/music/a", "/music") && duo::inFolder("/music", "/music") && !duo::inFolder("/music2", "/music"), "inFolder respects folder boundaries");
     CHECK(lib.addFolder((root / "missing").string()) == 0, "missing folder is ignored");
+    { Library other; const auto found = lib.all(); CHECK(other.merge(found) == 4 && other.merge(found) == 0, "merge adds scan results once"); }
     lib.toggleFavourite("/a/b"); lib.toggleFavourite("/c d"); Library l2; l2.favouritesFromString(lib.favouritesToString());
     CHECK(l2.isFavourite("/a/b") && l2.isFavourite("/c d") && l2.favourites().size() == 2, "favourites survive a save and load");
     lib.toggleFavourite("/a/b"); CHECK(!lib.isFavourite("/a/b"), "favourite can be removed");
     fs::remove_all(root);
 }
+static void testPadsAndShots() {
+    const double sr = 48000;
+    { // jumpBeats moves exactly by beats; trans latch chops; vinyl changes stop time
+        Deck d; d.prepare(sr); auto t = makeTrack(sr, 20, 120, 0.0); t->bpm = 120; t->firstBeat = 0.0; d.setTrack(t); d.seekSeconds(4.0);
+        d.jumpBeats(4); CHECK(std::fabs(d.positionSeconds() - 6.0) < 0.02, "jump +4 beats %.3f", d.positionSeconds());
+        d.jumpBeats(-8); CHECK(std::fabs(d.positionSeconds() - 2.0) < 0.02, "jump -8 beats %.3f", d.positionSeconds());
+        d.jumpBeats(-100); CHECK(d.positionSeconds() >= 0.0, "jump clamps at start");
+        Deck s; s.prepare(sr); s.setTrack(sineTrack(sr, 5, 440)); s.seekSeconds(1.0); s.jumpBeats(4); CHECK(std::fabs(s.positionSeconds() - 1.0) < 1e-6, "no grid, no jump");
+        Deck g; g.prepare(sr); auto t2 = makeTrack(sr, 20, 120, 0.0); g.setTrack(t2); g.setPlaying(true);
+        std::vector<float> L, R; g.setTransLatch(true); render(g, (int) sr * 2, L, R);
+        double mn = 1e9, mx = 0; for (size_t i = 24000; i + 2400 < L.size(); i += 2400) { double e = rms(L, i, i + 2400); mn = std::min(mn, e); mx = std::max(mx, e); }
+        CHECK(mn < 0.25 * mx, "trans latch gates the sound (min %.4f max %.4f)", mn, mx);
+        g.setTransLatch(false); render(g, (int) sr, L, R); CHECK(std::isfinite(rms(L, 0, L.size())), "trans off finite");
+    }
+    { // shots and pad fx in the engine
+        Engine e; e.prepare(sr, 512); std::vector<float> ml(512), mr(512);
+        MixParams p; auto run = [&](int blocks) { double en = 0; bool bad = false; for (int k = 0; k < blocks; ++k) { e.process(p, 512, nullptr, nullptr, nullptr, nullptr, ml.data(), mr.data(), nullptr, nullptr, nullptr, nullptr, nullptr, nullptr); for (float v : ml) { if (!std::isfinite(v) || std::fabs(v) > 1.5f) bad = true; en += (double) v * v; } } CHECK(!bad, "shot output finite"); return en; };
+        CHECK(run(10) < 1e-9, "no shot, silence");
+        for (int i = 0; i < Engine::kShots; ++i) { e.triggerShot(i); const double en = run(40); CHECK(en > 0.05, "shot %s makes sound (%.4f)", Engine::shotName(i), en); }
+        CHECK(run(40) < 1e-9, "shots end");
+        for (int i = 0; i < 12; ++i) e.triggerShot(i % 8); CHECK(run(10) > 0.05, "many shots at once ok"); e.triggerShot(-1); e.triggerShot(99);
+        e.deck[0].setTrack(sineTrack(sr, 10, 440)); e.deck[0].setPlaying(true); run(40);
+        for (int k = 0; k < 5; ++k) { e.setPadFx(0, k, true); const double en = run(60); CHECK(en > 0.5, "pad fx %d makes sound %.3f", k, en); e.setPadFx(0, k, false); }
+        e.setPadFx(0, 9, true); run(5);
+    }
+}
 int main() {
-    testBpm(); testKey(); testDeck(); testMixer(); testEngineAndFx(); testKeyLockQuality(); testAlign(); testLibrary();
+    testBpm(); testKey(); testDeck(); testMixer(); testEngineAndFx(); testKeyLockQuality(); testAlign(); testLibrary(); testPadsAndShots();
     if (fails) { std::printf("%d FAILED\n", fails); return 1; }
     std::printf("all tests passed\n"); return 0;
 }

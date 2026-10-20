@@ -10,7 +10,7 @@
 
 namespace duoui
 {
-enum CmdType { kPlay = 1, kCueDown, kCueUp, kHot, kHotClear, kLoopIn, kLoopOut, kLoopExit, kBeatLoop, kBrake, kBackspin, kMoveStart, kMoveEnd, kJog, kBend, kGoLive, kSeek, kAlign };
+enum CmdType { kPlay = 1, kCueDown, kCueUp, kHot, kHotClear, kLoopIn, kLoopOut, kLoopExit, kBeatLoop, kBrake, kBackspin, kMoveStart, kMoveEnd, kJog, kBend, kGoLive, kSeek, kAlign, kJumpBeats, kShot, kPadFx, kSetHot, kTransLatch };
 struct Cmd { int type = 0, deck = 0, i = 0; double a = 0.0; };
 
 // Things you can map to a MIDI control (note or CC). Deck actions are offset by 100 for deck B.
@@ -45,6 +45,7 @@ public:
     std::atomic<int> learnAction { -1 };
     std::atomic<bool> learnedNew { false };
     std::atomic<float> jogTicksPerTurn { 128.f };
+    std::atomic<double> hostBpmView { 0.0 };    // tempo reported by the host (0 when unknown), for the routing panel
 
     // read by the editor (written on the audio thread)
     struct DeckView {

@@ -4,6 +4,10 @@
 
 Two DJ decks and a mixer in one plugin (VST3 and standalone). Free and open source, Linux first.
 
+<p align="center"><img src="docs/screenshot.png" alt="Scratch Cat Duo editor" width="900"><br><sub>Screenshot of the interactive mockup in docs/mockups.</sub></p>
+
+**Manual:** [PDF, opens in the browser](https://github.com/SpeakingColors/scratchcatduo-vst/blob/main/docs/scratchcatduo-vst-manual.pdf)
+
 ## What works now (v0.2)
 - The window is the approved mockup, built for real: waveform section with overviews, two decks with pad tabs (hot cues you can name, colour and edit, loops, jumps, sampler, pad FX), mixer with kill buttons and meters, DAW routing, three slot FX chain, track browser with favourite folders, presets (factory and your own), Guide, Settings, About.
 - Two decks: load wav, aiff, flac, ogg or mp3; BPM, beat grid and key (Camelot) analysis; scratch on the platter, cue, 8 hot cues, loops, brake, backspin, vinyl mode, roll, censor, stutter, transform, key lock (WSOLA aligned grains), tempo fader (8, 16, 50 %), sync to the DAW tempo or the other deck.

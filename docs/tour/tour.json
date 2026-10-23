@@ -1,0 +1,1348 @@
+{
+ "title": "Scratch Cat Duo",
+ "page": "docs/mockup/scratchcatduo.html",
+ "tabs": [
+  {
+   "label": "Window",
+   "img": "window_1.png",
+   "items": [
+    {
+     "n": 1,
+     "name": "Previous preset",
+     "tip": "Previous preset.",
+     "kind": "button",
+     "sec": "Header bar",
+     "fresh": true
+    },
+    {
+     "n": 2,
+     "name": "Init",
+     "tip": "Open the preset list: factory presets and your own.",
+     "kind": "button",
+     "sec": "Header bar",
+     "fresh": true
+    },
+    {
+     "n": 3,
+     "name": "Next preset",
+     "tip": "Next preset.",
+     "kind": "button",
+     "sec": "Header bar",
+     "fresh": true
+    },
+    {
+     "n": 4,
+     "name": "Save",
+     "tip": "Save the current settings as your own preset (stays on this device).",
+     "kind": "button",
+     "sec": "Header bar",
+     "fresh": true
+    },
+    {
+     "n": 5,
+     "name": "Delete, export or import your presets",
+     "tip": "Delete, export or import your presets.",
+     "kind": "button",
+     "sec": "Header bar",
+     "fresh": true
+    },
+    {
+     "n": 6,
+     "name": "Guide",
+     "tip": "Quick guide: what each part does.",
+     "kind": "button",
+     "sec": "Header bar",
+     "fresh": true
+    },
+    {
+     "n": 7,
+     "name": "Settings",
+     "tip": "Info bubbles and eco mode.",
+     "kind": "button",
+     "sec": "Header bar",
+     "fresh": true
+    },
+    {
+     "n": 8,
+     "name": "About & Support",
+     "tip": "About Studio 87, privacy, and ways to support the project.",
+     "kind": "button",
+     "sec": "Header bar",
+     "fresh": true
+    },
+    {
+     "n": 9,
+     "name": "Both",
+     "tip": "Start or stop both decks together. Shortcut: Space.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 10,
+     "name": "Restart both",
+     "tip": "Jump both decks to the start so the beats line up again.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 11,
+     "name": "4 bars",
+     "tip": "Show this many bars across the waveforms.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 12,
+     "name": "Show this many bars across the waveforms",
+     "tip": "Show this many bars across the waveforms.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 13,
+     "name": "16",
+     "tip": "Show this many bars across the waveforms.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 14,
+     "name": "Analyze key & BPM",
+     "tip": "Detect the tempo and key of this deck again (shown as BPM, key and Camelot code).",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 15,
+     "name": "File",
+     "tip": "Source of this deck. File: plays once and stops at the end. DAW: loops what the host sends. Sampler: loops, with the sampler pads ready.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 16,
+     "name": "DAW",
+     "tip": "Source of this deck. File: plays once and stops at the end. DAW: loops what the host sends. Sampler: loops, with the sampler pads ready.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 17,
+     "name": "Sampler",
+     "tip": "Source of this deck. File: plays once and stops at the end. DAW: loops what the host sends. Sampler: loops, with the sampler pads ready.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 18,
+     "name": "The track on this deck",
+     "tip": "The track on this deck. Click to load your own file (wav, mp3, flac, aiff, ogg). It stays in this browser tab.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 19,
+     "name": "Sync",
+     "tip": "Match this deck's tempo to the host BPM (or to the master deck) and keep it matched.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 20,
+     "name": "Master",
+     "tip": "Make this deck the tempo master: the other deck's Sync follows it.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 21,
+     "name": "Key lock",
+     "tip": "Key lock: change the tempo without changing the pitch.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 22,
+     "name": "Quant",
+     "tip": "Quantize: cue points, hot cues and loops snap to the nearest beat.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 23,
+     "name": "Loop of 1/4 beat from here",
+     "tip": "Loop of 1/4 beat from here. Press again to leave the loop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 24,
+     "name": "Loop of 1/2 beat from here",
+     "tip": "Loop of 1/2 beat from here. Press again to leave the loop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 25,
+     "name": "Loop of 1 beat from here",
+     "tip": "Loop of 1 beat from here. Press again to leave the loop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 26,
+     "name": "Loop of 2 beats from here",
+     "tip": "Loop of 2 beats from here. Press again to leave the loop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 27,
+     "name": "Loop of 4 beats from here",
+     "tip": "Loop of 4 beats from here. Press again to leave the loop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 28,
+     "name": "Loop of 8 beats from here",
+     "tip": "Loop of 8 beats from here. Press again to leave the loop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 29,
+     "name": "Loop in",
+     "tip": "Set the loop start here.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 30,
+     "name": "Loop out",
+     "tip": "Set the loop end here and start looping.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 31,
+     "name": "Exit",
+     "tip": "Leave the loop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 32,
+     "name": "Vinyl",
+     "tip": "On: pausing slows the record down like a turntable. Off: it stops at once.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 33,
+     "name": "Trans.",
+     "tip": "Transform gate: chops the sound on and off in time with the beat.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 34,
+     "name": "Stutter",
+     "tip": "Hold: retriggers the cue point every 1/16 beat.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 35,
+     "name": "Brake",
+     "tip": "Slows the record to a stop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 36,
+     "name": "Backspin",
+     "tip": "The record spins back fast, then stops.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 37,
+     "name": "Roll",
+     "tip": "Hold: rolls a tiny loop of 1/8 beat; letting go lands where the song would have been.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 38,
+     "name": "Censor",
+     "tip": "Hold: plays backwards; letting go jumps to where the song would have been.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 39,
+     "name": "CUE",
+     "tip": "CUE. While playing: jumps back to the cue point and pauses. While paused: sets the cue point here; hold to preview from it.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 40,
+     "name": "Play or pause the deck",
+     "tip": "Play or pause the deck.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 41,
+     "name": "Tempo",
+     "tip": "Speed of this deck. Up is faster. The range buttons set how far it goes. Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 42,
+     "name": "How far the tempo fader goes (percent)",
+     "tip": "How far the tempo fader goes (percent).",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 43,
+     "name": "16",
+     "tip": "How far the tempo fader goes (percent).",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 44,
+     "name": "50",
+     "tip": "How far the tempo fader goes (percent).",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 45,
+     "name": "Reset",
+     "tip": "Put the tempo fader back to zero.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 46,
+     "name": "Hot Cue",
+     "tip": "What the eight pads do: hot cues, loops, jumps by beats, sampler hits or momentary effects.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 47,
+     "name": "Loop",
+     "tip": "What the eight pads do: hot cues, loops, jumps by beats, sampler hits or momentary effects.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 48,
+     "name": "Jump",
+     "tip": "What the eight pads do: hot cues, loops, jumps by beats, sampler hits or momentary effects.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 49,
+     "name": "Sampler",
+     "tip": "What the eight pads do: hot cues, loops, jumps by beats, sampler hits or momentary effects.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 50,
+     "name": "Pad FX",
+     "tip": "What the eight pads do: hot cues, loops, jumps by beats, sampler hits or momentary effects.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 51,
+     "name": "Delete",
+     "tip": "Delete switch: while on, clicking a set hot cue removes it. Holding Shift while clicking does the same.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 52,
+     "name": "Hot cue 1",
+     "tip": "Hot cue 1. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 53,
+     "name": "Hot cue 2",
+     "tip": "Hot cue 2. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 54,
+     "name": "Hot cue 3",
+     "tip": "Hot cue 3. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 55,
+     "name": "Hot cue 4",
+     "tip": "Hot cue 4. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 56,
+     "name": "Hot cue 5",
+     "tip": "Hot cue 5. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 57,
+     "name": "Hot cue 6",
+     "tip": "Hot cue 6. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 58,
+     "name": "Hot cue 7",
+     "tip": "Hot cue 7. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 59,
+     "name": "Hot cue 8",
+     "tip": "Hot cue 8. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 60,
+     "name": "MASTER",
+     "tip": "Output level. Double-click resets.",
+     "kind": "button",
+     "sec": "Mixer",
+     "fresh": true
+    },
+    {
+     "n": 61,
+     "name": "Trim",
+     "tip": "Input gain of deck A. Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 62,
+     "name": "HI",
+     "tip": "High shelf (4 kHz). Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 63,
+     "name": "MID",
+     "tip": "Mid band (1 kHz). Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 64,
+     "name": "LOW",
+     "tip": "Low shelf (250 Hz). Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 65,
+     "name": "COLOR",
+     "tip": "One-knob filter: left is low-pass, right is high-pass. Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 66,
+     "name": "Kill the highs of deck A",
+     "tip": "Kill the highs of deck A.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 67,
+     "name": "Kill the mids of deck A",
+     "tip": "Kill the mids of deck A.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 68,
+     "name": "Kill the lows of deck A",
+     "tip": "Kill the lows of deck A.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 69,
+     "name": "CUE",
+     "tip": "Headphone cue: sends this deck to the plugin's cue output. The mockup has one output, so this only lights up.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 70,
+     "name": "Channel fader of deck A",
+     "tip": "Channel fader of deck A. Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 71,
+     "name": "Trim",
+     "tip": "Input gain of deck B. Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 62,
+     "name": "HI",
+     "tip": "High shelf (4 kHz). Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 63,
+     "name": "MID",
+     "tip": "Mid band (1 kHz). Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 64,
+     "name": "LOW",
+     "tip": "Low shelf (250 Hz). Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 65,
+     "name": "COLOR",
+     "tip": "One-knob filter: left is low-pass, right is high-pass. Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 72,
+     "name": "Kill the highs of deck B",
+     "tip": "Kill the highs of deck B.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 73,
+     "name": "Kill the mids of deck B",
+     "tip": "Kill the mids of deck B.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 74,
+     "name": "Kill the lows of deck B",
+     "tip": "Kill the lows of deck B.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 69,
+     "name": "CUE",
+     "tip": "Headphone cue: sends this deck to the plugin's cue output. The mockup has one output, so this only lights up.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 75,
+     "name": "Channel fader of deck B",
+     "tip": "Channel fader of deck B. Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 76,
+     "name": "Crossfader",
+     "tip": "Crossfader: A on the left, B on the right. The thumb sits in the middle when both decks are open. Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 77,
+     "name": "Smooth",
+     "tip": "Smooth: both full in the middle. Sharp: cuts like a battle mixer. Constant: equal power.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 78,
+     "name": "Sharp",
+     "tip": "Smooth: both full in the middle. Sharp: cuts like a battle mixer. Constant: equal power.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 79,
+     "name": "Const",
+     "tip": "Smooth: both full in the middle. Sharp: cuts like a battle mixer. Constant: equal power.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 14,
+     "name": "Analyze key & BPM",
+     "tip": "Detect the tempo and key of this deck again (shown as BPM, key and Camelot code).",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 15,
+     "name": "File",
+     "tip": "Source of this deck. File: plays once and stops at the end. DAW: loops what the host sends. Sampler: loops, with the sampler pads ready.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 16,
+     "name": "DAW",
+     "tip": "Source of this deck. File: plays once and stops at the end. DAW: loops what the host sends. Sampler: loops, with the sampler pads ready.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 17,
+     "name": "Sampler",
+     "tip": "Source of this deck. File: plays once and stops at the end. DAW: loops what the host sends. Sampler: loops, with the sampler pads ready.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 18,
+     "name": "The track on this deck",
+     "tip": "The track on this deck. Click to load your own file (wav, mp3, flac, aiff, ogg). It stays in this browser tab.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 19,
+     "name": "Sync",
+     "tip": "Match this deck's tempo to the host BPM (or to the master deck) and keep it matched.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 20,
+     "name": "Master",
+     "tip": "Make this deck the tempo master: the other deck's Sync follows it.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 21,
+     "name": "Key lock",
+     "tip": "Key lock: change the tempo without changing the pitch.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 22,
+     "name": "Quant",
+     "tip": "Quantize: cue points, hot cues and loops snap to the nearest beat.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 23,
+     "name": "Loop of 1/4 beat from here",
+     "tip": "Loop of 1/4 beat from here. Press again to leave the loop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 24,
+     "name": "Loop of 1/2 beat from here",
+     "tip": "Loop of 1/2 beat from here. Press again to leave the loop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 25,
+     "name": "Loop of 1 beat from here",
+     "tip": "Loop of 1 beat from here. Press again to leave the loop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 26,
+     "name": "Loop of 2 beats from here",
+     "tip": "Loop of 2 beats from here. Press again to leave the loop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 27,
+     "name": "Loop of 4 beats from here",
+     "tip": "Loop of 4 beats from here. Press again to leave the loop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 28,
+     "name": "Loop of 8 beats from here",
+     "tip": "Loop of 8 beats from here. Press again to leave the loop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 29,
+     "name": "Loop in",
+     "tip": "Set the loop start here.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 30,
+     "name": "Loop out",
+     "tip": "Set the loop end here and start looping.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 31,
+     "name": "Exit",
+     "tip": "Leave the loop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 32,
+     "name": "Vinyl",
+     "tip": "On: pausing slows the record down like a turntable. Off: it stops at once.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 33,
+     "name": "Trans.",
+     "tip": "Transform gate: chops the sound on and off in time with the beat.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 34,
+     "name": "Stutter",
+     "tip": "Hold: retriggers the cue point every 1/16 beat.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 35,
+     "name": "Brake",
+     "tip": "Slows the record to a stop.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 36,
+     "name": "Backspin",
+     "tip": "The record spins back fast, then stops.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 37,
+     "name": "Roll",
+     "tip": "Hold: rolls a tiny loop of 1/8 beat; letting go lands where the song would have been.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 38,
+     "name": "Censor",
+     "tip": "Hold: plays backwards; letting go jumps to where the song would have been.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 39,
+     "name": "CUE",
+     "tip": "CUE. While playing: jumps back to the cue point and pauses. While paused: sets the cue point here; hold to preview from it.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 40,
+     "name": "Play or pause the deck",
+     "tip": "Play or pause the deck.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 41,
+     "name": "Tempo",
+     "tip": "Speed of this deck. Up is faster. The range buttons set how far it goes. Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 42,
+     "name": "How far the tempo fader goes (percent)",
+     "tip": "How far the tempo fader goes (percent).",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 43,
+     "name": "16",
+     "tip": "How far the tempo fader goes (percent).",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 44,
+     "name": "50",
+     "tip": "How far the tempo fader goes (percent).",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 45,
+     "name": "Reset",
+     "tip": "Put the tempo fader back to zero.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 46,
+     "name": "Hot Cue",
+     "tip": "What the eight pads do: hot cues, loops, jumps by beats, sampler hits or momentary effects.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 47,
+     "name": "Loop",
+     "tip": "What the eight pads do: hot cues, loops, jumps by beats, sampler hits or momentary effects.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 48,
+     "name": "Jump",
+     "tip": "What the eight pads do: hot cues, loops, jumps by beats, sampler hits or momentary effects.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 49,
+     "name": "Sampler",
+     "tip": "What the eight pads do: hot cues, loops, jumps by beats, sampler hits or momentary effects.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 50,
+     "name": "Pad FX",
+     "tip": "What the eight pads do: hot cues, loops, jumps by beats, sampler hits or momentary effects.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 51,
+     "name": "Delete",
+     "tip": "Delete switch: while on, clicking a set hot cue removes it. Holding Shift while clicking does the same.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 52,
+     "name": "Hot cue 1",
+     "tip": "Hot cue 1. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 53,
+     "name": "Hot cue 2",
+     "tip": "Hot cue 2. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 54,
+     "name": "Hot cue 3",
+     "tip": "Hot cue 3. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 55,
+     "name": "Hot cue 4",
+     "tip": "Hot cue 4. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 56,
+     "name": "Hot cue 5",
+     "tip": "Hot cue 5. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 57,
+     "name": "Hot cue 6",
+     "tip": "Hot cue 6. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 58,
+     "name": "Hot cue 7",
+     "tip": "Hot cue 7. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 59,
+     "name": "Hot cue 8",
+     "tip": "Hot cue 8. Empty: click to set a marker here. Set: click to jump to it. Shift-click, or the Delete switch, removes it. Right-click edits name, colour, position and on/off.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 80,
+     "name": "Deck A input",
+     "tip": "The audio on deck A. Choose Your file to load your own.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 81,
+     "name": "Deck B input",
+     "tip": "The audio on deck B. Choose Your file to load your own.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 82,
+     "name": "Master only",
+     "tip": "Master only gives one stereo out. A, B, Master gives three stereo outs for your DAW's mixer (plugin only; the mockup plays the master).",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 83,
+     "name": "A · B · Master",
+     "tip": "Master only gives one stereo out. A, B, Master gives three stereo outs for your DAW's mixer (plugin only; the mockup plays the master).",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 84,
+     "name": "Follow DAW",
+     "tip": "Follow DAW: Sync uses the host tempo. Decks lead: the master deck sets the tempo and the other deck's Sync follows it.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 85,
+     "name": "Decks lead",
+     "tip": "Follow DAW: Sync uses the host tempo. Decks lead: the master deck sets the tempo and the other deck's Sync follows it.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 86,
+     "name": "HOST BPM",
+     "tip": "The tempo your DAW runs at. Sync matches a deck to it. Double-click resets.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 87,
+     "name": "Controller",
+     "tip": "Choose the DJ controller the plugin listens to. Design mockup only.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 88,
+     "name": "Deck A",
+     "tip": "Which signal goes through the three effects.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": true
+    },
+    {
+     "n": 89,
+     "name": "Deck B",
+     "tip": "Which signal goes through the three effects.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": true
+    },
+    {
+     "n": 90,
+     "name": "Which signal goes through the three effe",
+     "tip": "Which signal goes through the three effects.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": true
+    },
+    {
+     "n": 91,
+     "name": "Master",
+     "tip": "Which signal goes through the three effects.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": true
+    },
+    {
+     "n": 92,
+     "name": "What this slot does",
+     "tip": "What this slot does.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": true
+    },
+    {
+     "n": 93,
+     "name": "Turn this effect slot on or off",
+     "tip": "Turn this effect slot on or off.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": true
+    },
+    {
+     "n": 94,
+     "name": "Amount",
+     "tip": "Filter: sweep. Echo: delay length. Reverb: size. Flanger: depth. Crush: amount. Double-click resets.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": true
+    },
+    {
+     "n": 95,
+     "name": "DRY/WET",
+     "tip": "How much of the effect is mixed in. Double-click resets.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": true
+    },
+    {
+     "n": 92,
+     "name": "What this slot does",
+     "tip": "What this slot does.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": false
+    },
+    {
+     "n": 93,
+     "name": "Turn this effect slot on or off",
+     "tip": "Turn this effect slot on or off.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": false
+    },
+    {
+     "n": 94,
+     "name": "Amount",
+     "tip": "Filter: sweep. Echo: delay length. Reverb: size. Flanger: depth. Crush: amount. Double-click resets.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": false
+    },
+    {
+     "n": 95,
+     "name": "DRY/WET",
+     "tip": "How much of the effect is mixed in. Double-click resets.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": false
+    },
+    {
+     "n": 92,
+     "name": "What this slot does",
+     "tip": "What this slot does.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": false
+    },
+    {
+     "n": 93,
+     "name": "Turn this effect slot on or off",
+     "tip": "Turn this effect slot on or off.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": false
+    },
+    {
+     "n": 94,
+     "name": "Amount",
+     "tip": "Filter: sweep. Echo: delay length. Reverb: size. Flanger: depth. Crush: amount. Double-click resets.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": false
+    },
+    {
+     "n": 95,
+     "name": "DRY/WET",
+     "tip": "How much of the effect is mixed in. Double-click resets.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": false
+    },
+    {
+     "n": 96,
+     "name": "CHAIN MIX",
+     "tip": "Scales the dry/wet of all three effects at once. Double-click resets.",
+     "kind": "button",
+     "sec": "FX chainDeck ADeck BA + BMaster",
+     "fresh": true
+    },
+    {
+     "n": 97,
+     "name": "ADD FOLDER",
+     "tip": "Choose a folder. Every subfolder is scanned too. In the plugin this opens the system folder dialog and remembers the path.",
+     "kind": "button",
+     "sec": "Track browser0 audio files",
+     "fresh": true
+    },
+    {
+     "n": 98,
+     "name": "ADD FILES",
+     "tip": "Add single audio files.",
+     "kind": "button",
+     "sec": "Track browser0 audio files",
+     "fresh": true
+    },
+    {
+     "n": 99,
+     "name": "Type to filter the list",
+     "tip": "Type to filter the list. Matches the file name, its folder and its format (wav, mp3, flac, aiff...).",
+     "kind": "button",
+     "sec": "Track browser0 audio files",
+     "fresh": true
+    },
+    {
+     "n": 100,
+     "name": "Window 100 %",
+     "tip": "Window size. Drag any edge or corner of the plugin to resize it; the shape stays the same. Double-click here for 100 %.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 101,
+     "name": "Resize",
+     "tip": "Drag to resize the window. Every edge and corner works, and the shape stays the same.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": true
+    },
+    {
+     "n": 101,
+     "name": "Resize",
+     "tip": "Drag to resize the window. Every edge and corner works, and the shape stays the same.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 101,
+     "name": "Resize",
+     "tip": "Drag to resize the window. Every edge and corner works, and the shape stays the same.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 101,
+     "name": "Resize",
+     "tip": "Drag to resize the window. Every edge and corner works, and the shape stays the same.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 101,
+     "name": "Resize",
+     "tip": "Drag to resize the window. Every edge and corner works, and the shape stays the same.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 101,
+     "name": "Resize",
+     "tip": "Drag to resize the window. Every edge and corner works, and the shape stays the same.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 101,
+     "name": "Resize",
+     "tip": "Drag to resize the window. Every edge and corner works, and the shape stays the same.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    },
+    {
+     "n": 101,
+     "name": "Resize",
+     "tip": "Drag to resize the window. Every edge and corner works, and the shape stays the same.",
+     "kind": "button",
+     "sec": "Window",
+     "fresh": false
+    }
+   ]
+  }
+ ]
+}

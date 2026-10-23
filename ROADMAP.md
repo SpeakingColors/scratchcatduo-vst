@@ -3,6 +3,7 @@
 ## Done (v0.1 test build)
 - [x] Deck engine (Hermite varispeed, scratch, cue, hot cues, loops, key lock, brake, backspin, roll, censor, stutter, transform), mixer, FX chain, analysis, tests
 - [x] Plugin shell on cat-ui with the shared PurrOne wood
+- [x] Real Duo editor from the approved mockup (0.2)
 
 ## Next
 - [x] Key lock: WSOLA style grain alignment (unit test: tone purity 0.013 before, 0.996 after at +-8 %, +50 %, -40 %)

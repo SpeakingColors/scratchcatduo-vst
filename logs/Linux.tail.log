@@ -1,24 +1,24 @@
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:90:17: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   90 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
-      |                 ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:90:29: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   90 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
-      |                             ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:90:62: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   90 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
-      |                                                              ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::setHotCuePos(int, double)’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:92:67: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   92 |     void setHotCuePos(int i, double p) { if (i >= 0 && i < 8) hot[i] = p; }
-      |                                                                   ^
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::clearHotCue(int)’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:93:56: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
-   93 |     void clearHotCue(int i) { if (i >= 0 && i < 8) hot[i] = -1.0; }
       |                                                        ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘double duo::Deck::hotCuePos(int) const’:
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:94:48: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    94 |     double hotCuePos(int i) const { return hot[i]; }
       |                                                ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h: In function ‘duo::KeyResult duo::analyseKey(const float*, const float*, size_t, double)’:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:129:64: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  129 |     std::vector<float> w(win); for (int i = 0; i < win; ++i) w[i] = 0.5f - 0.5f * (float) std::cos(2 * kPi * i / win);
+      |                                                                ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:132:43: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  132 |         for (int i = 0; i < win; ++i) buf[i] = { m[p + i] * w[i], 0.f };
+      |                                           ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:132:56: warning: conversion to ‘size_t’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  132 |         for (int i = 0; i < win; ++i) buf[i] = { m[p + i] * w[i], 0.f };
+      |                                                        ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:132:63: warning: conversion to ‘std::vector<float, std::allocator<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  132 |         for (int i = 0; i < win; ++i) buf[i] = { m[p + i] * w[i], 0.f };
+      |                                                               ^
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:136:45: warning: conversion to ‘std::vector<std::complex<float> >::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
+  136 |             const double mag = std::abs(buf[k]); if (mag <= 0) continue;
+      |                                             ^
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::process(float*, float*, int, const float*, const float*)’:
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:166:21: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
   166 |             if (vel != 0.0 || jogTouch) {
@@ -377,21 +377,21 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/buil
 [ 70%] Linking CXX static library "ScratchCatDuo_artefacts/Release/libScratch Cat Duo_SharedCode.a"
 [ 70%] Built target ScratchCatDuo
 [ 71%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
-[ 73%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
-[ 75%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
-[ 76%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
-[ 78%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
-[ 80%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
-[ 81%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
-[ 83%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
-[ 85%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
-[ 86%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+[ 73%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+[ 76%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
+[ 76%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+[ 78%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+[ 80%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
+[ 81%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+[ 83%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+[ 85%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
+[ 88%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
 [ 88%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
-[ 90%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
-[ 91%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
-[ 93%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
-[ 95%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
-[ 96%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
+[ 90%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+[ 91%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
+[ 93%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
+[ 95%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
+[ 96%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
 [ 98%] Linking CXX executable "ScratchCatDuo_artefacts/Release/Standalone/Scratch Cat Duo"
 [ 98%] Built target ScratchCatDuo_Standalone
 [100%] Linking CXX shared module "ScratchCatDuo_artefacts/Release/VST3/Scratch Cat Duo.vst3/Contents/x86_64-linux/Scratch Cat Duo.so"

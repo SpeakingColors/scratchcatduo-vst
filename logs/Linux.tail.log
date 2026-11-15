@@ -1,3 +1,4 @@
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::hotCue(int, bool)’:
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:90:17: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    90 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
       |                 ^
@@ -59,22 +60,11 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/buil
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:66:10: note:   by ‘virtual void DuoProcessor::processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&)’
    66 |     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
       |          ^~~~~~~~~~~~
-In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless.h:145,
-                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors/juce_audio_processors.h:64,
-                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:3:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h: At global scope:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h:292:18: warning: ‘virtual void juce::AudioProcessor::processBlock(juce::AudioBuffer<double>&, juce::MidiBuffer&)’ was hidden [-Woverloaded-virtual=]
-  292 |     virtual void processBlock (AudioBuffer<double>& buffer,
-      |                  ^~~~~~~~~~~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:66:10: note:   by ‘virtual void DuoProcessor::processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&)’
-   66 |     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
-      |          ^~~~~~~~~~~~
 In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:3,
                  from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:4,
                  from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoEngine.h:3,
                  from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:6,
-                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.h:2,
-                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:2:
+                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.cpp:1:
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDsp.h: In member function ‘void duo::ChannelStrip::setParams(float, float, float, float)’:
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDsp.h:98:18: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
    98 |         if (loDb != lastLo)   { lastLo = loDb;   for (int c = 0; c < 2; ++c) { Biquad t; t.lowShelf(sr, 100.0, g(loDb)); t.z1 = lo[c].z1; t.z2 = lo[c].z2; lo[c] = t; } }
@@ -237,6 +227,16 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:94:48: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    94 |     double hotCuePos(int i) const { return hot[i]; }
       |                                                ^
+In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless.h:145,
+                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors/juce_audio_processors.h:64,
+                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:3:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h: At global scope:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h:292:18: warning: ‘virtual void juce::AudioProcessor::processBlock(juce::AudioBuffer<double>&, juce::MidiBuffer&)’ was hidden [-Woverloaded-virtual=]
+  292 |     virtual void processBlock (AudioBuffer<double>& buffer,
+      |                  ^~~~~~~~~~~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:66:10: note:   by ‘virtual void DuoProcessor::processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&)’
+   66 |     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+      |          ^~~~~~~~~~~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::process(float*, float*, int, const float*, const float*)’:
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:166:21: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
   166 |             if (vel != 0.0 || jogTouch) {
@@ -377,21 +377,21 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/buil
 [ 70%] Linking CXX static library "ScratchCatDuo_artefacts/Release/libScratch Cat Duo_SharedCode.a"
 [ 70%] Built target ScratchCatDuo
 [ 71%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
-[ 75%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
+[ 73%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
 [ 75%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
 [ 76%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
-[ 78%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
-[ 80%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
-[ 81%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
-[ 83%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
-[ 85%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
-[ 88%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
-[ 88%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
-[ 90%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
-[ 93%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
-[ 93%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
-[ 95%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
-[ 96%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
+[ 81%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
+[ 81%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+[ 83%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
+[ 81%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+[ 85%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+[ 88%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+[ 88%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+[ 90%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
+[ 91%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+[ 93%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
+[ 95%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
+[ 96%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
 [ 98%] Linking CXX executable "ScratchCatDuo_artefacts/Release/Standalone/Scratch Cat Duo"
 [ 98%] Built target ScratchCatDuo_Standalone
 [100%] Linking CXX shared module "ScratchCatDuo_artefacts/Release/VST3/Scratch Cat Duo.vst3/Contents/x86_64-linux/Scratch Cat Duo.so"

@@ -1,4 +1,3 @@
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::hotCue(int, bool)’:
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:90:17: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    90 |         if (hot[i] < 0) hot[i] = snap(pos); else { pos = hot[i]; if (!playing) setPlaying(true); }
       |                 ^
@@ -60,11 +59,22 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/buil
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:66:10: note:   by ‘virtual void DuoProcessor::processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&)’
    66 |     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
       |          ^~~~~~~~~~~~
+In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless.h:145,
+                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors/juce_audio_processors.h:64,
+                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:3:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h: At global scope:
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h:292:18: warning: ‘virtual void juce::AudioProcessor::processBlock(juce::AudioBuffer<double>&, juce::MidiBuffer&)’ was hidden [-Woverloaded-virtual=]
+  292 |     virtual void processBlock (AudioBuffer<double>& buffer,
+      |                  ^~~~~~~~~~~~
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:66:10: note:   by ‘virtual void DuoProcessor::processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&)’
+   66 |     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+      |          ^~~~~~~~~~~~
 In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:3,
                  from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:4,
                  from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoEngine.h:3,
                  from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:6,
-                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.cpp:1:
+                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.h:2,
+                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:2:
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDsp.h: In member function ‘void duo::ChannelStrip::setParams(float, float, float, float)’:
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDsp.h:98:18: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
    98 |         if (loDb != lastLo)   { lastLo = loDb;   for (int c = 0; c < 2; ++c) { Biquad t; t.lowShelf(sr, 100.0, g(loDb)); t.z1 = lo[c].z1; t.z2 = lo[c].z2; lo[c] = t; } }
@@ -227,16 +237,6 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:94:48: warning: conversion to ‘std::array<double, 8>::size_type’ {aka ‘long unsigned int’} from ‘int’ may change the sign of the result [-Wsign-conversion]
    94 |     double hotCuePos(int i) const { return hot[i]; }
       |                                                ^
-In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/juce_audio_processors_headless.h:145,
-                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors/juce_audio_processors.h:64,
-                 from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:3:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h: At global scope:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_audio_processors_headless/processors/juce_AudioProcessor.h:292:18: warning: ‘virtual void juce::AudioProcessor::processBlock(juce::AudioBuffer<double>&, juce::MidiBuffer&)’ was hidden [-Woverloaded-virtual=]
-  292 |     virtual void processBlock (AudioBuffer<double>& buffer,
-      |                  ^~~~~~~~~~~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/Duo.h:66:10: note:   by ‘virtual void DuoProcessor::processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&)’
-   66 |     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
-      |          ^~~~~~~~~~~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h: In member function ‘void duo::Deck::process(float*, float*, int, const float*, const float*)’:
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:166:21: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
   166 |             if (vel != 0.0 || jogTouch) {
@@ -295,8 +295,8 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/
   169 |             if (row < 0 || row >= (int) b.rows.size()) return; auto& r = b.rows[(size_t) row]; if (r.kind == 0) return;
       |                                                                ^~~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp: In function ‘int {anonymous}::defaultWidth()’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:21:41: warning: ‘juce::Displays::Display::userArea’ is deprecated: Use userBounds [-Wdeprecated-declarations]
-   21 |         const double maxH = (double) d->userArea.getHeight() * 0.92, maxW = (double) d->userArea.getWidth() * 0.95;
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:22:41: warning: ‘juce::Displays::Display::userArea’ is deprecated: Use userBounds [-Wdeprecated-declarations]
+   22 |         const double maxH = (double) d->userArea.getHeight() * 0.92, maxW = (double) d->userArea.getWidth() * 0.95;
       |                                         ^~~~~~~~
 In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.h:208,
                  from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_gui_extra/juce_gui_extra.h:68,
@@ -304,55 +304,55 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/buil
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_gui_basics/desktop/juce_Displays.h:74:58: note: declared here
    74 |         [[deprecated ("Use userBounds")]] Rectangle<int> userArea;
       |                                                          ^~~~~~~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:21:41: warning: ‘juce::Displays::Display::userArea’ is deprecated: Use userBounds [-Wdeprecated-declarations]
-   21 |         const double maxH = (double) d->userArea.getHeight() * 0.92, maxW = (double) d->userArea.getWidth() * 0.95;
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:22:41: warning: ‘juce::Displays::Display::userArea’ is deprecated: Use userBounds [-Wdeprecated-declarations]
+   22 |         const double maxH = (double) d->userArea.getHeight() * 0.92, maxW = (double) d->userArea.getWidth() * 0.95;
       |                                         ^~~~~~~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_gui_basics/desktop/juce_Displays.h:74:58: note: declared here
    74 |         [[deprecated ("Use userBounds")]] Rectangle<int> userArea;
       |                                                          ^~~~~~~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:21:41: warning: ‘juce::Displays::Display::userArea’ is deprecated: Use userBounds [-Wdeprecated-declarations]
-   21 |         const double maxH = (double) d->userArea.getHeight() * 0.92, maxW = (double) d->userArea.getWidth() * 0.95;
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:22:41: warning: ‘juce::Displays::Display::userArea’ is deprecated: Use userBounds [-Wdeprecated-declarations]
+   22 |         const double maxH = (double) d->userArea.getHeight() * 0.92, maxW = (double) d->userArea.getWidth() * 0.95;
       |                                         ^~~~~~~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_gui_basics/desktop/juce_Displays.h:74:58: note: declared here
    74 |         [[deprecated ("Use userBounds")]] Rectangle<int> userArea;
       |                                                          ^~~~~~~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:21:89: warning: ‘juce::Displays::Display::userArea’ is deprecated: Use userBounds [-Wdeprecated-declarations]
-   21 |         const double maxH = (double) d->userArea.getHeight() * 0.92, maxW = (double) d->userArea.getWidth() * 0.95;
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:22:89: warning: ‘juce::Displays::Display::userArea’ is deprecated: Use userBounds [-Wdeprecated-declarations]
+   22 |         const double maxH = (double) d->userArea.getHeight() * 0.92, maxW = (double) d->userArea.getWidth() * 0.95;
       |                                                                                         ^~~~~~~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_gui_basics/desktop/juce_Displays.h:74:58: note: declared here
    74 |         [[deprecated ("Use userBounds")]] Rectangle<int> userArea;
       |                                                          ^~~~~~~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:21:89: warning: ‘juce::Displays::Display::userArea’ is deprecated: Use userBounds [-Wdeprecated-declarations]
-   21 |         const double maxH = (double) d->userArea.getHeight() * 0.92, maxW = (double) d->userArea.getWidth() * 0.95;
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:22:89: warning: ‘juce::Displays::Display::userArea’ is deprecated: Use userBounds [-Wdeprecated-declarations]
+   22 |         const double maxH = (double) d->userArea.getHeight() * 0.92, maxW = (double) d->userArea.getWidth() * 0.95;
       |                                                                                         ^~~~~~~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_gui_basics/desktop/juce_Displays.h:74:58: note: declared here
    74 |         [[deprecated ("Use userBounds")]] Rectangle<int> userArea;
       |                                                          ^~~~~~~~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:21:89: warning: ‘juce::Displays::Display::userArea’ is deprecated: Use userBounds [-Wdeprecated-declarations]
-   21 |         const double maxH = (double) d->userArea.getHeight() * 0.92, maxW = (double) d->userArea.getWidth() * 0.95;
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:22:89: warning: ‘juce::Displays::Display::userArea’ is deprecated: Use userBounds [-Wdeprecated-declarations]
+   22 |         const double maxH = (double) d->userArea.getHeight() * 0.92, maxW = (double) d->userArea.getWidth() * 0.95;
       |                                                                                         ^~~~~~~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/build/_deps/juce-src/modules/juce_gui_basics/desktop/juce_Displays.h:74:58: note: declared here
    74 |         [[deprecated ("Use userBounds")]] Rectangle<int> userArea;
       |                                                          ^~~~~~~~
 [ 35%] Building CXX object CMakeFiles/ScratchCatDuo.dir/_deps/juce-src/modules/juce_gui_extra/juce_gui_extra.cpp.o
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp: In lambda function:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:243:101: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
-  243 |         loopSeg[d]->onClick = [this, d](int i) { if (proc.view[d].loopOn.load() && lastLoopBeats[d] == bv[i]) cmd(duoui::kLoopExit, d); else { lastLoopBeats[d] = bv[i]; cmd(duoui::kBeatLoop, d, 0, bv[i]); } };
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:244:101: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
+  244 |         loopSeg[d]->onClick = [this, d](int i) { if (proc.view[d].loopOn.load() && lastLoopBeats[d] == bv[i]) cmd(duoui::kLoopExit, d); else { lastLoopBeats[d] = bv[i]; cmd(duoui::kBeatLoop, d, 0, bv[i]); } };
       |                                                                                    ~~~~~~~~~~~~~~~~~^~~~~~~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp: In member function ‘void DuoEditor::Impl::padPress(int, int, bool)’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:401:88: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
-  401 |         if (mode[d] == 1 && down) { if (proc.view[d].loopOn.load() && lastLoopBeats[d] == loops[i]) cmd(duoui::kLoopExit, d); else { lastLoopBeats[d] = loops[i]; cmd(duoui::kBeatLoop, d, 0, loops[i]); } }
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:402:88: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
+  402 |         if (mode[d] == 1 && down) { if (proc.view[d].loopOn.load() && lastLoopBeats[d] == loops[i]) cmd(duoui::kLoopExit, d); else { lastLoopBeats[d] = loops[i]; cmd(duoui::kBeatLoop, d, 0, loops[i]); } }
       |                                                                       ~~~~~~~~~~~~~~~~~^~~~~~~~~~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp: In lambda function:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:468:13: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
-  468 |             if (r != 1) return; const auto name = w->getTextEditorContents("n").trim();
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:469:13: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  469 |             if (r != 1) return; const auto name = w->getTextEditorContents("n").trim();
       |             ^~
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:468:33: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
-  468 |             if (r != 1) return; const auto name = w->getTextEditorContents("n").trim();
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:469:33: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  469 |             if (r != 1) return; const auto name = w->getTextEditorContents("n").trim();
       |                                 ^~~~~
 /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp: In member function ‘void DuoEditor::Impl::frame()’:
-/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:596:129: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
-  596 |             if (v.loopOn.load()) for (int i = 0; i < 6; ++i) { static const double bv[6] = { 0.25, 0.5, 1, 2, 4, 8 }; if (bv[i] == lastLoopBeats[d]) loopSeg[d]->set(i, true); }
+/home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/DuoEditor.cpp:598:129: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
+  598 |             if (v.loopOn.load()) for (int i = 0; i < 6; ++i) { static const double bv[6] = { 0.25, 0.5, 1, 2, 4, 8 }; if (bv[i] == lastLoopBeats[d]) loopSeg[d]->set(i, true); }
       |                                                                                                                           ~~~~~~^~~~~~~~~~~~~~~~~~~
 [ 36%] Building CXX object CMakeFiles/ScratchCatDuo.dir/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.cpp.o
 [ 38%] Building CXX object CMakeFiles/ScratchCatDuo.dir/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics_2.cpp.o
@@ -377,21 +377,21 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/buil
 [ 70%] Linking CXX static library "ScratchCatDuo_artefacts/Release/libScratch Cat Duo_SharedCode.a"
 [ 70%] Built target ScratchCatDuo
 [ 71%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
-[ 73%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
+[ 75%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
 [ 75%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
 [ 76%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
-[ 81%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
-[ 81%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+[ 80%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+[ 80%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+[ 83%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
 [ 83%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
-[ 81%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
-[ 85%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
-[ 88%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
-[ 88%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
-[ 90%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
-[ 91%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
-[ 93%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
-[ 95%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
-[ 96%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
+[ 85%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+[ 86%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+[ 88%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
+[ 90%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+[ 93%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
+[ 93%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+[ 95%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
+[ 96%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
 [ 98%] Linking CXX executable "ScratchCatDuo_artefacts/Release/Standalone/Scratch Cat Duo"
 [ 98%] Built target ScratchCatDuo_Standalone
 [100%] Linking CXX shared module "ScratchCatDuo_artefacts/Release/VST3/Scratch Cat Duo.vst3/Contents/x86_64-linux/Scratch Cat Duo.so"

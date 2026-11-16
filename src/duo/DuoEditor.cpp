@@ -523,6 +523,7 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
             "Scratch Cat Duo is a free and open source plugin by Studio 87, AGPL-3.0-or-later. It collects no data and never uses the network.\n\nVersion " + juce::String(JucePlugin_VersionString) + ".\n\nIf it helps your music, a coffee on Ko-fi keeps new plugins coming.");
         c->add("Support Studio 87 on Ko-fi", [] { juce::URL("https://ko-fi.com/studio87").launchInDefaultBrowser(); });
         c->add(studio87link::buttonText(), [] { studio87link::openUpdater("scratchcatduo-vst"); })->setTooltip(studio87link::tipText());
+        c->add(studio87link::githubButtonText(), [] { studio87link::openGitHub("scratchcatduo-vst"); })->setTooltip(studio87link::githubTipText());
         c->add("GitHub", [] { juce::URL("https://github.com/SpeakingColors/scratchcatduo-vst").launchInDefaultBrowser(); });
         c->onClose = [this] { overlay.close(); }; overlay.show(std::move(c), 960, 330);
     }

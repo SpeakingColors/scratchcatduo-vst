@@ -123,7 +123,7 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
     juce::TextButton* killBtn[2][3] = {}; float killStore[2][3] = {};
     Seg* loopSeg[2] = {}; Seg* stutterSeg[2] = {};
     Label* beatInfo = nullptr; Label* keyInfo = nullptr; Label* anaInfo = nullptr; Label* mixPos = nullptr; Label* fxInfo = nullptr; Label* dawInfo = nullptr; Label* browserStatus = nullptr;
-    Seg* zoomSeg = nullptr; juce::Slider* tempoSl[2] = {}; Label* sizeLabel = nullptr; KnobBox* hostKnob = nullptr;
+    Seg* zoomSeg = nullptr; juce::Slider* tempoSl[2] = {}; Label* sizeLabel = nullptr; Label* hostLbl = nullptr; Label* chainVal = nullptr;
     int mode[2] = { 0, 0 }; bool deleteMode[2] = { false, false }; double lastLoopBeats[2] = { 0, 0 };
     std::unique_ptr<juce::FileChooser> chooser; bool eco = false;
     struct PresetName : juce::Component, juce::SettableTooltipClient
@@ -234,7 +234,7 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
         srcSeg[d]->onCol = col; bindChoice(*srcSeg[d], "src_" + s);
         nameField[d] = own(std::make_unique<NameField>()); nameField[d]->setBounds(X(156, 434, 655, 36));
         nameField[d]->setTooltip("The track on this deck. Click to pick a file, or drag one from the browser below."); nameField[d]->onClick = [this, d] { chooseFile(d); };
-        jog[d] = std::make_unique<Jog>(proc, d); addAndMakeVisible(*jog[d]); jog[d]->setBounds(X(55, 518, 344, 344)); jog[d]->setTooltip("Platter. Drag to scratch: it follows your hand forward and backward and holds when you stop.");
+        jog[d] = std::make_unique<Jog>(proc, d); addAndMakeVisible(*jog[d]); jog[d]->setBounds(X(55, 518, 344, 344)); jog[d]->setTooltip("Platter. Middle: drag around to scratch, it follows your hand and holds when you stop. Outer ring: hold and drag down to speed the deck up, up to slow it (up to 8 %), it springs back when you let go. Paused: it moves the position.");
         auto* sw = seg(X(414, 518, 298, 31), { { "Sync", "Match this deck's tempo to the DAW tempo (or the other deck when Tempo is set to Decks lead)." }, { "Master", "Make this deck the tempo leader when both decks are synced and the tempo follows the decks." },
                        { "Key lock", "Change the tempo without changing the pitch." }, { "Quant", "Snap cue points and loops to the beat grid." } }, { 65, 75, 87, 71 }, 14.f);
         bindToggles(*sw, { "sync_" + s, "master_" + s, "keylock_" + s, "quant_" + s });
@@ -321,41 +321,41 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
         text("DAW ROUTING", R(57, 1167, 300, 16), 13.f, kDim, juce::Justification::centredLeft, true);
         text("HOW SCRATCH CAT DUO TALKS TO YOUR PROJECT", R(459, 1167, 500, 16), 13.f, kDim, juce::Justification::centredRight, true);
         const juce::StringArray items { "File (the loaded track)", "DAW input" };
-        text("DECK A INPUT", R(57, 1182, 300, 14), 11.f, kDim, juce::Justification::centredLeft, true); text("DECK B INPUT", R(516, 1182, 300, 14), 11.f, kDim, juce::Justification::centredLeft, true);
-        choice("src_a", R(57, 1204, 443, 31), "Where deck A gets its sound. File: the loaded track. DAW input: the audio your project sends to the Deck A input.", &items);
-        choice("src_b", R(516, 1204, 443, 31), "Where deck B gets its sound. File: the loaded track. DAW input: the audio your project sends to the Deck B input.", &items);
-        text("OUTPUTS", R(57, 1243, 200, 14), 11.f, kDim, juce::Justification::centredLeft, true); text("TEMPO", R(517, 1243, 200, 14), 11.f, kDim, juce::Justification::centredLeft, true);
-        auto* o = seg(R(58, 1261, 441, 29), { { "Master only", "One stereo output with the whole mix." }, { "A " + dot() + " B " + dot() + " Master", "The master mix plus a separate output for each deck, so you can route them to their own DAW channels. Enable the extra outputs in your host." } }, { 215, 226 }, 14.f);
+        text("DECK A INPUT", R(57, 1184, 300, 14), 11.f, kDim, juce::Justification::centredLeft, true); text("DECK B INPUT", R(516, 1184, 300, 14), 11.f, kDim, juce::Justification::centredLeft, true);
+        choice("src_a", R(57, 1200, 443, 31), "Where deck A gets its sound. File: the loaded track. DAW input: the audio your project sends to the Deck A input.", &items);
+        choice("src_b", R(516, 1200, 443, 31), "Where deck B gets its sound. File: the loaded track. DAW input: the audio your project sends to the Deck B input.", &items);
+        text("OUTPUTS", R(57, 1240, 200, 14), 11.f, kDim, juce::Justification::centredLeft, true); text("TEMPO", R(517, 1240, 200, 14), 11.f, kDim, juce::Justification::centredLeft, true);
+        auto* o = seg(R(58, 1256, 441, 29), { { "Master only", "One stereo output with the whole mix." }, { "A " + dot() + " B " + dot() + " Master", "The master mix plus a separate output for each deck, so you can route them to their own DAW channels. Enable the extra outputs in your host." } }, { 215, 226 }, 14.f);
         o->onCol = Colour(0xfff5a06a); bindChoice(*o, "outmode");
-        auto* t = seg(R(517, 1261, 441, 29), { { "Follow DAW", "Sync matches the tempo of your project." }, { "Decks lead", "Sync matches the other deck, not the project." } }, { 224, 217 }, 14.f); bindChoice(*t, "tempomode");
-        hostKnob = knob("", "HOST BPM", R(57, 1301, 84, 74), 44.f, kAccent, "The tempo your project reports.", [this] { const double b = proc.hostBpmView.load(); return b > 0 ? juce::String(b, 1) : juce::String("none"); });
-        hostKnob->s.setRange(60.0, 200.0); hostKnob->s.setInterceptsMouseClicks(false, false);
-        text("CONTROLLER", R(173, 1305, 200, 14), 11.f, kDim, juce::Justification::centredLeft, true);
-        hold("MIDI learn...", R(153, 1330, 156, 31), "Map the controls of your MIDI controller to decks, mixer and effects.", [this] { showMidi(); });
-        dawInfo = text("", R(57, 1391, 902, 54), 13.f, kDim, juce::Justification::topLeft, false, true); dawInfo->lines = 3;
+        auto* t = seg(R(517, 1256, 441, 29), { { "Follow DAW", "Sync matches the tempo of your project." }, { "Decks lead", "Sync matches the other deck, not the project." } }, { 224, 217 }, 14.f); bindChoice(*t, "tempomode");
+        hostLbl = text("HOST BPM", R(57, 1303, 190, 18), 13.f, kAccent, juce::Justification::centredLeft, true, true);
+        hold("MIDI learn...", R(260, 1296, 156, 31), "Map the controls of your MIDI controller to decks, mixer and effects.", [this] { showMidi(); });
+        dawInfo = text("", R(57, 1337, 902, 18), 13.f, kDim, juce::Justification::centredLeft, false, true); dawInfo->lines = 1;
     }
 
     void buildFx()
     {
-        text("FX CHAIN", R(995, 1167, 200, 31), 13.f, kDim, juce::Justification::centredLeft, true);
+        text("FX CHAIN", R(995, 1168, 90, 29), 13.f, kDim, juce::Justification::centredLeft, true);
+        text("CHAIN MIX", R(1090, 1176, 90, 14), 11.f, kDim, juce::Justification::centredLeft, true);
+        linear("chain", R(1175, 1170, 120, 26), false, kAccent, "Overall amount of the whole FX chain.");
+        chainVal = text("", R(1300, 1175, 60, 16), 13.f, kAccent, juce::Justification::centredLeft, false, true);
+        text("ECHO BEATS", R(1372, 1176, 90, 14), 11.f, kDim, juce::Justification::centredLeft, true);
+        auto* eb = seg(R(1458, 1168, 215, 29), { { "1/4", "Echo repeats every quarter beat." }, { "1/2", "Echo repeats every half beat." }, { "3/4", "Echo repeats every three quarter beat." }, { "1", "Echo repeats every beat." }, { "2", "Echo repeats every two beats." } }, {}, 14.f);
+        bindChoice(*eb, "echobeats");
         auto* tg = seg(R(1683, 1168, 260, 29), { { "Deck A", "The three effects work on deck A." }, { "Deck B", "The three effects work on deck B." }, { "A + B", "The three effects work on both decks together." }, { "Master", "The three effects work on the master mix." } }, { 68, 68, 57, 66 }, 14.f);
         bindChoice(*tg, "fxtarget");
         const juce::String amountTip = "Main control of the effect: filter cutoff, echo feedback, reverb size, flanger depth, crush amount.";
         for (int k = 1; k <= 3; ++k)
         {
             const int x0 = 995 + (k - 1) * 320; const juce::String n(k);
-            text("FX" + n, R(x0 + 9, 1216, 30, 31), 12.f, kDim, juce::Justification::centredLeft, false, true);
-            choice("fxt" + n, R(x0 + 37, 1216, 233, 31), "Effect type for slot " + n + ".");
-            auto* on = own(std::make_unique<juce::TextButton>()); on->setBounds(R(x0 + 276, 1219, 26, 22)); on->setClickingTogglesState(true); on->setColour(juce::TextButton::buttonOnColourId, kAccent);
+            text("FX" + n, R(x0 + 9, 1220, 30, 31), 12.f, kDim, juce::Justification::centredLeft, false, true);
+            choice("fxt" + n, R(x0 + 37, 1220, 233, 31), "Effect type for slot " + n + ".");
+            auto* on = own(std::make_unique<juce::TextButton>()); on->setBounds(R(x0 + 276, 1223, 26, 22)); on->setClickingTogglesState(true); on->setColour(juce::TextButton::buttonOnColourId, kAccent);
             on->setTooltip("Switch this effect on or off."); bAtt.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(proc.apvts, "fxon" + n, *on));
-            knob("fxp1_" + n, "AMOUNT", R(x0 + 40, 1251, 84, 66), 35.f, kAccent, amountTip, [this, n] { return fxAmountText(n); });
-            knob("fxp2_" + n, "DRY/WET", R(x0 + 186, 1251, 84, 66), 35.f, kAccent, "How much of the effect you hear.", [this, n] { return juce::String((int) std::lround(proc.get("fxp2_" + n) * 100.f)) + " %"; });
+            knob("fxp1_" + n, "AMOUNT", R(x0 + 40, 1260, 84, 66), 35.f, kAccent, amountTip, [this, n] { return fxAmountText(n); });
+            knob("fxp2_" + n, "DRY/WET", R(x0 + 186, 1260, 84, 66), 35.f, kAccent, "How much of the effect you hear.", [this, n] { return juce::String((int) std::lround(proc.get("fxp2_" + n) * 100.f)) + " %"; });
         }
-        knob("chain", "CHAIN MIX", R(995, 1332, 84, 74), 44.f, kAccent, "Overall amount of the whole FX chain.", [this] { return juce::String((int) std::lround(proc.get("chain") * 100.f)) + " %"; });
-        fxInfo = text("", R(1093, 1352, 520, 24), 16.f, kInk, juce::Justification::centredLeft);
-        text("ECHO TIME (BEATS)", R(1640, 1335, 300, 14), 11.f, kDim, juce::Justification::centredLeft, true);
-        auto* eb = seg(R(1640, 1352, 300, 28), { { "1/4", "Echo repeats every quarter beat." }, { "1/2", "Echo repeats every half beat." }, { "3/4", "Echo repeats every three quarter beat." }, { "1", "Echo repeats every beat." }, { "2", "Echo repeats every two beats." } }, {}, 14.f);
-        bindChoice(*eb, "echobeats");
+        fxInfo = text("", R(995, 1336, 940, 20), 15.f, kInk, juce::Justification::centredLeft);
     }
     juce::String fxAmountText(const juce::String& n)
     {
@@ -367,9 +367,9 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
 
     void buildBrowser()
     {
-        text("TRACK BROWSER", R(55, 1479, 400, 14), 13.f, kDim, juce::Justification::centredLeft, true);
-        browserStatus = text("", R(1645, 1479, 300, 14), 12.f, kYellow, juce::Justification::centredRight, true, true);
-        addAndMakeVisible(browser); browser.setBounds(R(55, 1499, 1890, 235));
+        text("TRACK BROWSER", R(55, 1383, 400, 14), 13.f, kDim, juce::Justification::centredLeft, true);
+        browserStatus = text("", R(1645, 1383, 300, 14), 12.f, kYellow, juce::Justification::centredRight, true, true);
+        addAndMakeVisible(browser); browser.setBounds(R(55, 1403, 1890, 331));
         browser.onLoad = [this](int d, const juce::File& f) { loadTo(d, f); };
         browser.freeDeck = [this] { return proc.view[0].playing.load() && ! proc.view[1].playing.load() ? 1 : 0; };
         browserStatus->setText(browser.statusText());
@@ -512,7 +512,7 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
         auto c = std::make_unique<TextCard>("Guide",
             "Scratch Cat Duo is two decks, a mixer and an effect chain in one plugin: scratch, mix and transition between two tracks, or run it on your project's audio.\n\n"
             "Load a track on each deck (click the name box, use the browser, or drop a file), then press Play. Sync matches a deck's tempo to your project (or to the other deck). Key lock changes tempo without changing pitch.\n\n"
-            "Drag a platter or a waveform to scratch. Hold Roll, Censor or Stutter for performance moves. The pads change with the tabs: hot cues, loops, jumps, sampler or effects.\n\n"
+            "Drag the middle of a platter or a waveform to scratch. Hold the outer ring of a platter and drag down to speed up or up to slow down, like a CDJ. Hold Roll, Censor or Stutter for performance moves. The pads change with the tabs: hot cues, loops, jumps, sampler or effects.\n\n"
             "The mixer has trim, three band EQ with kill buttons, a colour filter, channel faders and a crossfader with three curves. The FX chain can work on deck A, deck B, both or the master.\n\n"
             "In the browser, add a folder (subfolders are included), star folders to keep them, search, then load with A or B or drag a row onto a deck. Nothing leaves your computer.");
         c->onClose = [this] { overlay.close(); }; overlay.show(std::move(c), 1000, 560);
@@ -624,8 +624,8 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
             for (int k = 1; k <= 3; ++k) { const int t = (int) std::lround(proc.get("fxt" + juce::String(k))); if (proc.get("fxon" + juce::String(k)) > 0.5f && t > 0) { on.add(tn[juce::jlimit(0, 5, t)]); echo = echo || t == 2; } }
             fxInfo->setText(on.isEmpty() ? juce::String("No effect is on.") : on.joinIntoString(" + ") + " on " + tg[juce::jlimit(0, 3, (int) std::lround(proc.get("fxtarget")))] + (echo ? ", tempo synced" : ""));
         }
-        const double hb = proc.hostBpmView.load(); if (hostKnob != nullptr) hostKnob->s.setValue(juce::jlimit(60.0, 200.0, hb > 0 ? hb : 60.0), juce::dontSendNotification);
-        dawInfo->setText((hb > 0 ? "Host tempo " + juce::String(hb, 1) + " BPM" : juce::String("Host tempo: not reported")) + "\nDeck A " + juce::String(ba, 1) + " BPM " + dot() + " Deck B " + juce::String(bb, 1) + " BPM\nOutputs: " + (proc.get("outmode") > 0.5f ? "3 stereo (Master, Deck A, Deck B)" : "1 stereo (Master)"));
+        const double hb = proc.hostBpmView.load(); hostLbl->setText("HOST BPM  " + (hb > 0 ? juce::String(hb, 1) : juce::String("none"))); chainVal->setText(juce::String((int) std::lround(proc.get("chain") * 100.f)) + " %");
+        dawInfo->setText((hb > 0 ? "Host tempo " + juce::String(hb, 1) + " BPM" : juce::String("Host tempo: not reported")) + "  " + dot() + "  Deck A " + juce::String(ba, 1) + " BPM  " + dot() + "  Deck B " + juce::String(bb, 1) + " BPM  " + dot() + "  Outputs: " + (proc.get("outmode") > 0.5f ? "3 stereo (Master, Deck A, Deck B)" : "1 stereo (Master)"));
         browserStatus->setText(browser.statusText());
         presetName->setTextIf(bank.list[(size_t) juce::jlimit(0, (int) bank.list.size() - 1, bank.current)].name);
         const int pct = (int) std::lround(100.0 * ed.getWidth() / (double) defaultWidth()); sizeLabel->setText("WINDOW " + juce::String(pct) + " %");
@@ -663,8 +663,8 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
         }
         panel(g, { 835, 398, 330, 740 }, Colour(0xff2b2e34), 6.f);
         g.setColour(kDim); g.setFont(caps(13.f, 0.22f)); g.drawText("MIXER", R(843, 404, 314, 14), juce::Justification::centred);
-        panel(g, { 44, 1154, 928, 304 }, kPanel); panel(g, { 982, 1154, 974, 304 }, kPanel); panel(g, { 44, 1468, 1912, 277 }, kPanel);
-        for (int k = 0; k < 3; ++k) panel(g, { 995 + k * 320, 1206, 308, 118 }, kPanel2);
+        panel(g, { 44, 1154, 928, 208 }, kPanel); panel(g, { 982, 1154, 974, 208 }, kPanel); panel(g, { 44, 1372, 1912, 373 }, kPanel);
+        for (int k = 0; k < 3; ++k) panel(g, { 995 + k * 320, 1206, 308, 122 }, kPanel2);
         g.setColour(kDim); g.setFont(caps(12.f, 0.14f)); g.drawText("STUDIO 87  " + dot() + "  SCRATCH CAT DUO V" + juce::String(JucePlugin_VersionString), R(44, 1762, 800, 18), juce::Justification::centredLeft);
     }
 };

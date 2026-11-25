@@ -98,6 +98,7 @@ private:
     std::atomic<bool> jogTouch[2] { false, false };
     float jogTicks[2] = { 0.f, 0.f };
     bool midiJogOn[2] = { false, false };
+    double editorBend[2] = { 0.0, 0.0 };     // nudge held on the platter ring (audio thread only)
     double restoreHot[2][8];
     bool haveRestore[2] = { false, false };
     double fs = 44100.0; int maxBlock = 512;

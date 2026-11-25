@@ -177,15 +177,17 @@ button[aria-pressed="true"],button.on { background:color-mix(in srgb,var(--cL) 1
 .mstm { display:flex; flex-direction:column; align-items:center; gap:4px; } .mstm .vuc { flex:1; width:28px; position:relative; min-height:260px; }
 .mxx { display:flex; flex-direction:column; align-items:center; gap:4px; } .mxx .fdw.h { width:92%; }
 .botrow { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:10px; }
-.pnl { background:#34373E; border:1px solid #4A4E57; border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:8px; min-width:0; }
-.routg { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 16px; align-items:end; } .routg .rg { display:flex; flex-direction:column; gap:3px; } .routg .rg:last-child{flex-direction:row;align-items:center;gap:12px}
+.pnl { background:#34373E; border:1px solid #4A4E57; border-radius:12px; padding:9px 12px; display:flex; flex-direction:column; gap:5px; min-width:0; }
+.routg { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px 16px; align-items:end; } .routg .rg { display:flex; flex-direction:column; gap:2px; } .routg .rg:last-child{grid-column:1/-1;flex-direction:row;align-items:center;gap:14px}
+.routg .kw{display:grid;grid-template-columns:auto auto;grid-template-areas:'k l' 'k v';align-items:center;justify-items:start;column-gap:6px;width:auto}.routg .kw .knob{grid-area:k;transform:scale(.6);margin:-9px -8px}.routg .kw .kl{grid-area:l;text-align:left}.routg .kw .kv{grid-area:v;white-space:nowrap}
+#dawInfo{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .fxcards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
 .fxc { background:#1F2125; border:1px solid #4A4E57; border-radius:10px; padding:6px 8px; display:flex; flex-direction:column; gap:4px; } .fxh { display:flex; gap:6px; align-items:center; } .fxh span{font-size:11px;color:var(--ink-dim)} .fxsel{flex:1;min-width:0} .fxsel select{width:100%} .fxsel .fld{width:100%}
-.fxon { width:26px; height:22px; padding:0; border-radius:5px; } .fxk { display:flex; justify-content:space-around; } .fxk .kw .knob{transform:scale(.8);margin:-4px}
-#fxFoot { align-items:center; gap:14px; }
+.fxon { width:26px; height:22px; padding:0; border-radius:5px; } .fxk { display:flex; justify-content:space-around; } .fxk .kw{display:grid;grid-template-columns:auto auto;grid-template-areas:'k l' 'k v';align-items:center;justify-items:start;column-gap:6px;width:auto}.fxk .kw .knob{grid-area:k;transform:scale(.7);margin:-8px -6px}.fxk .kw .kl{grid-area:l;text-align:left}.fxk .kw .kv{grid-area:v;white-space:nowrap}
+#fxFoot { display:flex; align-items:center; gap:12px; min-width:0; flex:1; justify-content:center } #fxFoot .kw{display:grid;grid-template-columns:auto auto;grid-template-areas:'k l' 'k v';align-items:center;justify-items:start;column-gap:6px;width:auto}#fxFoot .kw .knob{grid-area:k;transform:scale(.6);margin:-9px -8px}#fxFoot .kw .kl{grid-area:l;text-align:left}#fxFoot .kw .kv{grid-area:v}#fxNote{white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .fxcards{flex:1} .fxc{justify-content:center;gap:10px}
 .brow{background:#34373E;border:1px solid #4A4E57;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:6px;min-height:0}
 .brtop{gap:8px}.brtop input[type=search]{flex:1 1 260px;min-width:160px;background:#0b0c0f;color:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px}
-.brbody{display:grid;grid-template-columns:240px minmax(0,1fr);gap:8px;height:200px;min-height:0}
+.brbody{display:grid;grid-template-columns:240px minmax(0,1fr);gap:8px;height:300px;min-height:0}
 .brtree,.brlist{background:#1F2125;border:1px solid #4A4E57;border-radius:8px;overflow:auto;padding:4px}
 .brn{display:flex;gap:6px;align-items:center;padding:3px 6px;cursor:pointer;font-size:12.5px;border-radius:3px}.brn:hover{background:#2a2c33}.brn.on{background:#1f3a38;color:#4FD1C5}.brn.gone{opacity:.45}
 .brn .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.brn .ct{color:var(--ink-dim);font-size:11px}.brn .st{width:14px;color:#F2D16B;cursor:pointer}
@@ -243,7 +245,7 @@ button[aria-pressed="true"],button.on { background:color-mix(in srgb,var(--cL) 1
       </div>
       <div class="botrow">
         <div class="pnl" id="dawBox"><h3 class="sh"><span>DAW routing</span><span class="note">how Scratch Cat Duo talks to your project</span></h3></div>
-        <div class="pnl" id="fxBox"><h3 class="sh"><span>FX chain</span><span id="fxTop"></span></h3><div class="fxcards" id="fxCards"></div><div class="row2" id="fxFoot"></div></div>
+        <div class="pnl" id="fxBox"><h3 class="sh"><span>FX chain</span><span id="fxFoot"></span><span id="fxTop"></span></h3><div class="fxcards" id="fxCards"></div><div class="note" id="fxNote"></div></div>
       </div>
       <section class="brow" id="brow"></section>
 
@@ -618,7 +620,7 @@ Deck.prototype.render = function (oL, oR, len, trel) {
     if (this.touch) { var d = this.target - this.pos; this.rate = d * (1 / (0.012 * sr)); }
     else {
       var m = this.mode;
-      if (m === "brake") { rT = 0; acc = 1.2 / (this.brakeT * sr); } else if (m === "back") { rT = -3.2; acc = 4.4 / (0.1 * sr); } else if (m === "censor") { rT = -tmp; acc = 2.5 / (0.01 * sr); } else if (this.playing) { rT = tmp; acc = 1 / (0.12 * sr); } else { rT = 0; acc = 1 / (0.08 * sr); }
+      if (m === "brake") { rT = 0; acc = 1.2 / (this.brakeT * sr); } else if (m === "back") { rT = -3.2; acc = 4.4 / (0.1 * sr); } else if (m === "censor") { rT = -tmp; acc = 2.5 / (0.01 * sr); } else if (this.playing) { rT = tmp * (1 + 0.08 * (this.bend || 0)); acc = 1 / (0.12 * sr); } else { rT = (this.bend || 0) * 0.5; acc = 1 / (0.08 * sr); }
       if (this.trans) { this.transPh += 1 / (sr * 60 / this.bpm / 2); if (this.transPh >= 1) this.transPh -= 1; }
       if (this.stutter) { var sl = this.beatLen() / 4; this.stTick = (this.stTick || 0) + 1; if (this.stTick >= sl) { this.stTick = 0; this.pos = this.cue; } }
       var dd = rT - this.rate; this.rate += Math.abs(dd) <= acc ? dd : (dd > 0 ? acc : -acc);
@@ -811,6 +813,7 @@ function seekWave(cv, d) {
 /* classic platter: tick ring, grooves, label disc and a white needle line */
 function drawClassic(g, w, h, cx, cy, R, a, d, col, letter) {
   g.beginPath(); g.arc(cx, cy, R, 0, TAU); g.fillStyle = "#1F2125"; g.fill(); g.lineWidth = 3; g.strokeStyle = d.touch ? col : "#4A4E57"; g.stroke();
+  if (d.bend) { g.beginPath(); g.arc(cx, cy, R * 0.85, 0, TAU); g.strokeStyle = col; g.globalAlpha = 0.45; g.lineWidth = R * 0.3; g.stroke(); g.globalAlpha = 1; g.fillStyle = "#f4f5f7"; g.font = "bold 13px 'JetBrains Mono',monospace"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText("NUDGE " + (d.bend > 0 ? "+" : "-"), cx, cy + R * 0.5); }
   g.save(); g.translate(cx, cy); g.rotate(a);
   for (var k = 0; k < 72; k++) { var t = k / 72 * TAU, long = k % 2 === 0, r1 = R * (long ? 0.7 : 0.76), r2 = R * 0.9; g.beginPath(); g.moveTo(Math.cos(t) * r1, Math.sin(t) * r1); g.lineTo(Math.cos(t) * r2, Math.sin(t) * r2); g.lineWidth = long ? 3 : 2; g.strokeStyle = col; g.globalAlpha = 0.85; g.stroke(); }
   g.globalAlpha = 1; g.restore();
@@ -829,18 +832,21 @@ function mkPlatter(cv, d, col, letter, classic) {
   var down = false, a0 = 0, p0 = 0, acc = 0, la = 0; var REV = 1.8;
   var lx = 0, ly = 0;
   function ang(e) { var r = cv.getBoundingClientRect(); return Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2)); }
-  cv.addEventListener("pointerdown", function (e) { if (d.n < 100) return; down = true; cv.setPointerCapture(e.pointerId); la = ang(e); lx = e.clientX; ly = e.clientY; acc = 0; p0 = d.pos; d.touch = true; d.target = d.pos; e.preventDefault(); });
-  cv.addEventListener("pointermove", function (e) { if (!down) return; var r0 = cv.getBoundingClientRect(), rx = e.clientX - (r0.left + r0.width / 2), ry = e.clientY - (r0.top + r0.height / 2), rr = Math.hypot(rx, ry), R0 = Math.min(r0.width, r0.height) / 2, dd;
+  function onRing(e) { var r = cv.getBoundingClientRect(), R = Math.min(r.width, r.height) / 2 - 4; return Math.hypot(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2)) >= R * 0.70; }
+  var ring = false, ry0 = 0;
+  cv.addEventListener("pointerdown", function (e) { if (d.n < 100) return; down = true; cv.setPointerCapture(e.pointerId); if (onRing(e)) { ring = true; ry0 = e.clientY; d.bend = 0; e.preventDefault(); return; } ring = false; la = ang(e); lx = e.clientX; ly = e.clientY; acc = 0; p0 = d.pos; d.touch = true; d.target = d.pos; e.preventDefault(); });
+  cv.addEventListener("pointermove", function (e) { if (!down) { cv.style.cursor = onRing(e) ? "ns-resize" : "grab"; return; } if (ring) { d.bend = clamp((e.clientY - ry0) / 70, -1, 1); return; } var r0 = cv.getBoundingClientRect(), rx = e.clientX - (r0.left + r0.width / 2), ry = e.clientY - (r0.top + r0.height / 2), rr = Math.hypot(rx, ry), R0 = Math.min(r0.width, r0.height) / 2, dd;
     if (rr < R0 * 0.22) { dd = ((e.clientX - lx) - (e.clientY - ly)) / (R0 * 1.1); la = ang(e); }   /* near the spindle: drag in any direction */
     else { var a = ang(e); dd = a - la; if (dd > Math.PI) dd -= TAU; if (dd < -Math.PI) dd += TAU; la = a; }
     lx = e.clientX; ly = e.clientY; acc += dd; d.target = clamp(p0 + acc / TAU * REV * sr, 0, d.n - 2); });
-  function up() { if (!down) return; down = false; d.touch = false; } cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+  function up() { if (!down) return; down = false; if (ring) { ring = false; d.bend = 0; return; } d.touch = false; } cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
   cv.addEventListener("wheel", function (e) { e.preventDefault(); d.pos = clamp(d.pos + (e.deltaY > 0 ? 1 : -1) * sr * 0.02, 0, d.n - 2); }, { passive: false });
   return function draw() {
     var cc = fit(cv); if (!cc) return; var g = cc.g, w = cc.w, h = cc.h, cx = w / 2, cy = h / 2, R = Math.min(w, h) / 2 - 4; g.clearRect(0, 0, w, h);
     var a = d.pos / sr / REV * TAU;
     if (classic) { drawClassic(g, w, h, cx, cy, R, a, d, col, letter); return; }
     g.beginPath(); g.arc(cx, cy, R, 0, TAU); g.fillStyle = "#0c0d10"; g.fill(); g.lineWidth = 2; g.strokeStyle = d.touch ? col : "#2c2f38"; g.stroke();
+    if (d.bend) { g.beginPath(); g.arc(cx, cy, R * 0.85, 0, TAU); g.strokeStyle = col; g.globalAlpha = 0.45; g.lineWidth = R * 0.3; g.stroke(); g.globalAlpha = 1; }
     for (var r = R * 0.38; r < R * 0.97; r += 5) { g.beginPath(); g.arc(cx, cy, r, 0, TAU); g.strokeStyle = "rgba(255,255,255,.045)"; g.lineWidth = 1; g.stroke(); }
     /* beat pulse ring */
     var bph = d.n > 100 ? ((d.pos - d.beat0) / d.beatLen()) % 1 : 0; if (bph < 0) bph += 1; g.beginPath(); g.arc(cx, cy, R - 3, 0, TAU); g.strokeStyle = col; g.globalAlpha = d.playing ? Math.max(0, 0.55 - bph * 0.9) : 0.1; g.lineWidth = 3; g.stroke(); g.globalAlpha = 1;
@@ -852,7 +858,7 @@ function mkPlatter(cv, d, col, letter, classic) {
     g.fillStyle = col; g.font = "bold " + Math.round(R * 0.26) + "px 'Barlow Condensed',sans-serif"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(letter, 0, 1);
     g.fillStyle = "#fff"; g.fillRect(-1.5, -R * 0.92, 3, R * 0.28);
     g.restore();
-    g.fillStyle = "#8f93a3"; g.font = "10px 'JetBrains Mono',monospace"; g.textAlign = "center"; g.textBaseline = "bottom"; g.fillText("drag to scratch", cx, h - 1);
+    g.fillStyle = "#8f93a3"; g.font = "10px 'JetBrains Mono',monospace"; g.textAlign = "center"; g.textBaseline = "bottom"; g.fillText(d.bend ? "NUDGE " + (d.bend > 0 ? "+" : "-") : "ring: nudge / centre: scratch", cx, h - 1);
   };
 }
 /* small vertical level meter with dB ticks */
@@ -1107,7 +1113,7 @@ P.xcurve = "smooth";
     mkKnob(kk, { id: "f" + q + "w", label: "DRY/WET", min: 0, max: 1, def: FXD[q][3], fmt: fmtPct, tip: "How much of the effect is mixed in." });
   })(q);
   mkKnob($("#fxFoot"), { id: "fxmix", label: "CHAIN MIX", min: 0, max: 1, def: 1, fmt: fmtPct, tip: "Scales the dry/wet of all three effects at once." });
-  var fi = document.createElement("span"); fi.className = "note"; fi.id = "fxInfo"; $("#fxFoot").appendChild(fi);
+  var fi = document.createElement("span"); fi.id = "fxInfo"; $("#fxNote").appendChild(fi);
   /* daw routing */
   var db = $("#dawBox"), rr = document.createElement("div"); rr.className = "routg"; db.appendChild(rr);
   mkSel(rr, "sa0", "Deck A input", srcOpts, "The audio on deck A. Choose Your file to load your own.");
@@ -1117,7 +1123,7 @@ P.xcurve = "smooth";
   var hg = document.createElement("div"); hg.className = "rg"; rr.appendChild(hg);
   mkKnob(hg, { id: "hostBpm", label: "HOST BPM", min: 70, max: 180, step: 0.5, def: 150, fmt: function (v) { return v.toFixed(1); }, tip: "The tempo your DAW runs at. Sync matches a deck to it." });
   mkSel(hg, "ctl", "Controller", [["none", "None"], ["ddj", "Pioneer DDJ-FLX4"], ["mixtrack", "Numark Mixtrack"], ["traktor", "Traktor Kontrol S2"], ["midi", "Generic MIDI"]], "Choose the DJ controller the plugin listens to. Design mockup only.");
-  var rd = document.createElement("div"); rd.className = "note"; rd.id = "dawInfo"; rd.style.cssText = "margin-top:8px;line-height:1.5"; db.appendChild(rd);
+  var rd = document.createElement("div"); rd.className = "note"; rd.id = "dawInfo"; rd.style.cssText = "margin-top:0;line-height:1.4"; db.appendChild(rd);
 })();
 function applyAll() {
   P.master = S.mst; P.xf = S.xf; P.xcurve = S.xc; P.fxTarget = S.fxt;
@@ -1128,7 +1134,7 @@ function applyAll() {
     if (S["sy" + i] && d.bpm && !(S.tm === "lead" && i === LD)) { var tgt = S.tm === "lead" ? D[LD].bpm * D[LD].tempo : S.hostBpm; tp = clamp((tgt / d.bpm - 1) * 100, -range, range); var nv = tp / range; if (Math.abs(nv - S["tp" + i]) > 1e-6) { S["tp" + i] = nv; if (UI["tp" + i]) UI["tp" + i](nv); } }
     d.tempo = 1 + tp / 100; d.keylock = !!S["kk" + i]; d.loopTrack = S["md" + i] !== "file"; });
   $$("#zoomRow [data-z]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.getAttribute("data-z") === S.zoom)); });
-  $("#dawInfo").innerHTML = "Host tempo " + ref.toFixed(1) + " BPM<br>Deck A " + (D[0].bpm * D[0].tempo).toFixed(1) + " BPM · Deck B " + (D[1].bpm * D[1].tempo).toFixed(1) + " BPM<br>Outputs: " + (S.outs === "master" ? "1 stereo (Master)" : "3 stereo (A, B, Master)");
+  $("#dawInfo").innerHTML = "Host tempo " + ref.toFixed(1) + " BPM · Deck A " + (D[0].bpm * D[0].tempo).toFixed(1) + " BPM · Deck B " + (D[1].bpm * D[1].tempo).toFixed(1) + " BPM · Outputs: " + (S.outs === "master" ? "1 stereo (Master)" : "3 stereo (A, B, Master)");
 }
 function load(i) {
   ensureCtx(); var id = S["sa" + i], buf, name, bpm;
@@ -1231,7 +1237,7 @@ var FACT = [
 ];
 initPresets(FACT, KEYS, function () { applyAll(); });
 simpleCards("Scratch Cat Duo", "<p>Scratch Cat Duo is two decks, a mixer and an effect chain in one plugin: scratch, mix and transition between two tracks, or run it on your DAW's audio. This page is a design mockup with test tracks.</p>",
-  "<h3>How to use</h3><ul><li>Pick a track for each deck, press Play (or Both, or Space).</li><li>Sync matches a deck's tempo to the host. Key lock changes tempo without changing pitch.</li><li>Drag a platter or a waveform to scratch. Hold Censor, Roll or Back for performance moves.</li><li>Pads change meaning with the Mode menu: hot cues, loops, jumps, sampler, pad effects.</li><li>The FX chain can go on deck A, B, both, or the master.</li></ul>");
+  "<h3>How to use</h3><ul><li>Pick a track for each deck, press Play (or Both, or Space).</li><li>Sync matches a deck's tempo to the host. Key lock changes tempo without changing pitch.</li><li>Drag the middle of a platter or a waveform to scratch. Hold the outer ring of a platter and drag down to speed up or up to slow down, like a CDJ. Hold Censor, Roll or Back for performance moves.</li><li>Pads change meaning with the Mode menu: hot cues, loops, jumps, sampler, pad effects.</li><li>The FX chain can go on deck A, B, both, or the master.</li></ul>");
 load(0); load(1); applyAll(); initWin();
 
 

@@ -140,7 +140,7 @@ void DuoProcessor::applyCmd(const Cmd& c)
         case kLoopIn: d.loopIn(); break; case kLoopOut: d.loopOut(); break; case kLoopExit: d.loopExit(); break;
         case kBeatLoop: d.beatLoop(c.a); break; case kBrake: d.brake(); break; case kBackspin: d.backspin(); break;
         case kMoveStart: d.startMove((duo::Move) c.i, c.a); break; case kMoveEnd: d.endMove(); break;
-        case kJog: d.setJog(c.i != 0, c.a); break; case kBend: d.setBend((float) c.a); break;
+        case kJog: d.setJog(c.i != 0, c.a); break; case kBend: editorBend[juce::jlimit(0, 1, c.deck)] = juce::jlimit(-1.0, 1.0, c.a); break;
         case kGoLive: d.goLive(); break; case kSeek: d.seekSeconds(c.a); break;
         case kJumpBeats: d.jumpBeats(c.a); break; case kShot: engine.triggerShot(c.i); break;
         case kPadFx: engine.setPadFx(c.deck, c.i, c.a > 0.5); break;
@@ -250,7 +250,9 @@ void DuoProcessor::processBlock(juce::AudioBuffer<float>& buf, juce::MidiBuffer&
     {
         if (jogTouch[d].load()) { engine.deck[d].setJog(true, (double) jogTicks[d] / tpt / ((double) n / fs)); midiJogOn[d] = true; }
         else if (midiJogOn[d]) { engine.deck[d].setJog(false, 0.0); midiJogOn[d] = false; }
-        else if (std::fabs(jogTicks[d]) > 0.f) engine.deck[d].setBend(juce::jlimit(-1.f, 1.f, jogTicks[d] / 6.f));
+        // nudge = ring held on screen + MIDI jog turned without touch; it returns to 0 as soon as both let go
+        if (!jogTouch[d].load() && !midiJogOn[d]) engine.deck[d].setBend(juce::jlimit(-1.f, 1.f, (float) editorBend[d] + jogTicks[d] / 6.f));
+        else engine.deck[d].setBend(0.f);
     }
 
     // 3. new tracks and source changes

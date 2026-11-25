@@ -267,8 +267,56 @@ static void testPadsAndShots() {
         e.setPadFx(0, 9, true); run(5);
     }
 }
+static void testNudgeAndStress() {
+    const double sr = 44100;
+    auto frames = [&](Deck& d, int n) { std::vector<float> L((size_t) n), R((size_t) n); d.process(L.data(), R.data(), n, nullptr, nullptr); };
+    { // ring nudge: up speeds the deck up by up to 8 %, down slows it, back at 0 it returns to normal speed and keeps playing
+        Deck d; d.prepare(sr); d.setTrack(sineTrack(sr, 30, 440)); d.setPlaying(true); frames(d, (int) sr / 2);
+        d.setBend(1.f); frames(d, (int) sr); CHECK(std::fabs(d.speed() - 1.08) < 0.005, "nudge up speed %.4f", d.speed());
+        d.setBend(-1.f); frames(d, (int) sr); CHECK(std::fabs(d.speed() - 0.92) < 0.005, "nudge down speed %.4f", d.speed());
+        d.setBend(0.f); frames(d, (int) sr); CHECK(std::fabs(d.speed() - 1.0) < 0.005 && d.isPlaying(), "nudge released speed %.4f", d.speed());
+        d.setBend(5.f); frames(d, (int) sr); CHECK(d.speed() < 1.081, "nudge is clamped %.4f", d.speed());
+    }
+    { // nudge on a paused deck: up moves the position forward, down moves it back, you hear it, it stops when you let go, play state unchanged
+        Deck d; d.prepare(sr); d.setTrack(sineTrack(sr, 20, 440)); d.seekSeconds(5.0); const double p0 = d.positionSeconds();
+        std::vector<float> L(4410), R(4410);
+        d.setBend(1.f); double en = 0; for (int k = 0; k < 10; ++k) { d.process(L.data(), R.data(), 4410, nullptr, nullptr); for (float v : L) en += (double) v * v; }
+        CHECK(!d.isPlaying(), "paused nudge keeps the deck paused");
+        CHECK(d.positionSeconds() - p0 > 0.35 && d.positionSeconds() - p0 < 0.55, "paused nudge up moves forward %.3f s", d.positionSeconds() - p0);
+        CHECK(en > 100, "paused nudge is audible (%.1f)", en);
+        d.setBend(-1.f); frames(d, (int) sr); CHECK(d.positionSeconds() < p0 + 0.2, "paused nudge down moves back %.3f", d.positionSeconds() - p0);
+        d.setBend(0.f); frames(d, (int) sr * 2); const double p1 = d.positionSeconds(); frames(d, (int) sr / 2);
+        CHECK(std::fabs(d.positionSeconds() - p1) < 1e-6 && std::fabs(d.speed()) < 1e-6, "paused deck holds still after release");
+    }
+    { // stress: random commands and settings on the whole engine for a while, nothing may go NaN, infinite or loud
+        Engine e; e.prepare(sr, 512); std::mt19937 rng(77); auto u = [&](float a, float b) { return std::uniform_real_distribution<float>(a, b)(rng); };
+        auto ri = [&](int a, int b) { return std::uniform_int_distribution<int>(a, b)(rng); };
+        e.deck[0].setTrack(sineTrack(sr, 20, 330)); e.deck[1].setTrack(makeTrack(sr, 20, 128, 0.2));
+        std::vector<float> ml(512), mr(512), il(512), ir(512); bool bad = false; float worst = 0;
+        for (int blk = 0; blk < 1500; ++blk) {
+            MixParams p; for (int d = 0; d < 2; ++d) { p.trimDb[d] = u(-24, 24); p.eqHi[d] = u(-26, 6); p.eqMid[d] = u(-26, 6); p.eqLo[d] = u(-26, 6); p.colour[d] = u(-1, 1); p.fader[d] = u(0, 1); p.cue[d] = ri(0, 1) != 0; }
+            p.cross = u(0, 1); p.curve = ri(0, 2); p.masterDb = u(-12, 6); p.cueMix = u(0, 1); p.chainMix = u(0, 1); p.echoBeats = u(0.25f, 2.f); p.fxTarget = ri(0, 3); p.hostBpm = ri(0, 1) ? u(60, 200) : 0.0;
+            for (int k = 0; k < 3; ++k) { p.fxType[k] = ri(1, 7); p.fxOn[k] = ri(0, 1) != 0; p.fxP1[k] = u(0, 1); p.fxP2[k] = u(0, 1); }
+            for (int d = 0; d < 2; ++d) {
+                Deck& k = e.deck[d];
+                switch (ri(0, 14)) {
+                    case 0: k.togglePlay(); break; case 1: k.cue(ri(0, 1) != 0); break; case 2: k.hotCue(ri(0, 7), true); break; case 3: k.beatLoop(1 << ri(0, 4)); break;
+                    case 4: k.loopExit(); break; case 5: k.brake(); break; case 6: k.backspin(); break; case 7: k.startMove((Move) ri(1, 4), 0.25 * ri(1, 4)); break;
+                    case 8: k.endMove(); break; case 9: k.setJog(ri(0, 1) != 0, u(-8, 8) * Deck::kPlatterRevPerSec); break; case 10: k.setBend(u(-3, 3)); break;
+                    case 11: k.setPitch(u(-1, 1), ri(0, 1) ? 0.08f : 0.5f); k.setKeyLock(ri(0, 1) != 0); break; case 12: k.setSync(ri(0, 1) != 0, u(60, 200)); break;
+                    case 13: k.seekSeconds(u(0, 20)); break; default: k.jumpBeats(u(-32, 32)); break;
+                }
+            }
+            if (ri(0, 20) == 0) e.triggerShot(ri(0, 7)); if (ri(0, 20) == 0) e.setPadFx(ri(0, 1), ri(0, 4), ri(0, 1) != 0);
+            for (int i = 0; i < 512; ++i) { il[(size_t) i] = u(-1, 1); ir[(size_t) i] = u(-1, 1); }
+            e.process(p, 512, il.data(), ir.data(), nullptr, nullptr, ml.data(), mr.data(), nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
+            for (int i = 0; i < 512; ++i) { if (!std::isfinite(ml[(size_t) i]) || !std::isfinite(mr[(size_t) i])) bad = true; worst = std::max(worst, std::max(std::fabs(ml[(size_t) i]), std::fabs(mr[(size_t) i]))); }
+        }
+        CHECK(!bad, "stress: output stays finite"); CHECK(worst < 1.6f, "stress: output stays bounded (%.2f)", worst);
+    }
+}
 int main() {
-    testBpm(); testKey(); testDeck(); testMixer(); testEngineAndFx(); testKeyLockQuality(); testAlign(); testLibrary(); testPadsAndShots();
+    testBpm(); testKey(); testDeck(); testMixer(); testEngineAndFx(); testKeyLockQuality(); testAlign(); testLibrary(); testPadsAndShots(); testNudgeAndStress();
     if (fails) { std::printf("%d FAILED\n", fails); return 1; }
     std::printf("all tests passed\n"); return 0;
 }

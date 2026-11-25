@@ -3,7 +3,7 @@ Scratch Cat Duo is two DJ decks and a mixer inside one plugin. Load a track on e
 
 # Quick start
 - Click the track name box on a deck (or use the track browser at the bottom, or drop a file) and pick a file (wav, aiff, flac, ogg or mp3). The BPM and the key (Camelot code and name) appear next to the deck name.
-- Press PLAY. Drag the platter to scratch: the sound follows your hand, forward and backward, and holds when you stop.
+- Press PLAY. Drag the middle of the platter to scratch: the sound follows your hand, forward and backward, and holds when you stop. Hold the outer ring and drag down to speed the deck up or up to slow it (up to 8 %); it springs back when you let go, like the ring of a CDJ. On a paused deck it moves the position instead.
 - Move the crossfader between the decks. Sync matches the deck tempo to the DAW tempo (or to the other deck when Tempo is set to Decks lead).
 - The two waveforms at the top show both decks on one time axis, so when the beat lines match the beats are aligned.
 

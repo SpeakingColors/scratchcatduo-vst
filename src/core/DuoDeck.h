@@ -23,6 +23,7 @@ enum class Move { None, Roll, Censor, Stutter, Transform };
 class Deck {
 public:
     static constexpr double kPlatterRevPerSec = 100.0 / 3.0 / 60.0;   // 33 1/3 rpm is normal speed
+    static constexpr double kPausedNudge = 0.5;                       // ring nudge on a paused deck: up to half speed
 
     void prepare(double hostSr) {
         fs = hostSr; ringSize = (size_t)(hostSr * 60.0); ringL.assign(ringSize, 0.f); ringR.assign(ringSize, 0.f); writeIdx = 0;
@@ -158,7 +159,7 @@ public:
             else if (mode == Mode::Backspin) { spinV *= (1.0 - 2.2 / fs * 1.0); target = spinV; c = cFast * 4.f; if (spinV > -0.05) { mode = Mode::Normal; playing = false; vel = 0; spinV = 0; } }
             else if (move == Move::Censor) { target = -t; c = cFast; }
             else if (playing) { target = t * (1.0 + 0.08 * (double) bend); }
-            else target = 0;
+            else target = (double) bend * kPausedNudge;      // paused: the ring nudges the position, forward or back, with sound
             vel += (target - vel) * c;
             if (!playing && !jogTouch && mode == Mode::Normal && move != Move::Censor && std::fabs(vel) < 1e-4) vel = 0;
             // sample

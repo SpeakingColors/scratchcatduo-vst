@@ -28,7 +28,7 @@ struct HotMeta
     }
 };
 
-// The platter. Drag it to scratch: it plays at the speed of your hand, forward or backward, and holds when you stop.
+// The platter. Middle: drag to scratch (it plays at the speed of your hand and holds when you stop). Outer ring: nudge the speed, like a CDJ.
 class Jog : public juce::Component, public juce::SettableTooltipClient, private juce::Timer
 {
 public:
@@ -52,19 +52,46 @@ public:
         g.setColour(Colour(0xff111111)); g.setFont(f(15.f, true)); g.drawText("DECK", Rectangle<float>(hub * 2, 22.f).withCentre(c), juce::Justification::centred);
         g.setColour(Colour(0xfff4f5f7)); g.drawLine(c.x + std::sin(ang) * hub * 0.9f, c.y - std::cos(ang) * hub * 0.9f, c.x + std::sin(ang) * (d * 0.5f - 10.f), c.y - std::cos(ang) * (d * 0.5f - 10.f), 3.f);
         if (proc.view[deck].touching.load()) { g.setColour(col.withAlpha(0.4f)); g.drawEllipse(r, 4.f); }
+        if (ringHeld) { g.setColour(col.withAlpha(0.55f)); g.drawEllipse(r.reduced(d * 0.5f * (1.f - kRingStart) * 0.5f), d * 0.5f * (1.f - kRingStart)); g.setColour(Colour(0xfff4f5f7)); g.setFont(f(15.f, true)); g.drawText(bendSent > 0.02f ? "NUDGE +" : (bendSent < -0.02f ? "NUDGE -" : "NUDGE"), r.withSizeKeepingCentre(d * 0.5f, 22.f), juce::Justification::centred); }
     }
-    void mouseDown(const juce::MouseEvent& e) override { last = ang(e); acc = 0.f; post(true, 0.0); startTimerHz(60); }
+    // Like a CDJ: the outer ring nudges (hold it, drag down to speed up, up to slow down, it springs back on release);
+    // (drag down = faster, drag up = slower, like pushing the ring forward or pulling it back); the middle of the platter is the vinyl: touch holds the record, drag around to scratch.
+    void mouseMove(const juce::MouseEvent& e) override { setMouseCursor(onRing(e.position) ? juce::MouseCursor::UpDownResizeCursor : juce::MouseCursor::DraggingHandCursor); }
+    void mouseDown(const juce::MouseEvent& e) override
+    {
+        ringHeld = onRing(e.position); startY = e.position.y; bendSent = 0.f;
+        if (ringHeld) { postBend(0.f); repaint(); return; }
+        last = ang(e); acc = 0.f; post(true, 0.0); startTimerHz(60);
+    }
     void mouseDrag(const juce::MouseEvent& e) override
     {
+        if (ringHeld) { postBend(juce::jlimit(-1.f, 1.f, (e.position.y - startY) / kBendPixels)); return; }
         const float a = ang(e); float dlt = a - last; while (dlt > juce::MathConstants<float>::pi) dlt -= juce::MathConstants<float>::twoPi; while (dlt < -juce::MathConstants<float>::pi) dlt += juce::MathConstants<float>::twoPi;
         acc += dlt / juce::MathConstants<float>::twoPi; last = a;
     }
-    void mouseUp(const juce::MouseEvent&) override { stopTimer(); post(false, 0.0); }
+    void mouseUp(const juce::MouseEvent&) override
+    {
+        if (ringHeld) { ringHeld = false; postBend(0.f, true); repaint(); return; }
+        stopTimer(); post(false, 0.0);
+    }
+    void mouseExit(const juce::MouseEvent&) override { if (!ringHeld) setMouseCursor(juce::MouseCursor::DraggingHandCursor); }
 private:
+    static constexpr float kRingStart = 0.70f;      // the outer ring starts at 70 % of the platter radius
+    static constexpr float kBendPixels = 70.f;      // drag this far for the full nudge (+-8 % of the tempo)
+    bool onRing(juce::Point<float> p) const
+    {
+        const auto c = getLocalBounds().toFloat().getCentre(); const float R = std::min(getWidth(), getHeight()) * 0.5f - 2.f;
+        return std::hypot(p.x - c.x, p.y - c.y) >= R * kRingStart;
+    }
+    void postBend(float v, bool force = false)
+    {
+        if (!force && std::fabs(v - bendSent) < 0.01f) return;     // do not flood the command queue while dragging
+        bendSent = v; duoui::Cmd c; c.type = duoui::kBend; c.deck = deck; c.a = v; proc.post(c);
+    }
     void post(bool touch, double turnsPerSec) { duoui::Cmd c; c.type = duoui::kJog; c.deck = deck; c.i = touch ? 1 : 0; c.a = turnsPerSec; proc.post(c); }
     float ang(const juce::MouseEvent& e) const { const auto c = getLocalBounds().toFloat().getCentre(); return std::atan2(e.position.x - c.x, -(e.position.y - c.y)); }
     void timerCallback() override { post(true, (double) acc * 60.0); acc = 0.f; }
-    DuoProcessor& proc; int deck; float last = 0.f, acc = 0.f;
+    DuoProcessor& proc; int deck; float last = 0.f, acc = 0.f, startY = 0.f, bendSent = 0.f; bool ringHeld = false;
 };
 
 // Two overview strips and two zoomed lanes. Click an overview to jump; drag a lane to scratch; drop a track on a deck's lane or strip to load it.

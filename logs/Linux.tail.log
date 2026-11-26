@@ -68,7 +68,7 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/buil
    66 |     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
       |          ^~~~~~~~~~~~
 [ 33%] Building CXX object CMakeFiles/ScratchCatDuo.dir/_deps/juce-src/modules/juce_audio_processors/juce_audio_processors.cpp.o
-[ 31%] Building CXX object CMakeFiles/ScratchCatDuo.dir/src/duo/DuoEditor.cpp.o
+[ 33%] Building CXX object CMakeFiles/ScratchCatDuo.dir/src/duo/DuoEditor.cpp.o
 In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoAnalysis.h:3,
                  from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoDeck.h:4,
                  from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/src/duo/../core/DuoEngine.h:3,
@@ -372,25 +372,25 @@ In file included from /home/runner/work/scratchcatduo-vst/scratchcatduo-vst/buil
 [ 46%] Building CXX object CMakeFiles/ScratchCatDuo.dir/_deps/juce-src/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o
 [ 66%] Building CXX object CMakeFiles/ScratchCatDuo.dir/_deps/juce-src/modules/juce_audio_devices/juce_audio_devices.cpp.o
 [ 65%] Building CXX object CMakeFiles/ScratchCatDuo.dir/_deps/juce-src/modules/juce_audio_formats/juce_audio_formats.cpp.o
-[ 68%] Building CXX object CMakeFiles/ScratchCatDuo.dir/_deps/juce-src/modules/juce_dsp/juce_dsp.cpp.o
 [ 45%] Building CXX object CMakeFiles/ScratchCatDuo.dir/_deps/juce-src/modules/juce_graphics/juce_graphics.cpp.o
+[ 68%] Building CXX object CMakeFiles/ScratchCatDuo.dir/_deps/juce-src/modules/juce_dsp/juce_dsp.cpp.o
 [ 70%] Linking CXX static library "ScratchCatDuo_artefacts/Release/libScratch Cat Duo_SharedCode.a"
 [ 70%] Built target ScratchCatDuo
+[ 76%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
 [ 75%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
-[ 76%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+[ 75%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
 [ 71%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
-[ 73%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
-[ 80%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
-[ 80%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
-[ 81%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
-[ 83%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
-[ 88%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
-[ 88%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
-[ 90%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
+[ 78%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
+[ 83%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+[ 81%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+[ 85%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+[ 88%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
+[ 86%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
+[ 90%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
+[ 91%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
 [ 93%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
 [ 95%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
-[ 91%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
-[ 85%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+[ 80%] Building CXX object CMakeFiles/ScratchCatDuo_Standalone.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
 [ 98%] Linking CXX executable "ScratchCatDuo_artefacts/Release/Standalone/Scratch Cat Duo"
 [ 98%] Built target ScratchCatDuo_Standalone
 [ 96%] Building CXX object CMakeFiles/ScratchCatDuo_VST3.dir/_deps/juce-src/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o

@@ -1,4 +1,4 @@
-// Scratch Cat Duo editor. A port of the approved mockup (docs/mockup/scratchcatduo.html), laid out on its 2000 x 1790 design and scaled with the window.
+// Scratch Cat Duo editor. A port of the approved mockup (docs/mockup/scratchcatduo.html), laid out on its 2200 x 1790 design and scaled with the window.
 #include "DuoEditor.h"
 #include "DuoUi.h"
 #include "DuoWaves.h"
@@ -12,7 +12,7 @@ using namespace duoui::ui;
 
 namespace
 {
-constexpr int kBaseW = 2000, kBaseH = 1790, kCheek = 30, kContentW = kBaseW - 2 * kCheek, kMinW = 800, kMaxW = 3200;
+constexpr int kBaseW = 2200, kBaseH = 1790, kCheek = 30, kContentW = kBaseW - 2 * kCheek, kMinW = 800, kMaxW = 3200;
 constexpr double kDefaultScale = 0.75;
 int defaultWidth()
 {
@@ -142,6 +142,19 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
 
     // ---------------------------------------------------------------- helpers
     static Rectangle<int> R(int ax, int ay, int w, int h) { return { ax - kCheek, ay, w, h }; }
+    // The window is 200 design pixels wider than the first layout: each deck gets 100 more, the mixer moves to the new middle.
+    static constexpr int kDeckDx = 1236; static constexpr double kDeckF = 876.0 / 776.0;
+    static Rectangle<int> deckR(int d, int ax, int ay, int w, int h)   // scales a deck's design x and width about the deck's left edge
+    { return R(44 + d * kDeckDx + (int) std::lround((ax - 44) * kDeckF), ay, (int) std::lround(w * kDeckF), h); }
+    static Rectangle<int> deckC(int d, int ax, int ay, int w, int h)   // same position but keeps its own size (round platter and buttons)
+    { const double cx = 44 + d * kDeckDx + ((ax - 44) + w * 0.5) * kDeckF; return R((int) std::lround(cx - w * 0.5), ay, w, h); }
+    // A slider with its direction reversed: the top of the track is the minimum (used for the tempo fader: up is slower, down is faster)
+    struct FlippedSlider : juce::Slider
+    {
+        using juce::Slider::Slider;
+        double proportionOfLengthToValue(double p) override { return juce::Slider::proportionOfLengthToValue(1.0 - p); }
+        double valueToProportionOfLength(double v) override { return 1.0 - juce::Slider::valueToProportionOfLength(v); }
+    };
     template <class T> T* own(std::unique_ptr<T> c) { auto* p = c.get(); addAndMakeVisible(*p); owned.push_back(std::move(c)); return p; }
     Label* text(const juce::String& t, Rectangle<int> r, float h, Colour c, juce::Justification j = juce::Justification::centredLeft, bool bold = false, bool monoFont = false)
     { auto* l = own(std::make_unique<Label>()); l->text = t; l->font = monoFont ? mono(h) : f(h, bold); l->col = c; l->just = j; l->setBounds(r); return l; }
@@ -167,9 +180,10 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
         }
         knobs.push_back(k); return k;
     }
-    juce::Slider* linear(const juce::String& id, Rectangle<int> r, bool vertical, Colour col, const juce::String& tip)
+    juce::Slider* linear(const juce::String& id, Rectangle<int> r, bool vertical, Colour col, const juce::String& tip, bool flipped = false)
     {
-        auto s = std::make_unique<juce::Slider>(vertical ? juce::Slider::LinearVertical : juce::Slider::LinearHorizontal, juce::Slider::NoTextBox);
+        std::unique_ptr<juce::Slider> s = flipped ? std::make_unique<FlippedSlider>(vertical ? juce::Slider::LinearVertical : juce::Slider::LinearHorizontal, juce::Slider::NoTextBox)
+                                                  : std::make_unique<juce::Slider>(vertical ? juce::Slider::LinearVertical : juce::Slider::LinearHorizontal, juce::Slider::NoTextBox);
         s->setBounds(r); s->setColour(juce::Slider::thumbColourId, col); s->setTooltip(tip); s->setScrollWheelEnabled(true);
         auto* par = proc.apvts.getParameter(id); s->setDoubleClickReturnValue(true, par->convertFrom0to1(par->getDefaultValue()));
         auto* p = own(std::move(s)); sAtt.push_back(std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(proc.apvts, id, *p)); return p;
@@ -191,7 +205,7 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
         buildTop(); buildWaves();
         for (int d = 0; d < 2; ++d) buildDeck(d);
         buildMixer(); buildRouting(); buildFx(); buildBrowser();
-        sizeLabel = text("WINDOW 100 %", R(1760, 1764, 196, 14), 12.f, kDim, juce::Justification::centredRight, false, true);
+        sizeLabel = text("WINDOW 100 %", R(1960, 1764, 196, 14), 12.f, kDim, juce::Justification::centredRight, false, true);
         addChildComponent(overlay); overlay.setBounds(getLocalBounds());
         eco = (bool) proc.apvts.state.getProperty("eco", false); applyTips();
         gate.onFrame = [this] { frame(); }; gate.start(eco ? 15 : 30);
@@ -201,32 +215,32 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
     void buildTop()
     {
         hold(juce::String::charToString(0x2039), R(426, 17, 29, 31), "Previous preset.", [this] { stepPreset(-1); });
-        hold(juce::String::charToString(0x203A), R(1453, 17, 29, 31), "Next preset.", [this] { stepPreset(1); });
-        auto* pn = own(std::make_unique<PresetName>()); pn->setBounds(R(462, 16, 985, 32)); pn->setTooltip("Open the preset list: factory presets and your own."); pn->text = bank.list[(size_t) bank.current].name;
+        hold(juce::String::charToString(0x203A), R(1653, 17, 29, 31), "Next preset.", [this] { stepPreset(1); });
+        auto* pn = own(std::make_unique<PresetName>()); pn->setBounds(R(462, 16, 1185, 32)); pn->setTooltip("Open the preset list: factory presets and your own."); pn->text = bank.list[(size_t) bank.current].name;
         pn->onClick = [this] { presetMenu(); }; presetName = pn;
-        hold("SAVE", R(1488, 17, 63, 31), "Save the current settings as your own preset (stays on this computer).", [this] { savePresetDialog(); });
-        hold(juce::String::charToString(0x22EF), R(1557, 17, 38, 31), "Delete, export or import your presets.", [this] { moreMenu(); });
-        hold("GUIDE", R(1611, 17, 70, 31), "How Scratch Cat Duo works.", [this] { showGuide(); });
-        hold("SETTINGS", R(1687, 17, 97, 31), "Info bubbles, eco mode, MIDI jog sensitivity.", [this] { showSettings(); });
-        hold("ABOUT & SUPPORT", R(1791, 17, 165, 31), "About Scratch Cat Duo, and how to support Studio 87.", [this] { showAbout(); });
+        hold("SAVE", R(1688, 17, 63, 31), "Save the current settings as your own preset (stays on this computer).", [this] { savePresetDialog(); });
+        hold(juce::String::charToString(0x22EF), R(1757, 17, 38, 31), "Delete, export or import your presets.", [this] { moreMenu(); });
+        hold("GUIDE", R(1811, 17, 70, 31), "How Scratch Cat Duo works.", [this] { showGuide(); });
+        hold("SETTINGS", R(1887, 17, 97, 31), "Info bubbles, eco mode, MIDI jog sensitivity.", [this] { showSettings(); });
+        hold("ABOUT & SUPPORT", R(1991, 17, 165, 31), "About Scratch Cat Duo, and how to support Studio 87.", [this] { showAbout(); });
     }
 
     void buildWaves()
     {
-        addAndMakeVisible(waves); waves.setBounds(R(56, 87, 1888, 246)); waves.onLoad = [this](int d, const juce::File& f) { loadTo(d, f); };
+        addAndMakeVisible(waves); waves.setBounds(R(56, 87, 2088, 246)); waves.onLoad = [this](int d, const juce::File& f) { loadTo(d, f); };
         anaInfo = text("", R(55, 340, 360, 30), 13.f, kDim, juce::Justification::centredLeft, false, true);
         beatInfo = text("", R(420, 340, 300, 30), 13.f, kDim, juce::Justification::centredLeft, false, true);
         keyInfo = text("", R(725, 340, 420, 30), 13.f, kAccent, juce::Justification::centredLeft, false, true);
-        hold(juce::String::charToString(0x25B6) + " BOTH", R(1567, 338, 83, 32), "Start both decks together.", [this] { cmd(duoui::kPlay, 0, 1); cmd(duoui::kPlay, 1, 1); });
-        hold("RESTART BOTH", R(1662, 339, 137, 31), "Both decks back to the start, playing together.", [this] { for (int d = 0; d < 2; ++d) { cmd(duoui::kSeek, d, 0, 0.0); cmd(duoui::kPlay, d, 1); } });
-        zoomSeg = seg(R(1811, 339, 134, 31), { { "4 bars", "Show 4 bars around the playhead." }, { "8", "Show 8 bars around the playhead." }, { "16", "Show 16 bars around the playhead." } }, { 62, 31, 38 }, 14.f);
+        hold(juce::String::charToString(0x25B6) + " BOTH", R(1767, 338, 83, 32), "Start both decks together.", [this] { cmd(duoui::kPlay, 0, 1); cmd(duoui::kPlay, 1, 1); });
+        hold("RESTART BOTH", R(1862, 339, 137, 31), "Both decks back to the start, playing together.", [this] { for (int d = 0; d < 2; ++d) { cmd(duoui::kSeek, d, 0, 0.0); cmd(duoui::kPlay, d, 1); } });
+        zoomSeg = seg(R(2011, 339, 134, 31), { { "4 bars", "Show 4 bars around the playhead." }, { "8", "Show 8 bars around the playhead." }, { "16", "Show 16 bars around the playhead." } }, { 62, 31, 38 }, 14.f);
         zoomSeg->setOnly(1); zoomSeg->onClick = [this](int i) { waves.bars = i == 0 ? 4 : i == 1 ? 8 : 16; zoomSeg->setOnly(i); waves.repaint(); };
     }
 
     void buildDeck(int d)
     {
-        const int dx = d * 1136; const juce::String s = d == 0 ? "a" : "b"; const juce::String D = d == 0 ? "A" : "B"; const Colour col = deckCol(d);
-        auto X = [dx](int ax, int ay, int w, int h) { return R(ax + dx, ay, w, h); };
+        const juce::String s = d == 0 ? "a" : "b"; const juce::String D = d == 0 ? "A" : "B"; const Colour col = deckCol(d);
+        auto X = [d](int ax, int ay, int w, int h) { return deckR(d, ax, ay, w, h); }; auto XC = [d](int ax, int ay, int w, int h) { return deckC(d, ax, ay, w, h); };
         text("DECK " + D, X(56, 398, 100, 32), 26.f, col, juce::Justification::centredLeft, true);
         deckInfo[d] = text("", X(166, 400, 420, 28), 16.f, kInk, juce::Justification::centredLeft, false, true);
         hold("Analyze key & BPM", X(671, 400, 140, 27), "Analyse the loaded track again for BPM, beat grid and key.", [this, d] { reanalyse(d); });
@@ -234,7 +248,7 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
         srcSeg[d]->onCol = col; bindChoice(*srcSeg[d], "src_" + s);
         nameField[d] = own(std::make_unique<NameField>()); nameField[d]->setBounds(X(156, 434, 655, 36));
         nameField[d]->setTooltip("The track on this deck. Click to pick a file, or drag one from the browser below."); nameField[d]->onClick = [this, d] { chooseFile(d); };
-        jog[d] = std::make_unique<Jog>(proc, d); addAndMakeVisible(*jog[d]); jog[d]->setBounds(X(55, 518, 344, 344)); jog[d]->setTooltip("Platter. Middle: drag around to scratch, it follows your hand and holds when you stop. Outer ring: hold and drag down to speed the deck up, up to slow it (up to 8 %), it springs back when you let go. Paused: it moves the position.");
+        jog[d] = std::make_unique<Jog>(proc, d); addAndMakeVisible(*jog[d]); jog[d]->setBounds(XC(55, 518, 344, 344)); jog[d]->setTooltip("Platter. Middle: drag around to scratch, it follows your hand and holds when you stop. Outer ring: hold and drag down to speed the deck up, up to slow it (up to 8 %), it springs back when you let go. Paused: it moves the position.");
         auto* sw = seg(X(414, 518, 298, 31), { { "Sync", "Match this deck's tempo to the DAW tempo (or the other deck when Tempo is set to Decks lead)." }, { "Master", "Make this deck the tempo leader when both decks are synced and the tempo follows the decks." },
                        { "Key lock", "Change the tempo without changing the pitch." }, { "Quant", "Snap cue points and loops to the beat grid." } }, { 65, 75, 87, 71 }, 14.f);
         bindToggles(*sw, { "sync_" + s, "master_" + s, "keylock_" + s, "quant_" + s });
@@ -257,12 +271,12 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
         hold("Backspin", X(567, 675, 146, 27), "Spin the record backwards and stop.", [this, d] { cmd(duoui::kBackspin, d); });
         hold("Roll", X(413, 710, 146, 27), "Hold: loops a short slice while the track keeps running underneath, then jumps back in time.", [this, d] { cmd(duoui::kMoveStart, d, (int) duo::Move::Roll, 0.25); }, [this, d] { cmd(duoui::kMoveEnd, d); });
         hold("Censor", X(567, 710, 146, 27), "Hold: plays backward while the track keeps running underneath, then jumps back in time.", [this, d] { cmd(duoui::kMoveStart, d, (int) duo::Move::Censor, 0.25); }, [this, d] { cmd(duoui::kMoveEnd, d); });
-        auto* cue = own(std::make_unique<RoundButton>()); cue->setBounds(X(443, 751, 112, 112)); cue->ring = kYellow; cue->text = "CUE"; cueBtn[d] = cue;
+        auto* cue = own(std::make_unique<RoundButton>()); cue->setBounds(XC(443, 751, 112, 112)); cue->ring = kYellow; cue->text = "CUE"; cueBtn[d] = cue;
         cue->setTooltip("Cue. Playing: back to the cue point and stop. Stopped: set the cue point here. Hold on the cue point to preview."); cue->onPress = [this, d] { cmd(duoui::kCueDown, d); }; cue->onRelease = [this, d] { cmd(duoui::kCueUp, d); };
-        auto* pl = own(std::make_unique<RoundButton>()); pl->setBounds(X(571, 751, 112, 112)); pl->ring = Colour(0xff8be08b); pl->isPlay = true; playBtn[d] = pl;
+        auto* pl = own(std::make_unique<RoundButton>()); pl->setBounds(XC(571, 751, 112, 112)); pl->ring = Colour(0xff8be08b); pl->isPlay = true; playBtn[d] = pl;
         pl->setTooltip("Play or pause."); pl->onPress = [this, d] { cmd(duoui::kPlay, d, 2); };
         text("TEMPO", X(740, 478, 80, 16), 12.f, kDim, juce::Justification::centred, true);
-        tempoSl[d] = linear("pitch_" + s, X(738, 496, 84, 320), true, kAccent, "Tempo fader. Up is faster, down is slower. Double click: back to 0.");
+        tempoSl[d] = linear("pitch_" + s, X(738, 496, 84, 320), true, kAccent, "Tempo fader, like a CDJ or turntable: up is slower, down is faster. Double click: back to 0.", true);
         tempoSl[d]->setSliderStyle(juce::Slider::LinearVertical);
         tempoVal[d] = text("0.0%", X(738, 818, 84, 18), 14.f, kInk, juce::Justification::centred, false, true);
         auto* rg = seg(X(729, 845, 90, 25), { { "8", "Tempo fader range: 8 percent." }, { "16", "Tempo fader range: 16 percent." }, { "50", "Tempo fader range: 50 percent." } }, { 25, 32, 32 }, 13.f); bindChoice(*rg, "prange_" + s);
@@ -284,6 +298,7 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
 
     void buildMixer()
     {
+        auto R = [](int ax, int ay, int w, int h) { return DuoEditor::Impl::R(ax + 100, ay, w, h); };   // the mixer sits in the new middle
         const Colour none(0x00000000);
         knob("master", "MASTER", R(958, 418, 84, 74), 44.f, none, "Master level.");
         for (int d = 0; d < 2; ++d)
@@ -318,44 +333,46 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
 
     void buildRouting()
     {
-        text("DAW ROUTING", R(57, 1167, 300, 16), 13.f, kDim, juce::Justification::centredLeft, true);
-        text("HOW SCRATCH CAT DUO TALKS TO YOUR PROJECT", R(459, 1167, 500, 16), 13.f, kDim, juce::Justification::centredRight, true);
+        auto L = [](int ax, int ay, int w, int h) { return Impl::L(44 + (int) std::lround((ax - 44) * 1028.0 / 928.0), ay, (int) std::lround(w * 1028.0 / 928.0), h); };   // routing panel is 100 wider
+        text("DAW ROUTING", L(57, 1167, 300, 16), 13.f, kDim, juce::Justification::centredLeft, true);
+        text("HOW SCRATCH CAT DUO TALKS TO YOUR PROJECT", L(459, 1167, 500, 16), 13.f, kDim, juce::Justification::centredRight, true);
         const juce::StringArray items { "File (the loaded track)", "DAW input" };
-        text("DECK A INPUT", R(57, 1184, 300, 14), 11.f, kDim, juce::Justification::centredLeft, true); text("DECK B INPUT", R(516, 1184, 300, 14), 11.f, kDim, juce::Justification::centredLeft, true);
-        choice("src_a", R(57, 1200, 443, 31), "Where deck A gets its sound. File: the loaded track. DAW input: the audio your project sends to the Deck A input.", &items);
-        choice("src_b", R(516, 1200, 443, 31), "Where deck B gets its sound. File: the loaded track. DAW input: the audio your project sends to the Deck B input.", &items);
-        text("OUTPUTS", R(57, 1240, 200, 14), 11.f, kDim, juce::Justification::centredLeft, true); text("TEMPO", R(517, 1240, 200, 14), 11.f, kDim, juce::Justification::centredLeft, true);
-        auto* o = seg(R(58, 1256, 441, 29), { { "Master only", "One stereo output with the whole mix." }, { "A " + dot() + " B " + dot() + " Master", "The master mix plus a separate output for each deck, so you can route them to their own DAW channels. Enable the extra outputs in your host." } }, { 215, 226 }, 14.f);
+        text("DECK A INPUT", L(57, 1184, 300, 14), 11.f, kDim, juce::Justification::centredLeft, true); text("DECK B INPUT", L(516, 1184, 300, 14), 11.f, kDim, juce::Justification::centredLeft, true);
+        choice("src_a", L(57, 1200, 443, 31), "Where deck A gets its sound. File: the loaded track. DAW input: the audio your project sends to the Deck A input.", &items);
+        choice("src_b", L(516, 1200, 443, 31), "Where deck B gets its sound. File: the loaded track. DAW input: the audio your project sends to the Deck B input.", &items);
+        text("OUTPUTS", L(57, 1240, 200, 14), 11.f, kDim, juce::Justification::centredLeft, true); text("TEMPO", L(517, 1240, 200, 14), 11.f, kDim, juce::Justification::centredLeft, true);
+        auto* o = seg(L(58, 1256, 441, 29), { { "Master only", "One stereo output with the whole mix." }, { "A " + dot() + " B " + dot() + " Master", "The master mix plus a separate output for each deck, so you can route them to their own DAW channels. Enable the extra outputs in your host." } }, { 215, 226 }, 14.f);
         o->onCol = Colour(0xfff5a06a); bindChoice(*o, "outmode");
-        auto* t = seg(R(517, 1256, 441, 29), { { "Follow DAW", "Sync matches the tempo of your project." }, { "Decks lead", "Sync matches the other deck, not the project." } }, { 224, 217 }, 14.f); bindChoice(*t, "tempomode");
-        hostLbl = text("HOST BPM", R(57, 1303, 190, 18), 13.f, kAccent, juce::Justification::centredLeft, true, true);
-        hold("MIDI learn...", R(260, 1296, 156, 31), "Map the controls of your MIDI controller to decks, mixer and effects.", [this] { showMidi(); });
-        dawInfo = text("", R(57, 1337, 902, 18), 13.f, kDim, juce::Justification::centredLeft, false, true); dawInfo->lines = 1;
+        auto* t = seg(L(517, 1256, 441, 29), { { "Follow DAW", "Sync matches the tempo of your project." }, { "Decks lead", "Sync matches the other deck, not the project." } }, { 224, 217 }, 14.f); bindChoice(*t, "tempomode");
+        hostLbl = text("HOST BPM", L(57, 1303, 190, 18), 13.f, kAccent, juce::Justification::centredLeft, true, true);
+        hold("MIDI learn...", L(260, 1296, 156, 31), "Map the controls of your MIDI controller to decks, mixer and effects.", [this] { showMidi(); });
+        dawInfo = text("", L(57, 1337, 902, 18), 13.f, kDim, juce::Justification::centredLeft, false, true); dawInfo->lines = 1;
     }
 
     void buildFx()
     {
-        text("FX CHAIN", R(995, 1168, 90, 29), 13.f, kDim, juce::Justification::centredLeft, true);
-        text("CHAIN MIX", R(1090, 1176, 90, 14), 11.f, kDim, juce::Justification::centredLeft, true);
-        linear("chain", R(1175, 1170, 120, 26), false, kAccent, "Overall amount of the whole FX chain.");
-        chainVal = text("", R(1300, 1175, 60, 16), 13.f, kAccent, juce::Justification::centredLeft, false, true);
-        text("ECHO BEATS", R(1372, 1176, 90, 14), 11.f, kDim, juce::Justification::centredLeft, true);
-        auto* eb = seg(R(1458, 1168, 215, 29), { { "1/4", "Echo repeats every quarter beat." }, { "1/2", "Echo repeats every half beat." }, { "3/4", "Echo repeats every three quarter beat." }, { "1", "Echo repeats every beat." }, { "2", "Echo repeats every two beats." } }, {}, 14.f);
+        auto L = [](int ax, int ay, int w, int h) { return Impl::L(1082 + (int) std::lround((ax - 982) * 1074.0 / 974.0), ay, (int) std::lround(w * 1074.0 / 974.0), h); };   // FX panel is 100 wider and starts 100 further right
+        text("FX CHAIN", L(995, 1168, 90, 29), 13.f, kDim, juce::Justification::centredLeft, true);
+        text("CHAIN MIX", L(1090, 1176, 90, 14), 11.f, kDim, juce::Justification::centredLeft, true);
+        linear("chain", L(1175, 1170, 120, 26), false, kAccent, "Overall amount of the whole FX chain.");
+        chainVal = text("", L(1300, 1175, 60, 16), 13.f, kAccent, juce::Justification::centredLeft, false, true);
+        text("ECHO BEATS", L(1372, 1176, 90, 14), 11.f, kDim, juce::Justification::centredLeft, true);
+        auto* eb = seg(L(1458, 1168, 215, 29), { { "1/4", "Echo repeats every quarter beat." }, { "1/2", "Echo repeats every half beat." }, { "3/4", "Echo repeats every three quarter beat." }, { "1", "Echo repeats every beat." }, { "2", "Echo repeats every two beats." } }, {}, 14.f);
         bindChoice(*eb, "echobeats");
-        auto* tg = seg(R(1683, 1168, 260, 29), { { "Deck A", "The three effects work on deck A." }, { "Deck B", "The three effects work on deck B." }, { "A + B", "The three effects work on both decks together." }, { "Master", "The three effects work on the master mix." } }, { 68, 68, 57, 66 }, 14.f);
+        auto* tg = seg(L(1683, 1168, 260, 29), { { "Deck A", "The three effects work on deck A." }, { "Deck B", "The three effects work on deck B." }, { "A + B", "The three effects work on both decks together." }, { "Master", "The three effects work on the master mix." } }, { 68, 68, 57, 66 }, 14.f);
         bindChoice(*tg, "fxtarget");
         const juce::String amountTip = "Main control of the effect: filter cutoff, echo feedback, reverb size, flanger depth, crush amount.";
         for (int k = 1; k <= 3; ++k)
         {
             const int x0 = 995 + (k - 1) * 320; const juce::String n(k);
-            text("FX" + n, R(x0 + 9, 1220, 30, 31), 12.f, kDim, juce::Justification::centredLeft, false, true);
-            choice("fxt" + n, R(x0 + 37, 1220, 233, 31), "Effect type for slot " + n + ".");
-            auto* on = own(std::make_unique<juce::TextButton>()); on->setBounds(R(x0 + 276, 1223, 26, 22)); on->setClickingTogglesState(true); on->setColour(juce::TextButton::buttonOnColourId, kAccent);
+            text("FX" + n, L(x0 + 9, 1220, 30, 31), 12.f, kDim, juce::Justification::centredLeft, false, true);
+            choice("fxt" + n, L(x0 + 37, 1220, 233, 31), "Effect type for slot " + n + ".");
+            auto* on = own(std::make_unique<juce::TextButton>()); on->setBounds(L(x0 + 276, 1223, 26, 22)); on->setClickingTogglesState(true); on->setColour(juce::TextButton::buttonOnColourId, kAccent);
             on->setTooltip("Switch this effect on or off."); bAtt.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(proc.apvts, "fxon" + n, *on));
-            knob("fxp1_" + n, "AMOUNT", R(x0 + 40, 1260, 84, 66), 35.f, kAccent, amountTip, [this, n] { return fxAmountText(n); });
-            knob("fxp2_" + n, "DRY/WET", R(x0 + 186, 1260, 84, 66), 35.f, kAccent, "How much of the effect you hear.", [this, n] { return juce::String((int) std::lround(proc.get("fxp2_" + n) * 100.f)) + " %"; });
+            knob("fxp1_" + n, "AMOUNT", L(x0 + 40, 1260, 84, 66), 35.f, kAccent, amountTip, [this, n] { return fxAmountText(n); });
+            knob("fxp2_" + n, "DRY/WET", L(x0 + 186, 1260, 84, 66), 35.f, kAccent, "How much of the effect you hear.", [this, n] { return juce::String((int) std::lround(proc.get("fxp2_" + n) * 100.f)) + " %"; });
         }
-        fxInfo = text("", R(995, 1336, 940, 20), 15.f, kInk, juce::Justification::centredLeft);
+        fxInfo = text("", L(995, 1336, 940, 20), 15.f, kInk, juce::Justification::centredLeft);
     }
     juce::String fxAmountText(const juce::String& n)
     {
@@ -368,8 +385,8 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
     void buildBrowser()
     {
         text("TRACK BROWSER", R(55, 1383, 400, 14), 13.f, kDim, juce::Justification::centredLeft, true);
-        browserStatus = text("", R(1645, 1383, 300, 14), 12.f, kYellow, juce::Justification::centredRight, true, true);
-        addAndMakeVisible(browser); browser.setBounds(R(55, 1403, 1890, 331));
+        browserStatus = text("", R(1845, 1383, 300, 14), 12.f, kYellow, juce::Justification::centredRight, true, true);
+        addAndMakeVisible(browser); browser.setBounds(R(55, 1403, 2090, 331));
         browser.onLoad = [this](int d, const juce::File& f) { loadTo(d, f); };
         browser.freeDeck = [this] { return proc.view[0].playing.load() && ! proc.view[1].playing.load() ? 1 : 0; };
         browserStatus->setText(browser.statusText());
@@ -427,7 +444,7 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
         }
         delBtn[d]->setVisible(mode[d] == 0);
         static const char* hint[5] = { "Click to set or jump. Right-click to edit.", "Loop of that many beats from the playhead. Press again to leave it.", "Jump by that many beats.", "Built in sounds played over the mix.", "Hold a pad to apply the effect or move to this deck." };
-        padHint[d]->setBounds(R(mode[d] == 0 ? 146 + d * 1136 : 56 + d * 1136, 943, 700, 26)); padHint[d]->setText(hint[mode[d]]);
+        padHint[d]->setBounds(deckR(d, mode[d] == 0 ? 146 : 56, 943, 700, 26)); padHint[d]->setText(hint[mode[d]]);
     }
     void editHot(int d, int i)
     {
@@ -655,16 +672,16 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
         catui::drawCatHead(g, { 36.f, 20.f, 46.f, 40.f }, Colour(0xfff4f5f7));
         g.setColour(kInk); g.setFont(caps(30.f, 0.08f)); g.drawText("SCRATCH CAT DUO", 90, 8, 340, 44, juce::Justification::centredLeft);
         g.setColour(Colour(0xffe0a020)); g.setFont(caps(13.f, 0.3f)); g.drawText("STUDIO 87", 92, 46, 200, 18, juce::Justification::centredLeft);
-        panel(g, { 44, 75, 1912, 306 }, kPanel);
+        panel(g, { 44, 75, 2112, 306 }, kPanel);
         for (int d = 0; d < 2; ++d)
         {
-            auto r = R(44 + d * 1136, 391, 776, 758); g.setColour(kPanel2); g.fillRoundedRectangle(r.toFloat(), 4.f); g.setColour(kLine); g.drawRoundedRectangle(r.toFloat().reduced(0.5f), 4.f, 1.f);
+            auto r = R(44 + d * kDeckDx, 391, 876, 758); g.setColour(kPanel2); g.fillRoundedRectangle(r.toFloat(), 4.f); g.setColour(kLine); g.drawRoundedRectangle(r.toFloat().reduced(0.5f), 4.f, 1.f);
             g.setColour(deckCol(d)); g.fillRect(r.getX(), r.getY() + 2, 3, r.getHeight() - 4);
         }
-        panel(g, { 835, 398, 330, 740 }, Colour(0xff2b2e34), 6.f);
-        g.setColour(kDim); g.setFont(caps(13.f, 0.22f)); g.drawText("MIXER", R(843, 404, 314, 14), juce::Justification::centred);
-        panel(g, { 44, 1154, 928, 208 }, kPanel); panel(g, { 982, 1154, 974, 208 }, kPanel); panel(g, { 44, 1372, 1912, 373 }, kPanel);
-        for (int k = 0; k < 3; ++k) panel(g, { 995 + k * 320, 1206, 308, 122 }, kPanel2);
+        panel(g, { 935, 398, 330, 740 }, Colour(0xff2b2e34), 6.f);
+        g.setColour(kDim); g.setFont(caps(13.f, 0.22f)); g.drawText("MIXER", R(943, 404, 314, 14), juce::Justification::centred);
+        panel(g, { 44, 1154, 1028, 208 }, kPanel); panel(g, { 1082, 1154, 1074, 208 }, kPanel); panel(g, { 44, 1372, 2112, 373 }, kPanel);
+        for (int k = 0; k < 3; ++k) panel(g, { 1082 + (int) std::lround((13 + k * 320) * 1074.0 / 974.0), 1206, (int) std::lround(308 * 1074.0 / 974.0), 122 }, kPanel2);
         g.setColour(kDim); g.setFont(caps(12.f, 0.14f)); g.drawText("STUDIO 87  " + dot() + "  SCRATCH CAT DUO V" + juce::String(JucePlugin_VersionString), R(44, 1762, 800, 18), juce::Justification::centredLeft);
     }
 };

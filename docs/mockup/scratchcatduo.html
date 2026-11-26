@@ -18,13 +18,13 @@ body { margin:0; background:var(--ground); color:var(--ink); font-family:var(--f
   padding-block:12px; padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px)); }
 #desk { position:relative; width:100%; }
 #frame { position:absolute; touch-action:none; }
-#win { position:absolute; left:0; top:0; width:2000px; height:1790px; transform-origin:0 0; }
+#win { position:absolute; left:0; top:0; width:2200px; height:1790px; transform-origin:0 0; }
 .rz { position:absolute; z-index:50; touch-action:none; }
 .rz.n,.rz.s { left:18px; right:18px; height:10px; cursor:ns-resize; } .rz.n { top:-5px; } .rz.s { bottom:-5px; }
 .rz.e,.rz.w { top:18px; bottom:18px; width:10px; cursor:ew-resize; } .rz.e { right:-5px; } .rz.w { left:-5px; }
 .rz.ne,.rz.nw,.rz.se,.rz.sw { width:20px; height:20px; } .rz.ne { top:-6px; right:-6px; cursor:nesw-resize; } .rz.nw { top:-6px; left:-6px; cursor:nwse-resize; } .rz.se { bottom:-6px; right:-6px; cursor:nwse-resize; } .rz.sw { bottom:-6px; left:-6px; cursor:nesw-resize; }
 .rz:hover,.rz.drag { background:#02EBBA55; border-radius:3px; }
-.unit { width:2000px; height:1790px; margin:0; display:grid; grid-template-columns:30px minmax(0,1fr) 30px; box-shadow:0 30px 80px #000c; border-radius:4px; overflow:hidden; }
+.unit { width:2200px; height:1790px; margin:0; display:grid; grid-template-columns:30px minmax(0,1fr) 30px; box-shadow:0 30px 80px #000c; border-radius:4px; overflow:hidden; }
 .cheek { background:repeating-linear-gradient(92deg,#5B3A22 0 3px,#6E4729 3px 7px,#4E3120 7px 9px,#77502F 9px 14px); }
 .cheek.l { box-shadow:inset -4px 0 8px rgba(0,0,0,.6); }
 .cheek.r { box-shadow:inset 4px 0 8px rgba(0,0,0,.6); background:repeating-linear-gradient(88deg,#5B3A22 0 3px,#6E4729 3px 7px,#4E3120 7px 9px,#77502F 9px 14px); }
@@ -261,7 +261,7 @@ button[aria-pressed="true"],button.on { background:color-mix(in srgb,var(--cL) 1
 <div class="tip" id="tip" hidden></div>
 
 <script>
-var KIT = {key:"scratchduo", W:2000, H:1790};
+var KIT = {key:"scratchduo", W:2200, H:1790};
 /* Studio 87 mockup kit: helpers, info bubbles, knobs, selects, toggles, resizable window, modals, presets, frame loop.
    Each mockup sets KIT = { key, W, H } before this file runs. */
 var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -754,14 +754,14 @@ function shotZap() { var n = Math.round(sr * 0.35), a = new Float32Array(n), ph 
 function mkFader(host, c) {
   var w = document.createElement("div"); w.className = "fdw" + (c.horiz ? " h" : ""); w.innerHTML = '<div class="fdl">' + c.label + '</div><div class="fdr"><i class="th"></i></div><div class="fdv"></div>'; host.appendChild(w);
   var tr = $(".fdr", w), th = $(".th", w), fv = $(".fdv", w), drag = false;
-  function toN(v) { return (v - c.min) / (c.max - c.min); }
+  function toN(v) { var n = (v - c.min) / (c.max - c.min); return c.flip ? 1 - n : n; }
   function paint(v) { var n = clamp(toN(v), 0, 1); if (c.horiz) th.style.left = "calc(" + (n * 100) + "% - " + (n * 24) + "px)"; else th.style.top = "calc(" + ((1 - n) * 100) + "% - " + ((1 - n) * 24) + "px)"; fv.textContent = c.fmt ? c.fmt(v) : v.toFixed(2); }
   if (!(c.id in S)) def(c.id, c.def); addUI(c.id, paint); paint(S[c.id]);
-  function set(e) { var r = tr.getBoundingClientRect(), k = tr.offsetWidth / r.width, n; if (c.horiz) n = ((e.clientX - r.left) * k - 12) / (tr.offsetWidth - 24); else n = 1 - ((e.clientY - r.top) * k - 12) / (tr.offsetHeight - 24); n = clamp(n, 0, 1); var v = c.min + n * (c.max - c.min); if (c.snap !== undefined && Math.abs(v - c.def) < c.snap) v = c.def; setParam(c.id, v, true); }
+  function set(e) { var r = tr.getBoundingClientRect(), k = tr.offsetWidth / r.width, n; if (c.horiz) n = ((e.clientX - r.left) * k - 12) / (tr.offsetWidth - 24); else n = 1 - ((e.clientY - r.top) * k - 12) / (tr.offsetHeight - 24); n = clamp(n, 0, 1); if (c.flip) n = 1 - n; var v = c.min + n * (c.max - c.min); if (c.snap !== undefined && Math.abs(v - c.def) < c.snap) v = c.def; setParam(c.id, v, true); }
   tr.addEventListener("pointerdown", function (e) { drag = true; tr.setPointerCapture(e.pointerId); set(e); e.preventDefault(); });
   tr.addEventListener("pointermove", function (e) { if (drag) set(e); }); tr.addEventListener("pointerup", function () { drag = false; });
   w.addEventListener("dblclick", function () { setParam(c.id, DEF[c.id], true); });
-  tr.addEventListener("wheel", function (e) { e.preventDefault(); setParam(c.id, clamp(S[c.id] + (e.deltaY < 0 ? 1 : -1) * (c.max - c.min) * 0.02, c.min, c.max), true); }, { passive: false });
+  tr.addEventListener("wheel", function (e) { e.preventDefault(); setParam(c.id, clamp(S[c.id] + (e.deltaY < 0 ? 1 : -1) * (c.flip ? -1 : 1) * (c.max - c.min) * 0.02, c.min, c.max), true); }, { passive: false });
   attachTip(w, c.label, (c.tip || "") + " Double-click resets."); return w;
 }
 function peaksOf(L, R, nb) { var n = L.length, p = new Float32Array(nb * 2), step = n / nb; for (var b = 0; b < nb; b++) { var a = Math.floor(b * step), z = Math.floor((b + 1) * step), mn = 0, mx = 0; for (var i = a; i < z; i += 3) { var v = 0.5 * (L[i] + R[i]); if (v < mn) mn = v; if (v > mx) mx = v; } p[b * 2] = mn; p[b * 2 + 1] = mx; } return p; }
@@ -884,7 +884,7 @@ function buildDeck(host, E, i, col, letter, o) {
   var plat = mkPlatter(q(".plat"), d, col, letter);
   /* tempo fader + range */
   var fd = q(".dk-fd"); var rg = document.createElement("div"); rg.className = "row2 col"; rg.style.cssText = "justify-content:flex-end"; def("rg" + i, 16);
-  mkFader(fd, { id: "tp" + i, label: "Tempo", min: -1, max: 1, def: 0, snap: 0.02, fmt: function (v) { var t = v * S["rg" + i]; return (t > 0 ? "+" : "") + t.toFixed(1) + "%"; }, tip: "Speed of this deck. Up is faster. The range menu sets how far it goes." });
+  mkFader(fd, { id: "tp" + i, label: "Tempo", min: -1, max: 1, def: 0, snap: 0.02, flip: true, fmt: function (v) { var t = v * S["rg" + i]; return (t > 0 ? "+" : "") + t.toFixed(1) + "%"; }, tip: "Speed of this deck, like a CDJ or turntable: up is slower, down is faster. The range menu sets how far it goes." });
   fd.appendChild(rg); mkSel(rg, "rg" + i, "Range", [[8, "8%"], [16, "16%"], [50, "50%"]], "How far the tempo fader goes.", 16); addUI("rg" + i, function () { if (UI["tp" + i]) UI["tp" + i](S["tp" + i]); });
   /* loops */
   var lp = q(".dloops"), LB = [["1/2", 0.5], ["1", 1], ["2", 2], ["4", 4], ["8", 8]], lbs = [];
@@ -1004,7 +1004,7 @@ function buildDeckClassic(host, E, i, col, letter, o) {
   var prev = false; bc.addEventListener("pointerdown", function () { if (d.n < 100) return; ensureCtx(); E.start(); if (d.playing) { d.playing = false; d.rate = 0; d.mode = "normal"; d.pos = d.cue; } else if (Math.abs(d.pos - d.cue) > sr * 0.02) { d.cue = S["qu" + i] ? d.nearestBeat(d.pos) : d.pos; } else { prev = true; d.playing = true; } });
   function cueUp() { if (prev) { prev = false; d.playing = false; d.rate = 0; d.pos = d.cue; } } bc.addEventListener("pointerup", cueUp); bc.addEventListener("pointerleave", cueUp);
   /* tempo */
-  var tp = q(".ck-tempo"); mkFader(tp, { id: "tp" + i, label: "Tempo", min: -1, max: 1, def: 0, snap: 0.02, fmt: function (v) { var t = v * S["rg" + i]; return (t > 0 ? "+" : "") + t.toFixed(1) + "%"; }, tip: "Speed of this deck. Up is faster. The range buttons set how far it goes." });
+  var tp = q(".ck-tempo"); mkFader(tp, { id: "tp" + i, label: "Tempo", min: -1, max: 1, def: 0, snap: 0.02, flip: true, fmt: function (v) { var t = v * S["rg" + i]; return (t > 0 ? "+" : "") + t.toFixed(1) + "%"; }, tip: "Speed of this deck, like a CDJ or turntable: up is slower, down is faster. The range buttons set how far it goes." });
   mkSeg(tp, "rg" + i, [[8, "8"], [16, "16"], [50, "50"]], "How far the tempo fader goes (percent).", "rng"); addUI("rg" + i, function () { if (UI["tp" + i]) UI["tp" + i](S["tp" + i]); });
   var rs = document.createElement("button"); rs.className = "rst"; rs.textContent = "Reset"; rs.setAttribute("data-tip", "Put the tempo fader back to zero."); tp.appendChild(rs); rs.addEventListener("click", function () { setParam("tp" + i, 0, true); });
   return { root: root, q: q, plat: plat, lbs: lbs, bp: bp, bm: bm, setPads: null, pmHost: q(".ck-pm"), LB: LB };

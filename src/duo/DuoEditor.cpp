@@ -333,7 +333,7 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
 
     void buildRouting()
     {
-        auto L = [](int ax, int ay, int w, int h) { return Impl::L(44 + (int) std::lround((ax - 44) * 1028.0 / 928.0), ay, (int) std::lround(w * 1028.0 / 928.0), h); };   // routing panel is 100 wider
+        auto L = [](int ax, int ay, int w, int h) { return Impl::R(44 + (int) std::lround((ax - 44) * 1028.0 / 928.0), ay, (int) std::lround(w * 1028.0 / 928.0), h); };   // routing panel is 100 wider
         text("DAW ROUTING", L(57, 1167, 300, 16), 13.f, kDim, juce::Justification::centredLeft, true);
         text("HOW SCRATCH CAT DUO TALKS TO YOUR PROJECT", L(459, 1167, 500, 16), 13.f, kDim, juce::Justification::centredRight, true);
         const juce::StringArray items { "File (the loaded track)", "DAW input" };
@@ -351,7 +351,7 @@ struct DuoEditor::Impl : public juce::Component, public juce::DragAndDropContain
 
     void buildFx()
     {
-        auto L = [](int ax, int ay, int w, int h) { return Impl::L(1082 + (int) std::lround((ax - 982) * 1074.0 / 974.0), ay, (int) std::lround(w * 1074.0 / 974.0), h); };   // FX panel is 100 wider and starts 100 further right
+        auto L = [](int ax, int ay, int w, int h) { return Impl::R(1082 + (int) std::lround((ax - 982) * 1074.0 / 974.0), ay, (int) std::lround(w * 1074.0 / 974.0), h); };   // FX panel is 100 wider and starts 100 further right
         text("FX CHAIN", L(995, 1168, 90, 29), 13.f, kDim, juce::Justification::centredLeft, true);
         text("CHAIN MIX", L(1090, 1176, 90, 14), 11.f, kDim, juce::Justification::centredLeft, true);
         linear("chain", L(1175, 1170, 120, 26), false, kAccent, "Overall amount of the whole FX chain.");
